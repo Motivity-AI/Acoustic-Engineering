@@ -1,25 +1,14 @@
 {
   "name": "acoustic-engineering",
   "version": "1.0.0",
-  "description": "Acoustic Engineering - Intelligent Acoustic & Sound System Design Platform",
-  "main": "server/index.js",
+  "description": "Acoustic Engineering - Unified Platform",
+  "main": "server.js",
   "scripts": {
-    "start": "node server/index.js",
-    "dev": "node --watch server/index.js"
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "serve": "node server.js --serve-only"
   },
-  "keywords": [
-    "acoustic",
-    "audio",
-    "sound",
-    "engineering",
-    "speaker",
-    "design",
-    "spline",
-    "spl",
-    "acoustic-engineering"
-  ],
-  "author": "Acoustic Engineering",
-  "license": "MIT",
+  "engines": { "node": ">=18.0.0" },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "better-sqlite3": "^11.7.0",
@@ -28,5 +17,6 @@
     "express-session": "^1.18.1",
     "multer": "^1.4.5-lts.1",
     "pdfkit": "^0.15.1"
-  }
+  },
+  "license": "MIT"
 }
