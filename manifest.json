@@ -1,16 +1,17 @@
 {
   "name": "هندسة صوتية | Acoustic Engineering",
   "short_name": "هندسة صوتية",
-  "description": "منصة هندسية متكاملة لتصميم أنظمة الصوت، توزيع السماعات، تحليل التغطية ومستويات SPL وإعداد التقارير الهندسية.",
+  "description": "منصة هندسية لتصميم أنظمة الصوت وتحليل التغطية وإعداد التقارير",
   "lang": "ar",
   "dir": "rtl",
-
   "start_url": "./index.html",
   "scope": "./",
-
   "display": "standalone",
-  "display_override": [
-    "window-controls-overlay",
-    "standalone",
-    "minimal-ui"
-  ],
+  "orientation": "any",
+  "background_color": "#080b12",
+  "theme_color": "#0b0f14",
+  "icons": [
+    { "src": "./assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "./assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
