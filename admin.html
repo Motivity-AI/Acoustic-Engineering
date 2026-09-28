@@ -1,0 +1,4139 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#080b12">
+
+    <title>هندسة صوتية | لوحة الإدارة</title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        /* =========================================================
+           ADMIN
+           ========================================================= */
+
+        :root {
+            --bg: #080b12;
+            --panel: #10151f;
+            --panel2: #0c1119;
+            --panel3: #151b26;
+            --border: rgba(255,255,255,.08);
+            --text: #f5f7fa;
+            --muted: #8792a3;
+            --red: #e60012;
+            --blue: #38bdf8;
+            --green: #22c55e;
+            --orange: #f59e0b;
+            --purple: #a78bfa;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Cairo", sans-serif;
+        }
+
+        body {
+            overflow-x: hidden;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           LAYOUT
+           ========================================================= */
+
+        .admin-shell {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .admin-sidebar {
+            width: 260px;
+            flex: 0 0 260px;
+            min-height: 100vh;
+            background: #0b1018;
+            border-left: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            z-index: 100;
+        }
+
+        .admin-main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        /* =========================================================
+           SIDEBAR
+           ========================================================= */
+
+        .admin-brand {
+            padding: 24px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-brand-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(
+                135deg,
+                var(--red),
+                #9e000c
+            );
+            box-shadow: 0 8px 25px rgba(230,0,18,.2);
+        }
+
+        .admin-brand-text strong {
+            display: block;
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .admin-brand-text span {
+            display: block;
+            color: #667182;
+            font-size: 9px;
+        }
+
+        .admin-role {
+            margin: 17px 16px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            background: rgba(230,0,18,.07);
+            border: 1px solid rgba(230,0,18,.13);
+            color: #ff7d87;
+            font-size: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .admin-nav {
+            padding: 6px 12px;
+            flex: 1;
+        }
+
+        .nav-label {
+            color: #505b6b;
+            font-size: 9px;
+            padding: 14px 9px 7px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .admin-nav button {
+            width: 100%;
+            height: 43px;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            color: #8994a4;
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            padding: 0 12px;
+            text-align: right;
+            font-size: 11px;
+            transition: .2s;
+            margin-bottom: 3px;
+        }
+
+        .admin-nav button i {
+            width: 19px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .admin-nav button:hover {
+            background: rgba(255,255,255,.045);
+            color: #fff;
+        }
+
+        .admin-nav button.active {
+            background: rgba(56,189,248,.09);
+            color: var(--blue);
+            border: 1px solid rgba(56,189,248,.1);
+        }
+
+        .admin-sidebar-footer {
+            padding: 15px;
+            border-top: 1px solid var(--border);
+        }
+
+        .back-app-btn {
+            width: 100%;
+            height: 40px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.03);
+            color: #a8b2c0;
+            font-size: 10px;
+        }
+
+        .back-app-btn:hover {
+            color: #fff;
+            background: rgba(255,255,255,.06);
+        }
+
+        /* =========================================================
+           TOPBAR
+           ========================================================= */
+
+        .admin-topbar {
+            height: 72px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 27px;
+            background: rgba(8,11,18,.88);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .page-title p {
+            margin: 2px 0 0;
+            color: var(--muted);
+            font-size: 10px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .top-btn {
+            height: 38px;
+            padding: 0 13px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.035);
+            color: #9da8b8;
+            font-size: 10px;
+        }
+
+        .top-btn:hover {
+            color: #fff;
+            background: rgba(255,255,255,.07);
+        }
+
+        .top-btn.danger {
+            color: #ff7883;
+        }
+
+        /* =========================================================
+           CONTENT
+           ========================================================= */
+
+        .admin-content {
+            padding: 27px;
+            max-width: 1700px;
+            margin: auto;
+        }
+
+        .admin-section {
+            display: none;
+            animation: fadeIn .2s ease;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           STAT CARDS
+           ========================================================= */
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .stat-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            left: -20px;
+            bottom: -30px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--stat-color, var(--blue));
+            opacity: .05;
+        }
+
+        .stat-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(56,189,248,.08);
+            color: var(--blue);
+        }
+
+        .stat-card.red {
+            --stat-color: var(--red);
+        }
+
+        .stat-card.green {
+            --stat-color: var(--green);
+        }
+
+        .stat-card.orange {
+            --stat-color: var(--orange);
+        }
+
+        .stat-card.purple {
+            --stat-color: var(--purple);
+        }
+
+        .stat-card.red .stat-icon {
+            color: var(--red);
+            background: rgba(230,0,18,.08);
+        }
+
+        .stat-card.green .stat-icon {
+            color: var(--green);
+            background: rgba(34,197,94,.08);
+        }
+
+        .stat-card.orange .stat-icon {
+            color: var(--orange);
+            background: rgba(245,158,11,.08);
+        }
+
+        .stat-card.purple .stat-icon {
+            color: var(--purple);
+            background: rgba(167,139,250,.08);
+        }
+
+        .stat-value {
+            margin-top: 16px;
+            font-size: 27px;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: 10px;
+            margin-top: 1px;
+        }
+
+        /* =========================================================
+           PANELS
+           ========================================================= */
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 18px;
+        }
+
+        .panel-header {
+            min-height: 58px;
+            padding: 0 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .panel-title i {
+            color: var(--blue);
+        }
+
+        .panel-actions {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .small-btn {
+            height: 32px;
+            padding: 0 10px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.035);
+            color: #9ca7b7;
+            font-size: 9px;
+        }
+
+        .small-btn:hover {
+            color: #fff;
+            background: rgba(255,255,255,.07);
+        }
+
+        .small-btn.primary {
+            background: rgba(56,189,248,.08);
+            color: var(--blue);
+            border-color: rgba(56,189,248,.16);
+        }
+
+        .small-btn.danger {
+            color: #ff737e;
+        }
+
+        .panel-body {
+            padding: 18px;
+        }
+
+        /* =========================================================
+           SEARCH
+           ========================================================= */
+
+        .search-box {
+            position: relative;
+            width: min(300px, 100%);
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 36px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.03);
+            color: #fff;
+            padding: 0 37px 0 10px;
+            outline: none;
+            font-size: 10px;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667182;
+            font-size: 11px;
+        }
+
+        .search-box input:focus {
+            border-color: rgba(56,189,248,.4);
+        }
+
+        /* =========================================================
+           TABLE
+           ========================================================= */
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 720px;
+        }
+
+        th {
+            text-align: right;
+            color: #657081;
+            font-size: 9px;
+            font-weight: 600;
+            padding: 11px 12px;
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255,255,255,.045);
+            color: #adb7c5;
+            font-size: 10px;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background: rgba(255,255,255,.018);
+        }
+
+        .user-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 34px;
+            height: 34px;
+            flex: 0 0 34px;
+            border-radius: 10px;
+            background: linear-gradient(
+                135deg,
+                #1b2738,
+                #111822
+            );
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .user-name {
+            color: #e7ebf0;
+            font-weight: 700;
+        }
+
+        .user-email {
+            color: #657081;
+            font-size: 8px;
+            direction: ltr;
+            text-align: right;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 8px;
+            white-space: nowrap;
+        }
+
+        .badge.user {
+            color: #8fb7d1;
+            background: rgba(56,189,248,.07);
+        }
+
+        .badge.engineer {
+            color: #c0a9f8;
+            background: rgba(167,139,250,.08);
+        }
+
+        .badge.admin {
+            color: #ff9ca5;
+            background: rgba(230,0,18,.08);
+        }
+
+        .badge.owner {
+            color: #f7c66d;
+            background: rgba(245,158,11,.08);
+        }
+
+        .badge.online {
+            color: #6ee69a;
+            background: rgba(34,197,94,.08);
+        }
+
+        .badge.offline {
+            color: #8b96a5;
+            background: rgba(255,255,255,.05);
+        }
+
+        .row-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .icon-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 7px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.025);
+            color: #7d8898;
+        }
+
+        .icon-btn:hover {
+            color: #fff;
+            background: rgba(255,255,255,.06);
+        }
+
+        .icon-btn.danger:hover {
+            color: #ff727d;
+        }
+
+        /* =========================================================
+           DASHBOARD GRID
+           ========================================================= */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1.4fr .8fr;
+            gap: 18px;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .quick-card {
+            padding: 17px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255,255,255,.025);
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,.045);
+        }
+
+        .quick-card i {
+            color: var(--blue);
+            font-size: 17px;
+        }
+
+        .quick-card strong {
+            display: block;
+            margin-top: 12px;
+            font-size: 11px;
+        }
+
+        .quick-card span {
+            display: block;
+            color: var(--muted);
+            font-size: 9px;
+            margin-top: 3px;
+        }
+
+        /* =========================================================
+           PROJECT CARDS
+           ========================================================= */
+
+        .project-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fill, minmax(250px, 1fr));
+            gap: 12px;
+        }
+
+        .project-card {
+            padding: 15px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: rgba(255,255,255,.025);
+        }
+
+        .project-card:hover {
+            background: rgba(255,255,255,.04);
+        }
+
+        .project-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 9px;
+            background: rgba(56,189,248,.08);
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-name {
+            margin-top: 12px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .project-meta {
+            color: var(--muted);
+            font-size: 8px;
+            line-height: 1.9;
+            margin-top: 5px;
+        }
+
+        /* =========================================================
+           ACTIVITY
+           ========================================================= */
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 11px;
+            padding: 11px 0;
+            border-bottom: 1px solid rgba(255,255,255,.045);
+        }
+
+        .activity-dot {
+            width: 27px;
+            height: 27px;
+            flex: 0 0 27px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(56,189,248,.08);
+            color: var(--blue);
+            font-size: 9px;
+        }
+
+        .activity-text {
+            min-width: 0;
+        }
+
+        .activity-text strong {
+            display: block;
+            font-size: 9px;
+            color: #d6dce5;
+        }
+
+        .activity-text span {
+            display: block;
+            color: #667182;
+            font-size: 8px;
+            margin-top: 2px;
+        }
+
+        /* =========================================================
+           EMPTY
+           ========================================================= */
+
+        .empty-state {
+            padding: 55px 20px;
+            text-align: center;
+            color: #657081;
+        }
+
+        .empty-state i {
+            font-size: 28px;
+            margin-bottom: 12px;
+            opacity: .6;
+        }
+
+        .empty-state strong {
+            display: block;
+            color: #909aaa;
+            font-size: 11px;
+        }
+
+        .empty-state span {
+            display: block;
+            margin-top: 4px;
+            font-size: 9px;
+        }
+
+        /* =========================================================
+           MODAL
+           ========================================================= */
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background: rgba(3,5,9,.78);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-card {
+            width: min(520px, 100%);
+            max-height: 90vh;
+            overflow: auto;
+            background: #111722;
+            border: 1px solid var(--border);
+            border-radius: 17px;
+            box-shadow: 0 30px 90px rgba(0,0,0,.5);
+        }
+
+        .modal-header {
+            min-height: 58px;
+            padding: 0 18px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .modal-close {
+            width: 31px;
+            height: 31px;
+            border-radius: 8px;
+            border: 0;
+            background: rgba(255,255,255,.04);
+            color: #8792a3;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #9da7b5;
+            font-size: 9px;
+        }
+
+        .form-control {
+            width: 100%;
+            height: 40px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,.035);
+            color: #fff;
+            outline: none;
+            padding: 0 11px;
+            font-size: 10px;
+        }
+
+        .form-control:focus {
+            border-color: rgba(56,189,248,.4);
+        }
+
+        select.form-control option {
+            background: #111722;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-start;
+            gap: 7px;
+            padding-top: 7px;
+        }
+
+        /* =========================================================
+           TOAST
+           ========================================================= */
+
+        #toastContainer {
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            min-width: 240px;
+            max-width: 350px;
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: #151c27;
+            color: #d8dee7;
+            box-shadow: 0 15px 40px rgba(0,0,0,.35);
+            font-size: 10px;
+            animation: toastIn .2s ease;
+        }
+
+        .toast.success {
+            border-color: rgba(34,197,94,.2);
+        }
+
+        .toast.error {
+            border-color: rgba(230,0,18,.25);
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           MOBILE
+           ========================================================= */
+
+        .mobile-menu {
+            display: none;
+        }
+
+        @media (max-width: 1100px) {
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .admin-sidebar {
+                position: fixed;
+                right: 0;
+                top: 0;
+                transform: translateX(100%);
+                transition: transform .25s ease;
+                box-shadow: -20px 0 50px rgba(0,0,0,.35);
+            }
+
+            .admin-sidebar.open {
+                transform: translateX(0);
+            }
+
+            .mobile-menu {
+                display: flex;
+                width: 35px;
+                height: 35px;
+                border-radius: 8px;
+                border: 1px solid var(--border);
+                background: rgba(255,255,255,.035);
+                color: #9da8b8;
+                align-items: center;
+                justify-content: center;
+                margin-left: 9px;
+            }
+
+            .admin-topbar {
+                padding: 0 15px;
+            }
+
+            .admin-content {
+                padding: 15px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 9px;
+            }
+
+            .stat-card {
+                padding: 13px;
+            }
+
+            .stat-value {
+                font-size: 21px;
+            }
+
+            .page-title p {
+                display: none;
+            }
+
+            .top-btn span {
+                display: none;
+            }
+
+            .top-btn {
+                width: 36px;
+                padding: 0;
+            }
+        }
+
+        @media (max-width: 460px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="admin-shell">
+
+    <!-- =========================================================
+         SIDEBAR
+         ========================================================= -->
+
+    <aside
+        id="adminSidebar"
+        class="admin-sidebar"
+    >
+
+        <div class="admin-brand">
+
+            <div class="admin-brand-icon">
+                <i class="fa-solid fa-wave-square"></i>
+            </div>
+
+            <div class="admin-brand-text">
+                <strong>هندسة صوتية</strong>
+                <span>ADMIN CONTROL CENTER</span>
+            </div>
+
+        </div>
+
+        <div class="admin-role">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span id="adminRoleLabel">
+                التحقق من الصلاحيات...
+            </span>
+        </div>
+
+        <nav class="admin-nav">
+
+            <div class="nav-label">
+                الرئيسية
+            </div>
+
+            <button
+                class="active"
+                data-section="dashboard"
+            >
+                <i class="fa-solid fa-gauge-high"></i>
+                <span>لوحة التحكم</span>
+            </button>
+
+            <div class="nav-label">
+                الإدارة
+            </div>
+
+            <button data-section="users">
+                <i class="fa-solid fa-users"></i>
+                <span>المستخدمون</span>
+            </button>
+
+            <button data-section="registrations">
+                <i class="fa-solid fa-user-plus"></i>
+                <span>طلبات التسجيل</span>
+            </button>
+
+            <button data-section="projects">
+                <i class="fa-solid fa-diagram-project"></i>
+                <span>المشاريع</span>
+            </button>
+
+            <button data-section="reports">
+                <i class="fa-solid fa-file-lines"></i>
+                <span>التقارير</span>
+            </button>
+
+            <div class="nav-label">
+                النظام
+            </div>
+
+            <button data-section="activity">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span>سجل النشاط</span>
+            </button>
+
+            <button data-section="settings">
+                <i class="fa-solid fa-gear"></i>
+                <span>إعدادات المنصة</span>
+            </button>
+
+        </nav>
+
+        <div class="admin-sidebar-footer">
+
+            <button
+                id="backToAppBtn"
+                class="back-app-btn"
+            >
+                <i class="fa-solid fa-arrow-right"></i>
+                العودة إلى البرنامج
+            </button>
+
+        </div>
+
+    </aside>
+
+    <!-- =========================================================
+         MAIN
+         ========================================================= -->
+
+    <main class="admin-main">
+
+        <header class="admin-topbar">
+
+            <div style="display:flex;align-items:center;">
+
+                <button
+                    id="mobileMenuBtn"
+                    class="mobile-menu"
+                >
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <div class="page-title">
+                    <h1 id="pageTitle">
+                        لوحة التحكم
+                    </h1>
+
+                    <p id="pageSubtitle">
+                        إدارة منصة هندسة صوتية
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="top-actions">
+
+                <button
+                    id="refreshBtn"
+                    class="top-btn"
+                    title="تحديث البيانات"
+                >
+                    <i class="fa-solid fa-rotate"></i>
+                    <span>تحديث</span>
+                </button>
+
+                <button
+                    id="logoutBtn"
+                    class="top-btn danger"
+                    title="تسجيل الخروج"
+                >
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>خروج</span>
+                </button>
+
+            </div>
+
+        </header>
+
+        <div class="admin-content">
+
+            <!-- =================================================
+                 DASHBOARD
+                 ================================================= -->
+
+            <section
+                id="section-dashboard"
+                class="admin-section active"
+            >
+
+                <div class="stats-grid">
+
+                    <div class="stat-card blue">
+
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                        </div>
+
+                        <div
+                            id="statUsers"
+                            class="stat-value"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            إجمالي المستخدمين
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card green">
+
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-diagram-project"></i>
+                            </div>
+                        </div>
+
+                        <div
+                            id="statProjects"
+                            class="stat-value"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            إجمالي المشاريع
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card orange">
+
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-file-lines"></i>
+                            </div>
+                        </div>
+
+                        <div
+                            id="statReports"
+                            class="stat-value"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            التقارير
+                        </div>
+
+                    </div>
+
+                    <div class="stat-card purple">
+
+                        <div class="stat-top">
+                            <div class="stat-icon">
+                                <i class="fa-solid fa-user-clock"></i>
+                            </div>
+                        </div>
+
+                        <div
+                            id="statRegistrations"
+                            class="stat-value"
+                        >
+                            0
+                        </div>
+
+                        <div class="stat-label">
+                            سجلات التسجيل
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="dashboard-grid">
+
+                    <div>
+
+                        <div class="panel">
+
+                            <div class="panel-header">
+
+                                <div class="panel-title">
+                                    <i class="fa-solid fa-bolt"></i>
+                                    الوصول السريع
+                                </div>
+
+                            </div>
+
+                            <div class="panel-body">
+
+                                <div class="quick-grid">
+
+                                    <div
+                                        class="quick-card"
+                                        data-section-link="users"
+                                    >
+                                        <i class="fa-solid fa-users"></i>
+                                        <strong>
+                                            إدارة المستخدمين
+                                        </strong>
+                                        <span>
+                                            الحسابات والصلاحيات
+                                        </span>
+                                    </div>
+
+                                    <div
+                                        class="quick-card"
+                                        data-section-link="projects"
+                                    >
+                                        <i class="fa-solid fa-diagram-project"></i>
+                                        <strong>
+                                            المشاريع
+                                        </strong>
+                                        <span>
+                                            استعراض مشاريع المنصة
+                                        </span>
+                                    </div>
+
+                                    <div
+                                        class="quick-card"
+                                        data-section-link="registrations"
+                                    >
+                                        <i class="fa-solid fa-user-plus"></i>
+                                        <strong>
+                                            التسجيلات
+                                        </strong>
+                                        <span>
+                                            بيانات التسجيل الجديدة
+                                        </span>
+                                    </div>
+
+                                    <div
+                                        class="quick-card"
+                                        data-section-link="reports"
+                                    >
+                                        <i class="fa-solid fa-file-pdf"></i>
+                                        <strong>
+                                            التقارير
+                                        </strong>
+                                        <span>
+                                            التقارير الهندسية
+                                        </span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="panel">
+
+                            <div class="panel-header">
+
+                                <div class="panel-title">
+                                    <i class="fa-solid fa-users"></i>
+                                    أحدث المستخدمين
+                                </div>
+
+                                <div class="panel-actions">
+
+                                    <button
+                                        class="small-btn"
+                                        data-section-link="users"
+                                    >
+                                        عرض الكل
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+                            <div
+                                id="recentUsers"
+                                class="panel-body"
+                            >
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <div class="panel">
+
+                            <div class="panel-header">
+
+                                <div class="panel-title">
+                                    <i class="fa-solid fa-clock-rotate-left"></i>
+                                    آخر النشاطات
+                                </div>
+
+                            </div>
+
+                            <div
+                                id="recentActivity"
+                                class="panel-body"
+                            >
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 USERS
+                 ================================================= -->
+
+            <section
+                id="section-users"
+                class="admin-section"
+            >
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div class="panel-title">
+                            <i class="fa-solid fa-users"></i>
+                            إدارة المستخدمين
+                        </div>
+
+                        <div class="panel-actions">
+
+                            <div class="search-box">
+
+                                <i class="fa-solid fa-search"></i>
+
+                                <input
+                                    id="usersSearch"
+                                    type="search"
+                                    placeholder="بحث بالاسم أو البريد أو الهاتف..."
+                                >
+
+                            </div>
+
+                            <button
+                                id="refreshUsersBtn"
+                                class="small-btn primary"
+                            >
+                                <i class="fa-solid fa-rotate"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="table-wrap">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>المستخدم</th>
+                                    <th>الهاتف</th>
+                                    <th>الدور</th>
+                                    <th>الحالة</th>
+                                    <th>تاريخ التسجيل</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="usersTableBody">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 REGISTRATIONS
+                 ================================================= -->
+
+            <section
+                id="section-registrations"
+                class="admin-section"
+            >
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div class="panel-title">
+                            <i class="fa-solid fa-user-plus"></i>
+                            سجلات التسجيل
+                        </div>
+
+                        <div class="panel-actions">
+
+                            <div class="search-box">
+
+                                <i class="fa-solid fa-search"></i>
+
+                                <input
+                                    id="registrationsSearch"
+                                    type="search"
+                                    placeholder="بحث..."
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="table-wrap">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>البريد</th>
+                                    <th>الهاتف</th>
+                                    <th>التاريخ</th>
+                                    <th>المصدر</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="registrationsTableBody">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 PROJECTS
+                 ================================================= -->
+
+            <section
+                id="section-projects"
+                class="admin-section"
+            >
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div class="panel-title">
+                            <i class="fa-solid fa-diagram-project"></i>
+                            المشاريع
+                        </div>
+
+                        <div class="panel-actions">
+
+                            <div class="search-box">
+
+                                <i class="fa-solid fa-search"></i>
+
+                                <input
+                                    id="projectsSearch"
+                                    type="search"
+                                    placeholder="بحث في المشاريع..."
+                                >
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div
+                        id="projectsGrid"
+                        class="panel-body project-grid"
+                    >
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 REPORTS
+                 ================================================= -->
+
+            <section
+                id="section-reports"
+                class="admin-section"
+            >
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div class="panel-title">
+                            <i class="fa-solid fa-file-lines"></i>
+                            التقارير الهندسية
+                        </div>
+
+                    </div>
+
+                    <div class="table-wrap">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>التقرير</th>
+                                    <th>المشروع</th>
+                                    <th>المستخدم</th>
+                                    <th>التاريخ</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="reportsTableBody">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 ACTIVITY
+                 ================================================= -->
+
+            <section
+                id="section-activity"
+                class="admin-section"
+            >
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div class="panel-title">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            سجل النشاط
+                        </div>
+
+                        <button
+                            id="refreshActivityBtn"
+                            class="small-btn"
+                        >
+                            <i class="fa-solid fa-rotate"></i>
+                            تحديث
+                        </button>
+
+                    </div>
+
+                    <div
+                        id="activityList"
+                        class="panel-body"
+                    >
+                    </div>
+
+                </div>
+
+            </section>
+
+            <!-- =================================================
+                 SETTINGS
+                 ================================================= -->
+
+            <section
+                id="section-settings"
+                class="admin-section"
+            >
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div class="panel-title">
+                            <i class="fa-solid fa-gear"></i>
+                            إعدادات المنصة
+                        </div>
+
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="form-group">
+                            <label>
+                                اسم المنصة
+                            </label>
+
+                            <input
+                                id="settingAppName"
+                                class="form-control"
+                                value="هندسة صوتية"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                إصدار النظام
+                            </label>
+
+                            <input
+                                id="settingVersion"
+                                class="form-control"
+                                value="1.0"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                وضع النظام
+                            </label>
+
+                            <select
+                                id="settingMode"
+                                class="form-control"
+                            >
+                                <option value="production">
+                                    Production
+                                </option>
+
+                                <option value="development">
+                                    Development
+                                </option>
+                            </select>
+                        </div>
+
+                        <button
+                            id="saveSettingsBtn"
+                            class="small-btn primary"
+                        >
+                            <i class="fa-solid fa-floppy-disk"></i>
+                            حفظ الإعدادات
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+</div>
+
+<!-- =========================================================
+     USER MODAL
+     ========================================================= -->
+
+<div
+    id="userModal"
+    class="modal"
+>
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <h3>
+                تعديل صلاحيات المستخدم
+            </h3>
+
+            <button
+                class="modal-close"
+                data-close-modal="userModal"
+            >
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div
+                id="editUserInfo"
+                style="
+                    padding:12px;
+                    border:1px solid var(--border);
+                    border-radius:10px;
+                    margin-bottom:17px;
+                    font-size:10px;
+                    color:#9da7b5;
+                "
+            >
+            </div>
+
+            <div class="form-group">
+
+                <label>
+                    الدور
+                </label>
+
+                <select
+                    id="editUserRole"
+                    class="form-control"
+                >
+                    <option value="user">
+                        مستخدم
+                    </option>
+
+                    <option value="engineer">
+                        مهندس
+                    </option>
+
+                    <option value="admin">
+                        مشرف
+                    </option>
+
+                    <option value="owner">
+                        مالك
+                    </option>
+                </select>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    id="saveUserRoleBtn"
+                    class="small-btn primary"
+                >
+                    <i class="fa-solid fa-floppy-disk"></i>
+                    حفظ
+                </button>
+
+                <button
+                    class="small-btn"
+                    data-close-modal="userModal"
+                >
+                    إلغاء
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- =========================================================
+     TOAST
+     ========================================================= -->
+
+<div id="toastContainer"></div>
+
+<!-- =========================================================
+     SCRIPTS
+     ========================================================= -->
+
+<script src="js/config.js"></script>
+<script src="js/firebase.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/storage.js"></script>
+
+<script>
+(function () {
+
+    "use strict";
+
+    const AE =
+        window.AcousticEngineering ||
+        {};
+
+    const auth =
+        AE.auth ||
+        window.AcousticAuth ||
+        null;
+
+    const firebase =
+        AE.firebase ||
+        window.AcousticFirebase ||
+        null;
+
+    const storage =
+        AE.storage ||
+        window.AcousticStorage ||
+        null;
+
+    const state = {
+
+        users: [],
+        registrations: [],
+        projects: [],
+        reports: [],
+        activity: [],
+
+        selectedUserId: null,
+
+        currentSection: "dashboard",
+
+        initialized: false
+    };
+
+    /* =========================================================
+       HELPERS
+       ========================================================= */
+
+    function $(selector) {
+        return document.querySelector(
+            selector
+        );
+    }
+
+    function escapeHTML(value) {
+
+        return String(
+            value ??
+            ""
+        )
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function formatDate(value) {
+
+        if (!value) {
+            return "—";
+        }
+
+        try {
+
+            const date =
+                new Date(value);
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+                return "—";
+            }
+
+            return date.toLocaleString(
+                "ar-SD",
+                {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            );
+
+        }
+        catch (error) {
+            return "—";
+        }
+    }
+
+    function getInitials(name) {
+
+        const parts =
+            String(name || "")
+                .trim()
+                .split(/\s+/)
+                .filter(Boolean);
+
+        if (!parts.length) {
+            return "?";
+        }
+
+        return parts
+            .slice(0, 2)
+            .map(
+                part =>
+                    part.charAt(0)
+            )
+            .join("")
+            .toUpperCase();
+    }
+
+    function roleLabel(role) {
+
+        const labels = {
+            user: "مستخدم",
+            engineer: "مهندس",
+            admin: "مشرف",
+            owner: "مالك"
+        };
+
+        return (
+            labels[role] ||
+            role ||
+            "مستخدم"
+        );
+    }
+
+    function roleBadge(role) {
+
+        return `
+            <span class="badge ${escapeHTML(role || "user")}">
+                <i class="fa-solid fa-user-shield"></i>
+                ${escapeHTML(roleLabel(role))}
+            </span>
+        `;
+    }
+
+    function showToast(
+        message,
+        type = "info"
+    ) {
+
+        const container =
+            $("#toastContainer");
+
+        if (!container) {
+            return;
+        }
+
+        const toast =
+            document.createElement("div");
+
+        toast.className =
+            "toast " + type;
+
+        toast.textContent =
+            message;
+
+        container.appendChild(
+            toast
+        );
+
+        setTimeout(
+            function () {
+                toast.remove();
+            },
+            3500
+        );
+    }
+
+    function openModal(id) {
+
+        const modal =
+            document.getElementById(id);
+
+        if (modal) {
+            modal.classList.add("show");
+        }
+    }
+
+    function closeModal(id) {
+
+        const modal =
+            document.getElementById(id);
+
+        if (modal) {
+            modal.classList.remove("show");
+        }
+    }
+
+    /* =========================================================
+       AUTHORIZATION
+       ========================================================= */
+
+    async function protectAdminPage() {
+
+        if (!auth) {
+
+            document.body.innerHTML = `
+                <div style="
+                    min-height:100vh;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    background:#080b12;
+                    color:#fff;
+                    font-family:Cairo,sans-serif;
+                    text-align:center;
+                    padding:30px;
+                ">
+                    <div>
+                        <i
+                            class="fa-solid fa-shield-halved"
+                            style="
+                                font-size:42px;
+                                color:#e60012;
+                                margin-bottom:20px;
+                            "
+                        ></i>
+
+                        <h2>
+                            خدمة المصادقة غير متاحة
+                        </h2>
+
+                        <p style="color:#8792a3;">
+                            يرجى التأكد من تحميل auth.js
+                        </p>
+                    </div>
+                </div>
+            `;
+
+            return false;
+        }
+
+        try {
+
+            if (
+                typeof auth.protectPage ===
+                "function"
+            ) {
+
+                const result =
+                    await auth.protectPage({
+                        requireAuth: true,
+                        requireAdmin: true
+                    });
+
+                if (result === false) {
+                    return false;
+                }
+
+            }
+
+            else if (
+                typeof auth.requireAdmin ===
+                "function"
+            ) {
+
+                const result =
+                    await auth.requireAdmin();
+
+                if (result === false) {
+                    return false;
+                }
+            }
+
+            return true;
+
+        }
+        catch (error) {
+
+            console.error(
+                "Admin protection:",
+                error
+            );
+
+            return false;
+        }
+    }
+
+    /* =========================================================
+       NAVIGATION
+       ========================================================= */
+
+    const sectionTitles = {
+
+        dashboard: [
+            "لوحة التحكم",
+            "إدارة منصة هندسة صوتية"
+        ],
+
+        users: [
+            "المستخدمون",
+            "إدارة الحسابات والصلاحيات"
+        ],
+
+        registrations: [
+            "طلبات التسجيل",
+            "بيانات المستخدمين المسجلين"
+        ],
+
+        projects: [
+            "المشاريع",
+            "مشاريع التصميم الهندسي"
+        ],
+
+        reports: [
+            "التقارير",
+            "التقارير الهندسية المحفوظة"
+        ],
+
+        activity: [
+            "سجل النشاط",
+            "متابعة عمليات النظام"
+        ],
+
+        settings: [
+            "إعدادات المنصة",
+            "إعدادات النظام العامة"
+        ]
+    };
+
+    function openSection(
+        section
+    ) {
+
+        if (
+            !sectionTitles[section]
+        ) {
+            return;
+        }
+
+        state.currentSection =
+            section;
+
+        document
+            .querySelectorAll(
+                ".admin-section"
+            )
+            .forEach(
+                element => {
+
+                    element.classList.toggle(
+                        "active",
+                        element.id ===
+                        "section-" +
+                        section
+                    );
+                }
+            );
+
+        document
+            .querySelectorAll(
+                ".admin-nav button"
+            )
+            .forEach(
+                button => {
+
+                    button.classList.toggle(
+                        "active",
+                        button.dataset.section ===
+                        section
+                    );
+                }
+            );
+
+        const title =
+            sectionTitles[section];
+
+        $("#pageTitle").textContent =
+            title[0];
+
+        $("#pageSubtitle").textContent =
+            title[1];
+
+        $("#adminSidebar")
+            .classList.remove(
+                "open"
+            );
+
+        if (section === "users") {
+            renderUsers();
+        }
+
+        if (section === "registrations") {
+            renderRegistrations();
+        }
+
+        if (section === "projects") {
+            renderProjects();
+        }
+
+        if (section === "reports") {
+            renderReports();
+        }
+
+        if (section === "activity") {
+            renderActivity();
+        }
+    }
+
+    /* =========================================================
+       LOAD DATA
+       ========================================================= */
+
+    async function loadData() {
+
+        if (!firebase) {
+
+            loadLocalData();
+
+            return;
+        }
+
+        try {
+
+            const db =
+                firebase.database;
+
+            if (!db) {
+
+                loadLocalData();
+
+                return;
+            }
+
+            const [
+                users,
+                registrations,
+                projects,
+                reports,
+                activity
+            ] = await Promise.all([
+
+                firebase.get(
+                    "acousticEngineering/users"
+                ),
+
+                firebase.get(
+                    "acousticEngineering/registrations"
+                ),
+
+                firebase.get(
+                    "acousticEngineering/projects"
+                ),
+
+                firebase.get(
+                    "acousticEngineering/reports"
+                ),
+
+                firebase.get(
+                    "acousticEngineering/activity"
+                )
+
+            ]);
+
+            state.users =
+                objectToArray(users);
+
+            state.registrations =
+                objectToArray(
+                    registrations
+                );
+
+            state.projects =
+                objectToArray(projects);
+
+            state.reports =
+                objectToArray(reports);
+
+            state.activity =
+                objectToArray(activity);
+
+            /*
+              If cloud data is unavailable,
+              retain local projects.
+            */
+
+            if (
+                !state.projects.length &&
+                storage
+            ) {
+
+                try {
+
+                    state.projects =
+                        await storage.loadProjects();
+
+                    if (
+                        !Array.isArray(
+                            state.projects
+                        )
+                    ) {
+                        state.projects = [];
+                    }
+
+                }
+                catch (error) {
+                    console.warn(
+                        "Local projects:",
+                        error
+                    );
+                }
+            }
+
+        }
+        catch (error) {
+
+            console.warn(
+                "Cloud data unavailable:",
+                error
+            );
+
+            loadLocalData();
+        }
+
+        updateDashboard();
+        renderUsers();
+        renderRegistrations();
+        renderProjects();
+        renderReports();
+        renderActivity();
+    }
+
+    function objectToArray(
+        value
+    ) {
+
+        if (
+            Array.isArray(value)
+        ) {
+            return value;
+        }
+
+        if (
+            !value ||
+            typeof value !== "object"
+        ) {
+            return [];
+        }
+
+        return Object.keys(value)
+            .map(
+                key => {
+
+                    const item =
+                        value[key];
+
+                    if (
+                        item &&
+                        typeof item ===
+                        "object"
+                    ) {
+
+                        return {
+                            id:
+                                item.id ||
+                                item.uid ||
+                                key,
+
+                            ...item
+                        };
+                    }
+
+                    return {
+                        id: key,
+                        value: item
+                    };
+                }
+            );
+    }
+
+    function loadLocalData() {
+
+        try {
+
+            const localUsers =
+                localStorage.getItem(
+                    "acousticEngineering_users"
+                );
+
+            const localRegistrations =
+                localStorage.getItem(
+                    "acousticEngineering_registrations"
+                );
+
+            const localProjects =
+                localStorage.getItem(
+                    "acousticEngineering_projects"
+                );
+
+            state.users =
+                localUsers
+                    ? JSON.parse(
+                        localUsers
+                    )
+                    : [];
+
+            state.registrations =
+                localRegistrations
+                    ? JSON.parse(
+                        localRegistrations
+                    )
+                    : [];
+
+            state.projects =
+                localProjects
+                    ? JSON.parse(
+                        localProjects
+                    )
+                    : [];
+
+            state.reports = [];
+
+            state.activity = [];
+
+        }
+        catch (error) {
+
+            console.warn(
+                "Local admin data:",
+                error
+            );
+
+            state.users = [];
+            state.registrations = [];
+            state.projects = [];
+            state.reports = [];
+            state.activity = [];
+        }
+    }
+
+    /* =========================================================
+       DASHBOARD
+       ========================================================= */
+
+    function updateDashboard() {
+
+        $("#statUsers").textContent =
+            state.users.length;
+
+        $("#statProjects").textContent =
+            state.projects.length;
+
+        $("#statReports").textContent =
+            state.reports.length;
+
+        $("#statRegistrations").textContent =
+            state.registrations.length;
+
+        renderRecentUsers();
+        renderRecentActivity();
+    }
+
+    function renderRecentUsers() {
+
+        const container =
+            $("#recentUsers");
+
+        if (!state.users.length) {
+
+            container.innerHTML =
+                emptyHTML(
+                    "لا يوجد مستخدمون",
+                    "لم يتم العثور على حسابات."
+                );
+
+            return;
+        }
+
+        const users =
+            [...state.users]
+                .sort(
+                    (a, b) =>
+                        timestamp(
+                            b.createdAt
+                        ) -
+                        timestamp(
+                            a.createdAt
+                        )
+                )
+                .slice(0, 5);
+
+        container.innerHTML = `
+            <div class="table-wrap">
+                <table style="min-width:520px;">
+                    <thead>
+                        <tr>
+                            <th>المستخدم</th>
+                            <th>الدور</th>
+                            <th>التاريخ</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        ${users.map(
+                            user => `
+                                <tr>
+
+                                    <td>
+                                        <div class="user-cell">
+
+                                            <div class="user-avatar">
+                                                ${escapeHTML(
+                                                    getInitials(
+                                                        user.name
+                                                    )
+                                                )}
+                                            </div>
+
+                                            <div>
+                                                <div class="user-name">
+                                                    ${escapeHTML(
+                                                        user.name ||
+                                                        "بدون اسم"
+                                                    )}
+                                                </div>
+
+                                                <div class="user-email">
+                                                    ${escapeHTML(
+                                                        user.email ||
+                                                        ""
+                                                    )}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        ${roleBadge(
+                                            user.role
+                                        )}
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(
+                                            formatDate(
+                                                user.createdAt
+                                            )
+                                        )}
+                                    </td>
+
+                                </tr>
+                            `
+                        ).join("")}
+
+                    </tbody>
+                </table>
+            </div>
+        `;
+    }
+
+    function renderRecentActivity() {
+
+        const container =
+            $("#recentActivity");
+
+        const items =
+            [...state.activity]
+                .sort(
+                    (a, b) =>
+                        timestamp(
+                            b.createdAt ||
+                            b.timestamp
+                        ) -
+                        timestamp(
+                            a.createdAt ||
+                            a.timestamp
+                        )
+                )
+                .slice(0, 8);
+
+        if (!items.length) {
+
+            container.innerHTML =
+                emptyHTML(
+                    "لا يوجد نشاط",
+                    "سيظهر النشاط هنا عند استخدام النظام."
+                );
+
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="activity-list">
+
+                ${items.map(
+                    item => activityHTML(item)
+                ).join("")}
+
+            </div>
+        `;
+    }
+
+    /* =========================================================
+       USERS
+       ========================================================= */
+
+    function renderUsers() {
+
+        const body =
+            $("#usersTableBody");
+
+        if (!body) {
+            return;
+        }
+
+        const search =
+            (
+                $("#usersSearch")?.value ||
+                ""
+            )
+            .trim()
+            .toLowerCase();
+
+        const users =
+            state.users.filter(
+                user => {
+
+                    if (!search) {
+                        return true;
+                    }
+
+                    return [
+                        user.name,
+                        user.email,
+                        user.phone,
+                        user.role
+                    ]
+                    .join(" ")
+                    .toLowerCase()
+                    .includes(search);
+                }
+            );
+
+        if (!users.length) {
+
+            body.innerHTML = `
+                <tr>
+                    <td colspan="6">
+                        ${emptyHTML(
+                            "لا توجد نتائج",
+                            "لم يتم العثور على مستخدمين مطابقين."
+                        )}
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        body.innerHTML =
+            users.map(
+                user => {
+
+                    const uid =
+                        user.uid ||
+                        user.id;
+
+                    return `
+                        <tr>
+
+                            <td>
+
+                                <div class="user-cell">
+
+                                    <div class="user-avatar">
+                                        ${escapeHTML(
+                                            getInitials(
+                                                user.name
+                                            )
+                                        )}
+                                    </div>
+
+                                    <div>
+                                        <div class="user-name">
+                                            ${escapeHTML(
+                                                user.name ||
+                                                "بدون اسم"
+                                            )}
+                                        </div>
+
+                                        <div class="user-email">
+                                            ${escapeHTML(
+                                                user.email ||
+                                                ""
+                                            )}
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+                            <td dir="ltr">
+                                ${escapeHTML(
+                                    user.phone ||
+                                    "—"
+                                )}
+                            </td>
+
+                            <td>
+                                ${roleBadge(
+                                    user.role
+                                )}
+                            </td>
+
+                            <td>
+                                <span class="badge online">
+                                    <i class="fa-solid fa-circle"></i>
+                                    نشط
+                                </span>
+                            </td>
+
+                            <td>
+                                ${escapeHTML(
+                                    formatDate(
+                                        user.createdAt
+                                    )
+                                )}
+                            </td>
+
+                            <td>
+
+                                <div class="row-actions">
+
+                                    <button
+                                        class="icon-btn"
+                                        title="تعديل الدور"
+                                        data-edit-user="${escapeHTML(
+                                            uid
+                                        )}"
+                                    >
+                                        <i class="fa-solid fa-user-gear"></i>
+                                    </button>
+
+                                    <button
+                                        class="icon-btn"
+                                        title="عرض التفاصيل"
+                                        data-view-user="${escapeHTML(
+                                            uid
+                                        )}"
+                                    >
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
+
+                                </div>
+
+                            </td>
+
+                        </tr>
+                    `;
+                }
+            )
+            .join("");
+
+        bindUserActions();
+    }
+
+    function bindUserActions() {
+
+        document
+            .querySelectorAll(
+                "[data-edit-user]"
+            )
+            .forEach(
+                button => {
+
+                    button.onclick =
+                        function () {
+
+                            openUserEditor(
+                                button.dataset.editUser
+                            );
+                        };
+                }
+            );
+
+        document
+            .querySelectorAll(
+                "[data-view-user]"
+            )
+            .forEach(
+                button => {
+
+                    button.onclick =
+                        function () {
+
+                            openUserEditor(
+                                button.dataset.viewUser,
+                                true
+                            );
+                        };
+                }
+            );
+    }
+
+    function findUser(id) {
+
+        return state.users.find(
+            user =>
+                String(
+                    user.uid ||
+                    user.id
+                ) === String(id)
+        );
+    }
+
+    function openUserEditor(
+        id,
+        readonly = false
+    ) {
+
+        const user =
+            findUser(id);
+
+        if (!user) {
+            showToast(
+                "لم يتم العثور على المستخدم.",
+                "error"
+            );
+
+            return;
+        }
+
+        state.selectedUserId =
+            id;
+
+        $("#editUserInfo").innerHTML = `
+            <strong style="color:#fff;">
+                ${escapeHTML(
+                    user.name ||
+                    "بدون اسم"
+                )}
+            </strong>
+
+            <br>
+
+            <span dir="ltr">
+                ${escapeHTML(
+                    user.email ||
+                    "—"
+                )}
+            </span>
+
+            <br>
+
+            <span dir="ltr">
+                ${escapeHTML(
+                    user.phone ||
+                    "—"
+                )}
+            </span>
+        `;
+
+        $("#editUserRole").value =
+            user.role ||
+            "user";
+
+        $("#editUserRole").disabled =
+            readonly;
+
+        $("#saveUserRoleBtn").style.display =
+            readonly
+                ? "none"
+                : "";
+
+        openModal(
+            "userModal"
+        );
+    }
+
+    async function saveUserRole() {
+
+        const id =
+            state.selectedUserId;
+
+        if (!id) {
+            return;
+        }
+
+        const role =
+            $("#editUserRole").value;
+
+        const user =
+            findUser(id);
+
+        if (!user) {
+            return;
+        }
+
+        try {
+
+            if (
+                auth &&
+                typeof auth.updateProfile ===
+                "function"
+            ) {
+
+                await auth.updateProfile(
+                    id,
+                    {
+                        role
+                    }
+                );
+
+            }
+
+            else if (
+                firebase &&
+                typeof firebase.update ===
+                "function"
+            ) {
+
+                await firebase.update(
+                    `acousticEngineering/users/${id}`,
+                    {
+                        role,
+                        updatedAt:
+                            new Date().toISOString()
+                    }
+                );
+            }
+
+            user.role = role;
+
+            closeModal(
+                "userModal"
+            );
+
+            renderUsers();
+            updateDashboard();
+
+            showToast(
+                "تم تحديث صلاحيات المستخدم.",
+                "success"
+            );
+
+        }
+        catch (error) {
+
+            console.error(
+                error
+            );
+
+            showToast(
+                "تعذر تحديث صلاحيات المستخدم.",
+                "error"
+            );
+        }
+    }
+
+    /* =========================================================
+       REGISTRATIONS
+       ========================================================= */
+
+    function renderRegistrations() {
+
+        const body =
+            $("#registrationsTableBody");
+
+        if (!body) {
+            return;
+        }
+
+        const search =
+            (
+                $("#registrationsSearch")?.value ||
+                ""
+            )
+            .trim()
+            .toLowerCase();
+
+        const records =
+            state.registrations.filter(
+                record => {
+
+                    if (!search) {
+                        return true;
+                    }
+
+                    return [
+                        record.name,
+                        record.email,
+                        record.phone
+                    ]
+                    .join(" ")
+                    .toLowerCase()
+                    .includes(search);
+                }
+            );
+
+        if (!records.length) {
+
+            body.innerHTML = `
+                <tr>
+                    <td colspan="5">
+                        ${emptyHTML(
+                            "لا توجد سجلات",
+                            "ستظهر بيانات التسجيل هنا."
+                        )}
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        body.innerHTML =
+            records.map(
+                record => `
+                    <tr>
+
+                        <td>
+                            <strong
+                                style="color:#e6eaf0;"
+                            >
+                                ${escapeHTML(
+                                    record.name ||
+                                    "—"
+                                )}
+                            </strong>
+                        </td>
+
+                        <td dir="ltr">
+                            ${escapeHTML(
+                                record.email ||
+                                "—"
+                            )}
+                        </td>
+
+                        <td dir="ltr">
+                            ${escapeHTML(
+                                record.phone ||
+                                "—"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                formatDate(
+                                    record.createdAt ||
+                                    record.registeredAt
+                                )
+                            )}
+                        </td>
+
+                        <td>
+                            <span class="badge online">
+                                <i class="fa-solid fa-database"></i>
+                                ${escapeHTML(
+                                    record.source ||
+                                    "platform"
+                                )}
+                            </span>
+                        </td>
+
+                    </tr>
+                `
+            )
+            .join("");
+    }
+
+    /* =========================================================
+       PROJECTS
+       ========================================================= */
+
+    function renderProjects() {
+
+        const container =
+            $("#projectsGrid");
+
+        if (!container) {
+            return;
+        }
+
+        const search =
+            (
+                $("#projectsSearch")?.value ||
+                ""
+            )
+            .trim()
+            .toLowerCase();
+
+        const projects =
+            state.projects.filter(
+                project => {
+
+                    if (!search) {
+                        return true;
+                    }
+
+                    return [
+                        project.projectName,
+                        project.name,
+                        project.clientName,
+                        project.projectLocation,
+                        project.venueType
+                    ]
+                    .join(" ")
+                    .toLowerCase()
+                    .includes(search);
+                }
+            );
+
+        if (!projects.length) {
+
+            container.innerHTML =
+                emptyHTML(
+                    "لا توجد مشاريع",
+                    "لم يتم حفظ أي مشروع حتى الآن."
+                );
+
+            return;
+        }
+
+        container.innerHTML =
+            projects.map(
+                project => {
+
+                    const room =
+                        project.room ||
+                        {};
+
+                    return `
+                        <article class="project-card">
+
+                            <div class="project-icon">
+                                <i class="fa-solid fa-volume-high"></i>
+                            </div>
+
+                            <div class="project-name">
+                                ${escapeHTML(
+                                    project.projectName ||
+                                    project.name ||
+                                    "مشروع بدون اسم"
+                                )}
+                            </div>
+
+                            <div class="project-meta">
+
+                                العميل:
+                                ${escapeHTML(
+                                    project.clientName ||
+                                    "—"
+                                )}
+
+                                <br>
+
+                                النوع:
+                                ${escapeHTML(
+                                    project.venueType ||
+                                    "—"
+                                )}
+
+                                <br>
+
+                                المساحة:
+                                ${escapeHTML(
+                                    room.width ||
+                                    "—"
+                                )}
+                                ×
+                                ${escapeHTML(
+                                    room.depth ||
+                                    "—"
+                                )}
+                                م
+
+                                <br>
+
+                                آخر تعديل:
+                                ${escapeHTML(
+                                    formatDate(
+                                        project.updatedAt
+                                    )
+                                )}
+
+                            </div>
+
+                            <div
+                                style="
+                                    display:flex;
+                                    gap:6px;
+                                    margin-top:13px;
+                                "
+                            >
+
+                                <button
+                                    class="small-btn"
+                                    data-open-project="${escapeHTML(
+                                        project.id ||
+                                        project.projectId ||
+                                        ""
+                                    )}"
+                                >
+                                    <i class="fa-solid fa-folder-open"></i>
+                                    فتح
+                                </button>
+
+                                <button
+                                    class="small-btn danger"
+                                    data-delete-project="${escapeHTML(
+                                        project.id ||
+                                        project.projectId ||
+                                        ""
+                                    )}"
+                                >
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+
+                            </div>
+
+                        </article>
+                    `;
+                }
+            )
+            .join("");
+
+        bindProjectActions();
+    }
+
+    function bindProjectActions() {
+
+        document
+            .querySelectorAll(
+                "[data-open-project]"
+            )
+            .forEach(
+                button => {
+
+                    button.onclick =
+                        function () {
+
+                            const id =
+                                button.dataset.openProject;
+
+                            localStorage.setItem(
+                                "acousticEngineering_activeProject",
+                                id
+                            );
+
+                            window.location.href =
+                                "app.html";
+                        };
+                }
+            );
+
+        document
+            .querySelectorAll(
+                "[data-delete-project]"
+            )
+            .forEach(
+                button => {
+
+                    button.onclick =
+                        async function () {
+
+                            const id =
+                                button.dataset.deleteProject;
+
+                            if (
+                                !confirm(
+                                    "هل تريد حذف هذا المشروع؟"
+                                )
+                            ) {
+                                return;
+                            }
+
+                            await deleteProject(
+                                id
+                            );
+                        };
+                }
+            );
+    }
+
+    async function deleteProject(id) {
+
+        try {
+
+            if (
+                storage &&
+                typeof storage.deleteProject ===
+                "function"
+            ) {
+
+                await storage.deleteProject(
+                    id
+                );
+            }
+
+            else if (
+                firebase &&
+                typeof firebase.deleteProject ===
+                "function"
+            ) {
+
+                await firebase.deleteProject(
+                    id
+                );
+            }
+
+            state.projects =
+                state.projects.filter(
+                    project =>
+                        String(
+                            project.id ||
+                            project.projectId
+                        ) !== String(id)
+                );
+
+            renderProjects();
+            updateDashboard();
+
+            showToast(
+                "تم حذف المشروع.",
+                "success"
+            );
+
+        }
+        catch (error) {
+
+            console.error(
+                error
+            );
+
+            showToast(
+                "تعذر حذف المشروع.",
+                "error"
+            );
+        }
+    }
+
+    /* =========================================================
+       REPORTS
+       ========================================================= */
+
+    function renderReports() {
+
+        const body =
+            $("#reportsTableBody");
+
+        if (!body) {
+            return;
+        }
+
+        if (!state.reports.length) {
+
+            body.innerHTML = `
+                <tr>
+                    <td colspan="5">
+                        ${emptyHTML(
+                            "لا توجد تقارير",
+                            "سيتم حفظ التقارير الهندسية هنا."
+                        )}
+                    </td>
+                </tr>
+            `;
+
+            return;
+        }
+
+        body.innerHTML =
+            state.reports.map(
+                report => `
+                    <tr>
+
+                        <td>
+                            <strong
+                                style="color:#e6eaf0;"
+                            >
+                                ${escapeHTML(
+                                    report.name ||
+                                    report.title ||
+                                    "تقرير هندسي"
+                                )}
+                            </strong>
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                report.projectName ||
+                                report.projectId ||
+                                "—"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                report.userName ||
+                                report.ownerId ||
+                                "—"
+                            )}
+                        </td>
+
+                        <td>
+                            ${escapeHTML(
+                                formatDate(
+                                    report.createdAt
+                                )
+                            )}
+                        </td>
+
+                        <td>
+
+                            <div class="row-actions">
+
+                                <button
+                                    class="icon-btn"
+                                    title="فتح التقرير"
+                                    data-open-report="${escapeHTML(
+                                        report.id ||
+                                        report.reportId ||
+                                        ""
+                                    )}"
+                                >
+                                    <i class="fa-solid fa-file-lines"></i>
+                                </button>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+                `
+            )
+            .join("");
+
+        document
+            .querySelectorAll(
+                "[data-open-report]"
+            )
+            .forEach(
+                button => {
+
+                    button.onclick =
+                        function () {
+
+                            const id =
+                                button.dataset.openReport;
+
+                            localStorage.setItem(
+                                "acousticEngineering_activeReport",
+                                id
+                            );
+
+                            window.location.href =
+                                "report.html";
+                        };
+                }
+            );
+    }
+
+    /* =========================================================
+       ACTIVITY
+       ========================================================= */
+
+    function renderActivity() {
+
+        const container =
+            $("#activityList");
+
+        if (!container) {
+            return;
+        }
+
+        const items =
+            [...state.activity]
+                .sort(
+                    (a, b) =>
+                        timestamp(
+                            b.createdAt ||
+                            b.timestamp
+                        ) -
+                        timestamp(
+                            a.createdAt ||
+                            a.timestamp
+                        )
+                );
+
+        if (!items.length) {
+
+            container.innerHTML =
+                emptyHTML(
+                    "لا يوجد نشاط",
+                    "سيظهر سجل العمليات هنا."
+                );
+
+            return;
+        }
+
+        container.innerHTML = `
+            <div class="activity-list">
+
+                ${items.map(
+                    item =>
+                        activityHTML(
+                            item
+                        )
+                ).join("")}
+
+            </div>
+        `;
+    }
+
+    function renderActivityIcon(
+        action
+    ) {
+
+        const icons = {
+
+            register:
+                "fa-user-plus",
+
+            login:
+                "fa-right-to-bracket",
+
+            logout:
+                "fa-right-from-bracket",
+
+            project_create:
+                "fa-plus",
+
+            project_update:
+                "fa-pen",
+
+            project_delete:
+                "fa-trash",
+
+            report_create:
+                "fa-file-lines",
+
+            report_download:
+                "fa-download",
+
+            role_update:
+                "fa-user-shield"
+        };
+
+        return icons[action] ||
+            "fa-circle-info";
+    }
+
+    function activityHTML(
+        item
+    ) {
+
+        const action =
+            item.action ||
+            item.type ||
+            "";
+
+        return `
+            <div class="activity-item">
+
+                <div class="activity-dot">
+                    <i class="fa-solid ${renderActivityIcon(
+                        action
+                    )}"></i>
+                </div>
+
+                <div class="activity-text">
+
+                    <strong>
+                        ${escapeHTML(
+                            item.message ||
+                            item.description ||
+                            action ||
+                            "نشاط"
+                        )}
+                    </strong>
+
+                    <span>
+                        ${escapeHTML(
+                            item.userName ||
+                            item.email ||
+                            item.userId ||
+                            ""
+                        )}
+
+                        ${item.createdAt || item.timestamp
+                            ? " • " +
+                              escapeHTML(
+                                  formatDate(
+                                      item.createdAt ||
+                                      item.timestamp
+                                  )
+                              )
+                            : ""}
+                    </span>
+
+                </div>
+
+            </div>
+        `;
+    }
+
+    /* =========================================================
+       EMPTY STATE
+       ========================================================= */
+
+    function emptyHTML(
+        title,
+        message
+    ) {
+
+        return `
+            <div class="empty-state">
+
+                <i class="fa-solid fa-inbox"></i>
+
+                <strong>
+                    ${escapeHTML(title)}
+                </strong>
+
+                <span>
+                    ${escapeHTML(message)}
+                </span>
+
+            </div>
+        `;
+    }
+
+    /* =========================================================
+       TIMESTAMP
+       ========================================================= */
+
+    function timestamp(value) {
+
+        if (!value) {
+            return 0;
+        }
+
+        if (
+            typeof value ===
+            "number"
+        ) {
+            return value;
+        }
+
+        const result =
+            new Date(value)
+                .getTime();
+
+        return Number.isFinite(result)
+            ? result
+            : 0;
+    }
+
+    /* =========================================================
+       SETTINGS
+       ========================================================= */
+
+    function loadSettings() {
+
+        try {
+
+            const config =
+                AE.config ||
+                window.AcousticConfig ||
+                {};
+
+            $("#settingAppName").value =
+                config.app?.name ||
+                "هندسة صوتية";
+
+            $("#settingVersion").value =
+                config.app?.version ||
+                "1.0";
+
+            $("#settingMode").value =
+                config.app?.environment ||
+                "production";
+
+        }
+        catch (error) {
+            console.warn(
+                "Settings:",
+                error
+            );
+        }
+    }
+
+    function saveSettings() {
+
+        const settings = {
+
+            appName:
+                $("#settingAppName").value
+                    .trim(),
+
+            version:
+                $("#settingVersion").value
+                    .trim(),
+
+            mode:
+                $("#settingMode").value,
+
+            updatedAt:
+                new Date().toISOString()
+        };
+
+        try {
+
+            localStorage.setItem(
+                "acousticEngineering_adminSettings",
+                JSON.stringify(
+                    settings
+                )
+            );
+
+            if (
+                firebase &&
+                typeof firebase.set ===
+                "function"
+            ) {
+
+                firebase.set(
+                    "acousticEngineering/settings/platform",
+                    settings
+                )
+                .catch(
+                    error =>
+                        console.warn(
+                            "Cloud settings:",
+                            error
+                        )
+                );
+            }
+
+            showToast(
+                "تم حفظ إعدادات المنصة.",
+                "success"
+            );
+
+        }
+        catch (error) {
+
+            showToast(
+                "تعذر حفظ الإعدادات.",
+                "error"
+            );
+        }
+    }
+
+    /* =========================================================
+       EVENTS
+       ========================================================= */
+
+    function bindEvents() {
+
+        document
+            .querySelectorAll(
+                "[data-section]"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            openSection(
+                                button.dataset.section
+                            );
+                        }
+                    );
+                }
+            );
+
+        document
+            .querySelectorAll(
+                "[data-section-link]"
+            )
+            .forEach(
+                element => {
+
+                    element.addEventListener(
+                        "click",
+                        function () {
+
+                            openSection(
+                                element.dataset.sectionLink
+                            );
+                        }
+                    );
+                }
+            );
+
+        $("#mobileMenuBtn")
+            ?.addEventListener(
+                "click",
+                function () {
+
+                    $("#adminSidebar")
+                        .classList.toggle(
+                            "open"
+                        );
+                }
+            );
+
+        $("#refreshBtn")
+            ?.addEventListener(
+                "click",
+                async function () {
+
+                    await loadData();
+
+                    showToast(
+                        "تم تحديث بيانات لوحة الإدارة.",
+                        "success"
+                    );
+                }
+            );
+
+        $("#refreshUsersBtn")
+            ?.addEventListener(
+                "click",
+                async function () {
+
+                    await loadData();
+
+                    openSection(
+                        "users"
+                    );
+                }
+            );
+
+        $("#refreshActivityBtn")
+            ?.addEventListener(
+                "click",
+                async function () {
+
+                    await loadData();
+
+                    openSection(
+                        "activity"
+                    );
+                }
+            );
+
+        $("#usersSearch")
+            ?.addEventListener(
+                "input",
+                renderUsers
+            );
+
+        $("#registrationsSearch")
+            ?.addEventListener(
+                "input",
+                renderRegistrations
+            );
+
+        $("#projectsSearch")
+            ?.addEventListener(
+                "input",
+                renderProjects
+            );
+
+        $("#saveUserRoleBtn")
+            ?.addEventListener(
+                "click",
+                saveUserRole
+            );
+
+        $("#saveSettingsBtn")
+            ?.addEventListener(
+                "click",
+                saveSettings
+            );
+
+        $("#backToAppBtn")
+            ?.addEventListener(
+                "click",
+                function () {
+                    window.location.href =
+                        "app.html";
+                }
+            );
+
+        $("#logoutBtn")
+            ?.addEventListener(
+                "click",
+                async function () {
+
+                    try {
+
+                        if (
+                            auth &&
+                            typeof auth.logout ===
+                            "function"
+                        ) {
+                            await auth.logout();
+                        }
+
+                    }
+                    catch (error) {
+                        console.warn(
+                            error
+                        );
+                    }
+
+                    window.location.href =
+                        "index.html";
+                }
+            );
+
+        document
+            .querySelectorAll(
+                "[data-close-modal]"
+            )
+            .forEach(
+                button => {
+
+                    button.addEventListener(
+                        "click",
+                        function () {
+
+                            closeModal(
+                                button.dataset.closeModal
+                            );
+                        }
+                    );
+                }
+            );
+
+        document
+            .querySelectorAll(
+                ".modal"
+            )
+            .forEach(
+                modal => {
+
+                    modal.addEventListener(
+                        "click",
+                        function (event) {
+
+                            if (
+                                event.target ===
+                                modal
+                            ) {
+                                modal.classList.remove(
+                                    "show"
+                                );
+                            }
+                        }
+                    );
+                }
+            );
+    }
+
+    /* =========================================================
+       AUTH USER DISPLAY
+       ========================================================= */
+
+    function displayCurrentAdmin() {
+
+        try {
+
+            const user =
+                auth?.getCurrentUser?.();
+
+            const profile =
+                auth?.getProfile?.();
+
+            const role =
+                profile?.role ||
+                auth?.state?.role ||
+                "admin";
+
+            $("#adminRoleLabel").textContent =
+                role === "owner"
+                    ? "المالك • صلاحيات كاملة"
+                    : "المشرف • صلاحيات الإدارة";
+
+        }
+        catch (error) {
+
+            $("#adminRoleLabel").textContent =
+                "لوحة الإدارة";
+        }
+    }
+
+    /* =========================================================
+       INITIALIZATION
+       ========================================================= */
+
+    async function initialize() {
+
+        const allowed =
+            await protectAdminPage();
+
+        if (!allowed) {
+            return;
+        }
+
+        displayCurrentAdmin();
+
+        loadSettings();
+
+        bindEvents();
+
+        await loadData();
+
+        state.initialized =
+            true;
+    }
+
+    if (
+        document.readyState ===
+        "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initialize
+        );
+
+    }
+
+    else {
+        initialize();
+    }
+
+})();
+</script>
+
+</body>
+</html>

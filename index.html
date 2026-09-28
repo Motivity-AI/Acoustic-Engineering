@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    >
+
+    <title>هندسة صوتية | Acoustic Engineering</title>
+
+    <meta
+        name="description"
+        content="منصة هندسية متكاملة لتصميم أنظمة الصوت وتوزيع السماعات وتحليل التغطية وإعداد التقارير الهندسية."
+    >
+
+    <meta name="theme-color" content="#0b0f14">
+
+    <link rel="manifest" href="manifest.json">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        :root {
+            --ae-bg: #080b10;
+            --ae-panel: #0e131a;
+            --ae-panel-2: #121922;
+            --ae-border: rgba(255,255,255,.08);
+            --ae-text: #f4f7fb;
+            --ae-muted: #8d99a8;
+            --ae-red: #e60012;
+            --ae-blue: #38bdf8;
+            --ae-green: #22c55e;
+            --ae-shadow: 0 25px 80px rgba(0,0,0,.45);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            font-family: "Cairo", sans-serif;
+            background: var(--ae-bg);
+            color: var(--ae-text);
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .landing-page {
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(
+                    circle at 75% 20%,
+                    rgba(56,189,248,.08),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 15% 75%,
+                    rgba(230,0,18,.08),
+                    transparent 28%
+                ),
+                var(--ae-bg);
+        }
+
+        /* =====================================================
+           BACKGROUND ENGINEERING GRID
+        ====================================================== */
+
+        .engineering-grid {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: .16;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.035) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.035) 1px,
+                    transparent 1px
+                );
+
+            background-size: 50px 50px;
+
+            mask-image:
+                linear-gradient(
+                    to bottom,
+                    black,
+                    transparent 90%
+                );
+        }
+
+        .glow {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+        }
+
+        .glow-red {
+            width: 300px;
+            height: 300px;
+            background: rgba(230,0,18,.12);
+            top: 15%;
+            left: -120px;
+        }
+
+        .glow-blue {
+            width: 400px;
+            height: 400px;
+            background: rgba(56,189,248,.09);
+            right: -150px;
+            bottom: 5%;
+        }
+
+        /* =====================================================
+           HEADER
+        ====================================================== */
+
+        .landing-header {
+            position: relative;
+            z-index: 10;
+
+            height: 82px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 6%;
+
+            border-bottom: 1px solid var(--ae-border);
+
+            background: rgba(8,11,16,.72);
+            backdrop-filter: blur(20px);
+        }
+
+        .landing-brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .landing-brand-icon {
+            width: 45px;
+            height: 45px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 13px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--ae-red),
+                    #8d0010
+                );
+
+            box-shadow:
+                0 10px 30px rgba(230,0,18,.25);
+        }
+
+        .landing-brand-icon i {
+            font-size: 21px;
+        }
+
+        .landing-brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.15;
+        }
+
+        .landing-brand-text strong {
+            font-size: 17px;
+            font-weight: 900;
+        }
+
+        .landing-brand-text span {
+            margin-top: 4px;
+            color: var(--ae-muted);
+            font-size: 10px;
+            direction: ltr;
+        }
+
+        .landing-nav {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link {
+            border: 0;
+            background: transparent;
+            color: #b6c0cc;
+            padding: 10px 14px;
+            border-radius: 9px;
+            transition: .2s ease;
+        }
+
+        .nav-link:hover {
+            color: white;
+            background: rgba(255,255,255,.05);
+        }
+
+        .nav-login {
+            border: 1px solid rgba(255,255,255,.12);
+            color: white;
+        }
+
+        /* =====================================================
+           HERO
+        ====================================================== */
+
+        .hero {
+            position: relative;
+            z-index: 2;
+
+            min-height: calc(100vh - 82px);
+
+            max-width: 1450px;
+            margin: auto;
+
+            padding:
+                80px 6%
+                90px;
+
+            display: grid;
+            grid-template-columns: 1.05fr .95fr;
+            align-items: center;
+            gap: 70px;
+        }
+
+        .hero-content {
+            max-width: 720px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            padding: 7px 13px;
+
+            border-radius: 999px;
+
+            color: #d9f3ff;
+            background: rgba(56,189,248,.08);
+            border: 1px solid rgba(56,189,248,.18);
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .hero-badge span {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--ae-green);
+            box-shadow: 0 0 12px var(--ae-green);
+        }
+
+        .hero h1 {
+            margin: 25px 0 18px;
+
+            font-size: clamp(42px, 5.5vw, 76px);
+            line-height: 1.08;
+            font-weight: 900;
+            letter-spacing: -2px;
+        }
+
+        .hero h1 .accent {
+            display: block;
+            background:
+                linear-gradient(
+                    90deg,
+                    #fff,
+                    #a7dff5,
+                    var(--ae-blue)
+                );
+
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .hero-description {
+            max-width: 650px;
+
+            color: #9ca8b6;
+
+            font-size: 17px;
+            line-height: 2;
+
+            margin-bottom: 30px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 13px;
+        }
+
+        .primary-action,
+        .secondary-action {
+            min-height: 52px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+
+            padding: 0 24px;
+
+            border-radius: 11px;
+
+            font-size: 14px;
+            font-weight: 800;
+
+            transition:
+                transform .2s ease,
+                box-shadow .2s ease,
+                background .2s ease;
+        }
+
+        .primary-action {
+            border: 0;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--ae-red),
+                    #a5000e
+                );
+
+            box-shadow:
+                0 12px 35px rgba(230,0,18,.22);
+        }
+
+        .primary-action:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 18px 45px rgba(230,0,18,.32);
+        }
+
+        .secondary-action {
+            border: 1px solid rgba(255,255,255,.1);
+            color: white;
+            background: rgba(255,255,255,.035);
+        }
+
+        .secondary-action:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,.07);
+        }
+
+        /* =====================================================
+           HERO VISUAL
+        ====================================================== */
+
+        .hero-visual {
+            position: relative;
+            min-height: 520px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .engineering-card {
+            width: min(100%, 570px);
+
+            position: relative;
+
+            padding: 18px;
+
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 22px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.07),
+                    rgba(255,255,255,.015)
+                );
+
+            box-shadow: var(--ae-shadow);
+
+            backdrop-filter: blur(20px);
+
+            transform:
+                perspective(1000px)
+                rotateY(-4deg)
+                rotateX(2deg);
+        }
+
+        .engineering-window {
+            position: relative;
+
+            height: 420px;
+
+            overflow: hidden;
+
+            border-radius: 15px;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(56,189,248,.08),
+                    transparent 50%
+                ),
+                #080c11;
+
+            border: 1px solid rgba(255,255,255,.08);
+        }
+
+        .window-top {
+            height: 42px;
+
+            display: flex;
+            align-items: center;
+
+            gap: 7px;
+
+            padding: 0 14px;
+
+            border-bottom: 1px solid rgba(255,255,255,.07);
+
+            background: rgba(255,255,255,.025);
+        }
+
+        .window-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #697482;
+        }
+
+        .window-title {
+            margin-right: 10px;
+
+            color: #7f8a97;
+
+            font-size: 9px;
+        }
+
+        .floor-grid {
+            position: absolute;
+            inset: 42px 0 0;
+
+            background-image:
+                linear-gradient(
+                    rgba(255,255,255,.045) 1px,
+                    transparent 1px
+                ),
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,.045) 1px,
+                    transparent 1px
+                );
+
+            background-size: 30px 30px;
+        }
+
+        .room-outline {
+            position: absolute;
+
+            width: 72%;
+            height: 62%;
+
+            left: 14%;
+            top: 18%;
+
+            border: 2px solid rgba(56,189,248,.7);
+
+            box-shadow:
+                inset 0 0 30px rgba(56,189,248,.035),
+                0 0 25px rgba(56,189,248,.08);
+        }
+
+        .stage-shape {
+            position: absolute;
+
+            width: 28%;
+            height: 14%;
+
+            left: 36%;
+            top: 22%;
+
+            border: 1px solid rgba(230,0,18,.8);
+
+            background: rgba(230,0,18,.09);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #ff6d78;
+
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .speaker-point {
+            position: absolute;
+
+            width: 12px;
+            height: 12px;
+
+            border-radius: 50%;
+
+            background: var(--ae-red);
+
+            border: 2px solid white;
+
+            box-shadow:
+                0 0 0 5px rgba(230,0,18,.1),
+                0 0 20px rgba(230,0,18,.55);
+        }
+
+        .speaker-cone {
+            position: absolute;
+
+            width: 170px;
+            height: 120px;
+
+            border-radius: 50% 50% 0 0;
+
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(230,0,18,.2),
+                    rgba(230,0,18,0)
+                );
+
+            transform-origin: bottom center;
+
+            pointer-events: none;
+        }
+
+        .sp1 {
+            left: 29%;
+            top: 31%;
+        }
+
+        .sp2 {
+            left: 68%;
+            top: 31%;
+        }
+
+        .sp3 {
+            left: 29%;
+            top: 68%;
+        }
+
+        .sp4 {
+            left: 68%;
+            top: 68%;
+        }
+
+        .cone1 {
+            left: 17%;
+            top: 35%;
+            transform: rotate(-10deg);
+        }
+
+        .cone2 {
+            left: 51%;
+            top: 35%;
+            transform: rotate(10deg);
+        }
+
+        .cone3 {
+            left: 17%;
+            top: 54%;
+            transform: rotate(-165deg);
+        }
+
+        .cone4 {
+            left: 51%;
+            top: 54%;
+            transform: rotate(165deg);
+        }
+
+        .measurement-line {
+            position: absolute;
+
+            height: 1px;
+
+            background: rgba(56,189,248,.7);
+
+            font-size: 8px;
+        }
+
+        .measurement-line span {
+            position: absolute;
+            top: -16px;
+            right: 50%;
+            transform: translateX(50%);
+
+            color: #8ddfff;
+            white-space: nowrap;
+        }
+
+        .measure-width {
+            left: 14%;
+            width: 72%;
+            top: 84%;
+        }
+
+        .measure-height {
+            width: 1px;
+            height: 62%;
+
+            top: 18%;
+            left: 10%;
+
+            background: rgba(56,189,248,.7);
+        }
+
+        .measure-height span {
+            right: auto;
+            left: -30px;
+            top: 50%;
+            transform: rotate(-90deg);
+        }
+
+        /* =====================================================
+           FEATURE STRIP
+        ====================================================== */
+
+        .feature-strip {
+            position: absolute;
+            bottom: 30px;
+            left: 6%;
+            right: 6%;
+
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+
+            gap: 10px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 11px 13px;
+
+            border: 1px solid rgba(255,255,255,.06);
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.025);
+
+            color: #aeb9c6;
+
+            font-size: 11px;
+        }
+
+        .feature-item i {
+            color: var(--ae-blue);
+        }
+
+        /* =====================================================
+           LOGIN MODAL
+        ====================================================== */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+
+            z-index: 999;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(0,0,0,.72);
+
+            backdrop-filter: blur(12px);
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        .login-modal {
+            width: min(100%, 440px);
+
+            padding: 30px;
+
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 18px;
+
+            background: #0e131a;
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.55);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            margin: 0 0 5px;
+            font-size: 22px;
+        }
+
+        .modal-header p {
+            margin: 0;
+            color: var(--ae-muted);
+            font-size: 12px;
+        }
+
+        .close-modal {
+            width: 35px;
+            height: 35px;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 8px;
+
+            color: #9aa5b2;
+            background: rgba(255,255,255,.035);
+        }
+
+        .close-modal:hover {
+            color: white;
+        }
+
+        .login-form-group {
+            margin-bottom: 17px;
+        }
+
+        .login-form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #c5ced8;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .login-input-wrapper {
+            position: relative;
+        }
+
+        .login-input-wrapper i {
+            position: absolute;
+
+            right: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #667382;
+        }
+
+        .login-input {
+            width: 100%;
+
+            height: 48px;
+
+            padding:
+                0 43px
+                0 13px;
+
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 9px;
+
+            outline: none;
+
+            color: white;
+            background: rgba(255,255,255,.035);
+
+            direction: rtl;
+        }
+
+        .login-input:focus {
+            border-color: rgba(56,189,248,.45);
+            box-shadow:
+                0 0 0 3px rgba(56,189,248,.08);
+        }
+
+        .login-submit {
+            width: 100%;
+            height: 50px;
+
+            margin-top: 7px;
+
+            border: 0;
+            border-radius: 9px;
+
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--ae-red),
+                    #a5000e
+                );
+
+            font-weight: 800;
+        }
+
+        .login-submit:disabled {
+            opacity: .65;
+            cursor: wait;
+        }
+
+        .login-links {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-top: 15px;
+
+            font-size: 11px;
+        }
+
+        .login-links button {
+            border: 0;
+            background: none;
+            color: var(--ae-blue);
+        }
+
+        .offline-notice {
+            display: none;
+
+            margin-top: 15px;
+            padding: 10px;
+
+            border-radius: 8px;
+
+            background: rgba(245,158,11,.08);
+            border: 1px solid rgba(245,158,11,.15);
+
+            color: #f6c56b;
+
+            font-size: 10px;
+            line-height: 1.7;
+        }
+
+        .offline-notice.show {
+            display: block;
+        }
+
+        /* =====================================================
+           TOAST
+        ====================================================== */
+
+        #landingToast {
+            position: fixed;
+
+            left: 22px;
+            bottom: 22px;
+
+            z-index: 2000;
+
+            min-width: 260px;
+            max-width: 400px;
+
+            padding: 13px 16px;
+
+            border-radius: 10px;
+
+            background: #151b24;
+            border: 1px solid rgba(255,255,255,.1);
+
+            box-shadow: 0 20px 50px rgba(0,0,0,.35);
+
+            color: white;
+
+            font-size: 12px;
+
+            opacity: 0;
+            transform: translateY(15px);
+
+            pointer-events: none;
+
+            transition: .25s ease;
+        }
+
+        #landingToast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ====================================================== */
+
+        @media (max-width: 1050px) {
+
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+                padding-top: 55px;
+            }
+
+            .hero-content {
+                margin: auto;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                min-height: 430px;
+            }
+
+            .feature-strip {
+                position: relative;
+                bottom: auto;
+                left: auto;
+                right: auto;
+
+                max-width: 900px;
+                margin: -35px auto 35px;
+
+                padding: 0 6%;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .landing-header {
+                height: 70px;
+                padding: 0 18px;
+            }
+
+            .landing-nav .nav-link:first-child {
+                display: none;
+            }
+
+            .hero {
+                padding: 45px 18px 50px;
+                gap: 30px;
+            }
+
+            .hero h1 {
+                font-size: 42px;
+                letter-spacing: -1px;
+            }
+
+            .hero-description {
+                font-size: 14px;
+                line-height: 1.9;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+            }
+
+            .primary-action,
+            .secondary-action {
+                width: 100%;
+            }
+
+            .hero-visual {
+                min-height: 350px;
+            }
+
+            .engineering-window {
+                height: 320px;
+            }
+
+            .feature-strip {
+                grid-template-columns: 1fr 1fr;
+                padding: 0 18px;
+            }
+
+            .feature-item {
+                font-size: 10px;
+            }
+
+            .login-modal {
+                padding: 23px;
+            }
+
+        }
+
+        @media (max-width: 430px) {
+
+            .landing-brand-text span {
+                display: none;
+            }
+
+            .landing-brand-icon {
+                width: 40px;
+                height: 40px;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .feature-strip {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="landing-page">
+
+    <div class="engineering-grid"></div>
+
+    <div class="glow glow-red"></div>
+    <div class="glow glow-blue"></div>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="landing-header">
+
+        <div class="landing-brand">
+
+            <div class="landing-brand-icon">
+                <i class="fa-solid fa-wave-square"></i>
+            </div>
+
+            <div class="landing-brand-text">
+                <strong>هندسة صوتية</strong>
+                <span>ACOUSTIC ENGINEERING PLATFORM</span>
+            </div>
+
+        </div>
+
+
+        <nav class="landing-nav">
+
+            <button
+                class="nav-link"
+                id="aboutBtn"
+            >
+                عن النظام
+            </button>
+
+            <button
+                class="nav-link"
+                id="loginNavBtn"
+            >
+                تسجيل الدخول
+            </button>
+
+            <button
+                class="primary-action"
+                id="registerNavBtn"
+                style="min-height:42px;padding:0 17px;"
+            >
+                إنشاء حساب
+            </button>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =====================================================
+         HERO
+    ====================================================== -->
+
+    <main class="hero">
+
+        <section class="hero-content">
+
+            <div class="hero-badge">
+                <span></span>
+                منصة هندسية ذكية لتصميم أنظمة الصوت
+            </div>
+
+
+            <h1>
+
+                صمّم نظام الصوت
+
+                <span class="accent">
+                    باحتراف هندسي
+                </span>
+
+            </h1>
+
+
+            <p class="hero-description">
+
+                ارسم المكان، أدخل مواصفات السماعات،
+                حدّد متطلبات المشروع، ودع محرك الهندسة
+                الصوتية يساعدك في توزيع السماعات وتحليل
+                التغطية ومستويات الضغط الصوتي وإنشاء
+                تقرير هندسي متكامل.
+
+            </p>
+
+
+            <div class="hero-actions">
+
+                <button
+                    id="startDesignBtn"
+                    class="primary-action"
+                >
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    ابدأ التصميم الآن
+                </button>
+
+
+                <button
+                    id="loginHeroBtn"
+                    class="secondary-action"
+                >
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    تسجيل الدخول
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =================================================
+             ENGINEERING PREVIEW
+        ================================================== -->
+
+        <section class="hero-visual">
+
+            <div class="engineering-card">
+
+                <div class="engineering-window">
+
+                    <div class="window-top">
+
+                        <span class="window-dot"></span>
+                        <span class="window-dot"></span>
+                        <span class="window-dot"></span>
+
+                        <span class="window-title">
+                            Acoustic Engineering / Project Design
+                        </span>
+
+                    </div>
+
+
+                    <div class="floor-grid"></div>
+
+
+                    <div class="room-outline"></div>
+
+
+                    <div class="stage-shape">
+                        STAGE
+                    </div>
+
+
+                    <!-- Coverage cones -->
+
+                    <div class="speaker-cone cone1"></div>
+                    <div class="speaker-cone cone2"></div>
+                    <div class="speaker-cone cone3"></div>
+                    <div class="speaker-cone cone4"></div>
+
+
+                    <!-- Speakers -->
+
+                    <div class="speaker-point sp1"></div>
+                    <div class="speaker-point sp2"></div>
+                    <div class="speaker-point sp3"></div>
+                    <div class="speaker-point sp4"></div>
+
+
+                    <!-- Dimensions -->
+
+                    <div class="measurement-line measure-width">
+                        <span>30.00 m</span>
+                    </div>
+
+                    <div class="measurement-line measure-height">
+                        <span>20.00 m</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FEATURES
+    ====================================================== -->
+
+    <section class="feature-strip">
+
+        <div class="feature-item">
+            <i class="fa-solid fa-ruler-combined"></i>
+            رسم هندسي للمكان
+        </div>
+
+        <div class="feature-item">
+            <i class="fa-solid fa-volume-high"></i>
+            نمذجة مواصفات السماعات
+        </div>
+
+        <div class="feature-item">
+            <i class="fa-solid fa-chart-area"></i>
+            تحليل التغطية و SPL
+        </div>
+
+        <div class="feature-item">
+            <i class="fa-solid fa-file-pdf"></i>
+            تقرير هندسي احترافي
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         LOGIN MODAL
+    ====================================================== -->
+
+    <div
+        id="loginModal"
+        class="modal-overlay"
+        aria-hidden="true"
+    >
+
+        <div
+            class="login-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="loginTitle"
+        >
+
+            <div class="modal-header">
+
+                <div>
+                    <h2 id="loginTitle">
+                        تسجيل الدخول
+                    </h2>
+
+                    <p>
+                        الدخول إلى منصة هندسة صوتية
+                    </p>
+                </div>
+
+                <button
+                    id="closeLoginBtn"
+                    class="close-modal"
+                    type="button"
+                >
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+
+            </div>
+
+
+            <form id="loginForm">
+
+                <div class="login-form-group">
+
+                    <label for="loginEmail">
+                        البريد الإلكتروني
+                    </label>
+
+                    <div class="login-input-wrapper">
+
+                        <i class="fa-solid fa-envelope"></i>
+
+                        <input
+                            id="loginEmail"
+                            class="login-input"
+                            type="email"
+                            autocomplete="email"
+                            placeholder="example@email.com"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="login-form-group">
+
+                    <label for="loginPassword">
+                        كلمة المرور
+                    </label>
+
+                    <div class="login-input-wrapper">
+
+                        <i class="fa-solid fa-lock"></i>
+
+                        <input
+                            id="loginPassword"
+                            class="login-input"
+                            type="password"
+                            autocomplete="current-password"
+                            placeholder="••••••••"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    id="loginSubmitBtn"
+                    type="submit"
+                    class="login-submit"
+                >
+                    <i class="fa-solid fa-right-to-bracket"></i>
+                    دخول
+                </button>
+
+
+                <div class="login-links">
+
+                    <button
+                        id="forgotPasswordBtn"
+                        type="button"
+                    >
+                        نسيت كلمة المرور؟
+                    </button>
+
+                    <button
+                        id="createAccountFromLoginBtn"
+                        type="button"
+                    >
+                        إنشاء حساب جديد
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="offlineNotice"
+                    class="offline-notice"
+                >
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    Firebase غير مهيأ حالياً.
+                    يمكن للنظام العمل محلياً، لكن الحسابات والمزامنة
+                    السحابية تحتاج إلى إعداد Firebase.
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div id="landingToast"></div>
+
+</div>
+
+
+<!-- =========================================================
+     APPLICATION CONFIG / AUTH
+========================================================== -->
+
+<script src="js/config.js"></script>
+<script src="js/firebase.js"></script>
+<script src="js/auth.js"></script>
+
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    /* =====================================================
+       HELPERS
+    ====================================================== */
+
+    const $ = (id) => document.getElementById(id);
+
+
+    function toast(message, duration = 3000) {
+
+        const el = $("landingToast");
+
+        if (!el) return;
+
+        el.textContent = message;
+        el.classList.add("show");
+
+        clearTimeout(window.__landingToastTimer);
+
+        window.__landingToastTimer = setTimeout(() => {
+            el.classList.remove("show");
+        }, duration);
+    }
+
+
+    function goToRegister() {
+        window.location.href = "register.html";
+    }
+
+
+    function goToApp() {
+        window.location.href = "app.html";
+    }
+
+
+    function openLogin() {
+
+        const modal = $("loginModal");
+
+        if (!modal) return;
+
+        modal.classList.add("show");
+        modal.setAttribute("aria-hidden", "false");
+
+        setTimeout(() => {
+            $("loginEmail")?.focus();
+        }, 100);
+
+        checkOfflineMode();
+    }
+
+
+    function closeLogin() {
+
+        const modal = $("loginModal");
+
+        if (!modal) return;
+
+        modal.classList.remove("show");
+        modal.setAttribute("aria-hidden", "true");
+    }
+
+
+    function checkOfflineMode() {
+
+        const notice = $("offlineNotice");
+
+        if (!notice) return;
+
+        try {
+
+            const firebaseManager =
+                window.AcousticEngineering?.firebase ||
+                window.AcousticFirebase;
+
+            const configured =
+                firebaseManager?.state?.configured;
+
+            if (configured === false) {
+                notice.classList.add("show");
+            } else {
+                notice.classList.remove("show");
+            }
+
+        } catch (error) {
+
+            notice.classList.add("show");
+
+        }
+    }
+
+
+    /* =====================================================
+       LOGIN
+    ====================================================== */
+
+    async function handleLogin(event) {
+
+        event.preventDefault();
+
+        const email =
+            $("loginEmail")?.value.trim();
+
+        const password =
+            $("loginPassword")?.value || "";
+
+        const button =
+            $("loginSubmitBtn");
+
+        if (!email || !password) {
+
+            toast("أدخل البريد الإلكتروني وكلمة المرور.");
+
+            return;
+        }
+
+
+        if (button) {
+
+            button.disabled = true;
+
+            button.innerHTML =
+                '<i class="fa-solid fa-spinner fa-spin"></i> جاري الدخول...';
+
+        }
+
+
+        try {
+
+            const auth =
+                window.AcousticEngineering?.auth ||
+                window.AcousticAuth ||
+                window.AuthManager;
+
+
+            if (!auth) {
+                throw new Error(
+                    "نظام المصادقة غير متاح."
+                );
+            }
+
+
+            const result =
+                await auth.login(
+                    email,
+                    password
+                );
+
+
+            if (result?.success === false) {
+
+                throw new Error(
+                    result.message ||
+                    "تعذر تسجيل الدخول."
+                );
+
+            }
+
+
+            toast("تم تسجيل الدخول بنجاح.");
+
+
+            setTimeout(() => {
+                goToApp();
+            }, 500);
+
+
+        } catch (error) {
+
+            console.error(
+                "Login error:",
+                error
+            );
+
+
+            toast(
+                error?.message ||
+                "تعذر تسجيل الدخول. تحقق من البيانات."
+            );
+
+
+        } finally {
+
+            if (button) {
+
+                button.disabled = false;
+
+                button.innerHTML =
+                    '<i class="fa-solid fa-right-to-bracket"></i> دخول';
+
+            }
+
+        }
+
+    }
+
+
+    /* =====================================================
+       FORGOT PASSWORD
+    ====================================================== */
+
+    async function handleForgotPassword() {
+
+        const email =
+            $("loginEmail")?.value.trim();
+
+        if (!email) {
+
+            toast(
+                "أدخل البريد الإلكتروني أولاً."
+            );
+
+            $("loginEmail")?.focus();
+
+            return;
+        }
+
+
+        try {
+
+            const auth =
+                window.AcousticEngineering?.auth ||
+                window.AcousticAuth ||
+                window.AuthManager;
+
+
+            if (!auth?.resetPassword) {
+
+                toast(
+                    "خدمة استعادة كلمة المرور غير متاحة حالياً."
+                );
+
+                return;
+            }
+
+
+            const result =
+                await auth.resetPassword(email);
+
+
+            if (result?.success === false) {
+
+                throw new Error(
+                    result.message ||
+                    "تعذر إرسال رابط الاستعادة."
+                );
+
+            }
+
+
+            toast(
+                "تم إرسال رابط استعادة كلمة المرور."
+            );
+
+
+        } catch (error) {
+
+            toast(
+                error?.message ||
+                "تعذر إرسال رابط الاستعادة."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       AUTH STATE
+    ====================================================== */
+
+    async function checkExistingSession() {
+
+        try {
+
+            const auth =
+                window.AcousticEngineering?.auth ||
+                window.AcousticAuth ||
+                window.AuthManager;
+
+
+            if (!auth) return;
+
+
+            if (
+                typeof auth.initialize === "function"
+            ) {
+                await auth.initialize();
+            }
+
+
+            if (
+                typeof auth.isAuthenticated === "function" &&
+                auth.isAuthenticated()
+            ) {
+
+                const user =
+                    typeof auth.getCurrentUser === "function"
+                        ? auth.getCurrentUser()
+                        : auth.state?.user;
+
+
+                if (user) {
+
+                    /*
+                     * إذا كان المستخدم مسجلاً بالفعل،
+                     * نسمح له بالانتقال مباشرة للتطبيق.
+                     */
+
+                    const continueBtn =
+                        $("startDesignBtn");
+
+                    if (continueBtn) {
+
+                        continueBtn.innerHTML =
+                            '<i class="fa-solid fa-arrow-right"></i> متابعة التصميم';
+
+                    }
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.warn(
+                "Session check:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       EVENTS
+    ====================================================== */
+
+    $("startDesignBtn")
+        ?.addEventListener(
+            "click",
+            async () => {
+
+                try {
+
+                    const auth =
+                        window.AcousticEngineering?.auth ||
+                        window.AcousticAuth ||
+                        window.AuthManager;
+
+
+                    if (
+                        auth &&
+                        typeof auth.isAuthenticated === "function" &&
+                        auth.isAuthenticated()
+                    ) {
+
+                        goToApp();
+
+                    } else {
+
+                        goToRegister();
+
+                    }
+
+                } catch {
+
+                    goToRegister();
+
+                }
+
+            }
+        );
+
+
+    $("registerNavBtn")
+        ?.addEventListener(
+            "click",
+            goToRegister
+        );
+
+
+    $("createAccountFromLoginBtn")
+        ?.addEventListener(
+            "click",
+            goToRegister
+        );
+
+
+    $("loginNavBtn")
+        ?.addEventListener(
+            "click",
+            openLogin
+        );
+
+
+    $("loginHeroBtn")
+        ?.addEventListener(
+            "click",
+            openLogin
+        );
+
+
+    $("closeLoginBtn")
+        ?.addEventListener(
+            "click",
+            closeLogin
+        );
+
+
+    $("loginModal")
+        ?.addEventListener(
+            "click",
+            (event) => {
+
+                if (
+                    event.target ===
+                    $("loginModal")
+                ) {
+                    closeLogin();
+                }
+
+            }
+        );
+
+
+    $("loginForm")
+        ?.addEventListener(
+            "submit",
+            handleLogin
+        );
+
+
+    $("forgotPasswordBtn")
+        ?.addEventListener(
+            "click",
+            handleForgotPassword
+        );
+
+
+    $("aboutBtn")
+        ?.addEventListener(
+            "click",
+            () => {
+
+                toast(
+                    "منصة هندسية لتصميم أنظمة الصوت وتحليل التغطية وإعداد التقارير."
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       KEYBOARD
+    ====================================================== */
+
+    document.addEventListener(
+        "keydown",
+        (event) => {
+
+            if (
+                event.key === "Escape"
+            ) {
+                closeLogin();
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       INITIALIZATION
+    ====================================================== */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        () => {
+
+            checkExistingSession();
+
+        }
+    );
+
+
+})();
+
+</script>
+
+
+</body>
+</html>

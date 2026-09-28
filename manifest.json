@@ -1,0 +1,16 @@
+{
+  "name": "هندسة صوتية | Acoustic Engineering",
+  "short_name": "هندسة صوتية",
+  "description": "منصة هندسية متكاملة لتصميم أنظمة الصوت، توزيع السماعات، تحليل التغطية ومستويات SPL وإعداد التقارير الهندسية.",
+  "lang": "ar",
+  "dir": "rtl",
+
+  "start_url": "./index.html",
+  "scope": "./",
+
+  "display": "standalone",
+  "display_override": [
+    "window-controls-overlay",
+    "standalone",
+    "minimal-ui"
+  ],

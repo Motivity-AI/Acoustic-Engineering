@@ -1,0 +1,5973 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="mainHtml">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+    <meta name="theme-color" content="#080b10">
+
+    <meta name="application-name" content="Acoustic Engineering">
+
+    <meta name="description"
+          content="نظام هندسي متكامل لتصميم وتحليل وتوزيع الأنظمة الصوتية">
+
+    <title>Acoustic Engineering | هندسة صوتية</title>
+
+    <!-- =====================================================
+         PWA
+         ===================================================== -->
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- =====================================================
+         FONTS
+         ===================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- =====================================================
+         ICONS
+         ===================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- =====================================================
+         CSS
+         ===================================================== -->
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/app.css">
+
+    <style>
+
+        /* =====================================================
+           PAGE SAFETY
+           ===================================================== */
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: "Cairo", sans-serif;
+        }
+
+        /* =====================================================
+           APP SHELL
+           ===================================================== */
+
+        .app-shell {
+            width: 100%;
+            height: 100vh;
+            height: 100dvh;
+
+            display: flex;
+            overflow: hidden;
+        }
+
+        /* =====================================================
+           SIDEBAR
+           ===================================================== */
+
+        .sidebar {
+            width: 270px;
+            min-width: 270px;
+
+            height: 100%;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            transition:
+                width .25s ease,
+                min-width .25s ease,
+                transform .25s ease;
+        }
+
+        .sidebar.collapsed {
+            width: 78px;
+            min-width: 78px;
+        }
+
+        /* =====================================================
+           BRAND
+           ===================================================== */
+
+        .sidebar-brand {
+            height: 76px;
+
+            padding: 14px 18px;
+
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            border-bottom: 1px solid rgba(255,255,255,.07);
+        }
+
+        .brand-symbol {
+            width: 44px;
+            height: 44px;
+
+            min-width: 44px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 12px;
+
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e60012,
+                    #a4000c
+                );
+
+            box-shadow:
+                0 8px 25px rgba(230,0,18,.22);
+        }
+
+        .brand-symbol i {
+            font-size: 19px;
+        }
+
+        .brand-copy {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .brand-copy strong {
+            display: block;
+            font-size: 16px;
+            font-weight: 800;
+        }
+
+        .brand-copy span {
+            display: block;
+            color: #7e8b9d;
+            font-size: 10px;
+            margin-top: 1px;
+        }
+
+        .sidebar.collapsed .brand-copy {
+            display: none;
+        }
+
+        /* =====================================================
+           SIDEBAR NAV
+           ===================================================== */
+
+        .sidebar-nav {
+            flex: 1;
+
+            padding: 14px 10px;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .nav-section-title {
+            padding: 9px 11px 7px;
+
+            color: #647083;
+
+            font-size: 9px;
+            font-weight: 800;
+
+            letter-spacing: .5px;
+
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed .nav-section-title {
+            text-align: center;
+            font-size: 0;
+        }
+
+        .sidebar.collapsed .nav-section-title::after {
+            content: "•••";
+            font-size: 11px;
+        }
+
+        .nav-item {
+            width: 100%;
+
+            min-height: 42px;
+
+            display: flex;
+            align-items: center;
+            gap: 11px;
+
+            margin-bottom: 3px;
+            padding: 0 11px;
+
+            border: 1px solid transparent;
+            border-radius: 9px;
+
+            color: #9ba7b7;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            text-decoration: none;
+
+            transition: .18s ease;
+
+            font-family: inherit;
+            font-size: 12px;
+
+            text-align: right;
+        }
+
+        .nav-item i {
+            width: 18px;
+            min-width: 18px;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255,255,255,.045);
+        }
+
+        .nav-item.active {
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(230,0,18,.14),
+                    rgba(230,0,18,.04)
+                );
+
+            border-color: rgba(230,0,18,.16);
+
+            box-shadow:
+                inset -3px 0 0 #e60012;
+        }
+
+        .nav-item.active i {
+            color: #e60012;
+        }
+
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding: 0;
+        }
+
+        .sidebar.collapsed .nav-item span,
+        .sidebar.collapsed .nav-item .nav-badge {
+            display: none;
+        }
+
+        .nav-badge {
+            margin-right: auto;
+
+            min-width: 20px;
+            height: 18px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0 5px;
+
+            border-radius: 5px;
+
+            background: rgba(56,189,248,.1);
+            color: #38bdf8;
+
+            font-size: 9px;
+        }
+
+        /* =====================================================
+           SIDEBAR FOOTER
+           ===================================================== */
+
+        .sidebar-footer {
+            padding: 10px;
+
+            border-top: 1px solid rgba(255,255,255,.07);
+        }
+
+        .sidebar-user {
+            min-height: 50px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 7px;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.025);
+
+            overflow: hidden;
+        }
+
+        .user-avatar {
+            width: 34px;
+            height: 34px;
+
+            min-width: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background: #1b2430;
+
+            color: #8fdcff;
+        }
+
+        .user-info {
+            min-width: 0;
+        }
+
+        .user-info strong {
+            display: block;
+
+            font-size: 11px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .user-info span {
+            display: block;
+
+            color: #687588;
+
+            font-size: 9px;
+        }
+
+        .sidebar.collapsed .sidebar-user {
+            justify-content: center;
+        }
+
+        .sidebar.collapsed .user-info {
+            display: none;
+        }
+
+        /* =====================================================
+           MAIN AREA
+           ===================================================== */
+
+        .main-area {
+            min-width: 0;
+            flex: 1;
+
+            height: 100%;
+
+            display: flex;
+            flex-direction: column;
+
+            overflow: hidden;
+        }
+
+        /* =====================================================
+           TOPBAR
+           ===================================================== */
+
+        .topbar {
+            height: 66px;
+            min-height: 66px;
+
+            padding: 0 14px;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            border-bottom: 1px solid rgba(255,255,255,.07);
+
+            background: rgba(8,11,16,.95);
+
+            backdrop-filter: blur(14px);
+
+            z-index: 500;
+        }
+
+        .topbar-button {
+            width: 38px;
+            height: 38px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 9px;
+
+            background: rgba(255,255,255,.025);
+
+            color: #9ca8b7;
+
+            cursor: pointer;
+
+            transition: .18s ease;
+        }
+
+        .topbar-button:hover {
+            color: #fff;
+            border-color: rgba(56,189,248,.25);
+        }
+
+        .project-header {
+            min-width: 180px;
+            max-width: 420px;
+
+            margin-right: 4px;
+        }
+
+        .project-header small {
+            display: block;
+
+            color: #647083;
+
+            font-size: 9px;
+        }
+
+        .project-header strong {
+            display: block;
+
+            color: #e9eef5;
+
+            font-size: 13px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .topbar-spacer {
+            flex: 1;
+        }
+
+        .save-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+
+            padding: 6px 10px;
+
+            border-radius: 7px;
+
+            color: #718095;
+
+            font-size: 9px;
+        }
+
+        .save-status.saved {
+            color: #5ee59a;
+        }
+
+        .save-status.dirty {
+            color: #f7bd54;
+        }
+
+        .save-status-dot {
+            width: 6px;
+            height: 6px;
+
+            border-radius: 50%;
+
+            background: currentColor;
+        }
+
+        .topbar-action {
+            height: 38px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+
+            padding: 0 12px;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 9px;
+
+            color: #aeb9c8;
+
+            background: rgba(255,255,255,.025);
+
+            cursor: pointer;
+
+            font-family: inherit;
+            font-size: 11px;
+        }
+
+        .topbar-action:hover {
+            color: #fff;
+            border-color: rgba(255,255,255,.16);
+        }
+
+        .topbar-action.primary {
+            background: #e60012;
+            border-color: #e60012;
+            color: #fff;
+        }
+
+        /* =====================================================
+           WORKSPACE
+           ===================================================== */
+
+        .workspace {
+            min-height: 0;
+            flex: 1;
+
+            display: flex;
+            flex-direction: column;
+
+            overflow: hidden;
+        }
+
+        /* =====================================================
+           DESIGN TOOLBAR
+           ===================================================== */
+
+        .design-toolbar {
+            min-height: 50px;
+
+            padding: 6px 10px;
+
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            border-bottom: 1px solid rgba(255,255,255,.06);
+
+            background: #0d1219;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            scrollbar-width: thin;
+        }
+
+        .toolbar-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+
+            padding-left: 8px;
+            margin-left: 4px;
+
+            border-left: 1px solid rgba(255,255,255,.07);
+        }
+
+        [dir="rtl"] .toolbar-group {
+            padding-left: 0;
+            padding-right: 8px;
+
+            margin-left: 0;
+            margin-right: 4px;
+
+            border-left: 0;
+            border-right: 1px solid rgba(255,255,255,.07);
+        }
+
+        .tool-button {
+            width: 35px;
+            height: 35px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid transparent;
+            border-radius: 7px;
+
+            color: #7f8b9c;
+
+            background: transparent;
+
+            cursor: pointer;
+
+            position: relative;
+
+            transition: .16s ease;
+        }
+
+        .tool-button:hover {
+            color: #fff;
+            background: rgba(255,255,255,.05);
+        }
+
+        .tool-button.active {
+            color: #fff;
+
+            background: rgba(230,0,18,.12);
+
+            border-color: rgba(230,0,18,.22);
+        }
+
+        .tool-button.active i {
+            color: #e60012;
+        }
+
+        .tool-button[title]::after {
+            content: attr(title);
+
+            position: absolute;
+
+            bottom: -33px;
+
+            right: 50%;
+
+            transform: translateX(50%);
+
+            padding: 4px 7px;
+
+            border-radius: 5px;
+
+            color: #fff;
+            background: #05070a;
+
+            font-size: 8px;
+
+            white-space: nowrap;
+
+            opacity: 0;
+            pointer-events: none;
+
+            z-index: 2000;
+        }
+
+        .tool-button:hover::after {
+            opacity: 1;
+        }
+
+        .toolbar-select {
+            height: 34px;
+
+            padding: 0 9px;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 7px;
+
+            background: #111821;
+            color: #aeb9c7;
+
+            font-family: inherit;
+            font-size: 10px;
+
+            outline: none;
+        }
+
+        .toolbar-dimension {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .toolbar-input {
+            width: 65px;
+            height: 32px;
+
+            padding: 0 7px;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 6px;
+
+            color: #dce4ed;
+
+            background: #111821;
+
+            font-family: inherit;
+            font-size: 10px;
+
+            text-align: center;
+
+            outline: none;
+        }
+
+        .toolbar-input:focus {
+            border-color: rgba(56,189,248,.4);
+        }
+
+        .toolbar-label {
+            color: #637084;
+            font-size: 9px;
+        }
+
+        /* =====================================================
+           DESIGN LAYOUT
+           ===================================================== */
+
+        .design-layout {
+            min-height: 0;
+            flex: 1;
+
+            display: grid;
+
+            grid-template-columns:
+                275px
+                minmax(350px, 1fr)
+                295px;
+
+            overflow: hidden;
+        }
+
+        .left-panel,
+        .right-panel {
+            min-width: 0;
+
+            background: #0c1118;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+
+            scrollbar-width: thin;
+        }
+
+        .left-panel {
+            border-left: 1px solid rgba(255,255,255,.07);
+        }
+
+        .right-panel {
+            border-right: 1px solid rgba(255,255,255,.07);
+        }
+
+        [dir="rtl"] .left-panel {
+            border-left: 0;
+            border-right: 1px solid rgba(255,255,255,.07);
+        }
+
+        [dir="rtl"] .right-panel {
+            border-right: 0;
+            border-left: 1px solid rgba(255,255,255,.07);
+        }
+
+        /* =====================================================
+           PANEL SECTIONS
+           ===================================================== */
+
+        .panel-section {
+            padding: 14px;
+
+            border-bottom: 1px solid rgba(255,255,255,.06);
+        }
+
+        .panel-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 11px;
+        }
+
+        .panel-heading h3 {
+            margin: 0;
+
+            font-size: 11px;
+            font-weight: 800;
+
+            color: #dce4ed;
+        }
+
+        .panel-heading span {
+            color: #596679;
+            font-size: 9px;
+        }
+
+        .field {
+            margin-bottom: 9px;
+        }
+
+        .field:last-child {
+            margin-bottom: 0;
+        }
+
+        .field label {
+            display: block;
+
+            margin-bottom: 4px;
+
+            color: #6f7d90;
+
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+
+            min-height: 35px;
+
+            padding: 7px 9px;
+
+            border: 1px solid rgba(255,255,255,.075);
+            border-radius: 7px;
+
+            color: #dbe3ec;
+
+            background: #111821;
+
+            font-family: inherit;
+            font-size: 10px;
+
+            outline: none;
+
+            transition: .16s ease;
+        }
+
+        .field textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: rgba(56,189,248,.35);
+
+            box-shadow:
+                0 0 0 2px rgba(56,189,248,.04);
+        }
+
+        .field-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 7px;
+        }
+
+        .field-grid-3 {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 6px;
+        }
+
+        /* =====================================================
+           TOGGLE
+           ===================================================== */
+
+        .toggle-row {
+            min-height: 36px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+        }
+
+        .toggle-label {
+            color: #a8b3c2;
+            font-size: 10px;
+        }
+
+        .switch {
+            position: relative;
+
+            width: 38px;
+            height: 20px;
+
+            flex: 0 0 auto;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch-slider {
+            position: absolute;
+            inset: 0;
+
+            border-radius: 20px;
+
+            background: #242d38;
+
+            cursor: pointer;
+
+            transition: .2s;
+        }
+
+        .switch-slider::before {
+            content: "";
+
+            position: absolute;
+
+            width: 14px;
+            height: 14px;
+
+            right: 3px;
+            top: 3px;
+
+            border-radius: 50%;
+
+            background: #8995a4;
+
+            transition: .2s;
+        }
+
+        .switch input:checked + .switch-slider {
+            background: rgba(230,0,18,.65);
+        }
+
+        .switch input:checked + .switch-slider::before {
+            transform: translateX(-18px);
+            background: #fff;
+        }
+
+        /* =====================================================
+           CANVAS PANEL
+           ===================================================== */
+
+        .canvas-panel {
+            min-width: 0;
+            min-height: 0;
+
+            position: relative;
+
+            display: flex;
+            flex-direction: column;
+
+            background:
+                radial-gradient(
+                    circle at center,
+                    rgba(56,189,248,.025),
+                    transparent 50%
+                ),
+                #080c12;
+
+            overflow: hidden;
+        }
+
+        .canvas-header {
+            height: 38px;
+            min-height: 38px;
+
+            padding: 0 10px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid rgba(255,255,255,.05);
+
+            background: rgba(10,14,20,.88);
+
+            z-index: 20;
+        }
+
+        .canvas-title {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+
+            color: #8290a2;
+            font-size: 10px;
+        }
+
+        .canvas-title i {
+            color: #38bdf8;
+        }
+
+        .canvas-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #59687a;
+            font-size: 9px;
+        }
+
+        .canvas-coordinate {
+            color: #8290a2;
+        }
+
+        .canvas-stage {
+            min-height: 0;
+            flex: 1;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+        .acoustic-canvas {
+            position: absolute;
+
+            inset: 0;
+
+            width: 100%;
+            height: 100%;
+
+            touch-action: none;
+
+            user-select: none;
+        }
+
+        .canvas-empty-state {
+            position: absolute;
+
+            left: 50%;
+            top: 50%;
+
+            transform: translate(-50%, -50%);
+
+            width: min(340px, calc(100% - 40px));
+
+            padding: 25px;
+
+            text-align: center;
+
+            pointer-events: none;
+
+            border: 1px dashed rgba(255,255,255,.1);
+            border-radius: 14px;
+
+            background: rgba(8,11,16,.75);
+
+            backdrop-filter: blur(8px);
+        }
+
+        .canvas-empty-state i {
+            display: block;
+
+            margin-bottom: 12px;
+
+            color: #38bdf8;
+
+            font-size: 34px;
+        }
+
+        .canvas-empty-state strong {
+            display: block;
+
+            color: #dfe7f0;
+
+            font-size: 13px;
+        }
+
+        .canvas-empty-state span {
+            display: block;
+
+            margin-top: 6px;
+
+            color: #647184;
+
+            font-size: 10px;
+
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           CANVAS HUD
+           ===================================================== */
+
+        .canvas-hud {
+            position: absolute;
+
+            left: 10px;
+            bottom: 10px;
+
+            z-index: 30;
+
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .hud-button {
+            width: 32px;
+            height: 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 7px;
+
+            background: rgba(8,11,16,.85);
+            color: #8491a2;
+
+            cursor: pointer;
+
+            backdrop-filter: blur(8px);
+        }
+
+        .hud-button:hover {
+            color: #fff;
+        }
+
+        .zoom-level {
+            height: 32px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 9px;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 7px;
+
+            background: rgba(8,11,16,.85);
+
+            color: #778598;
+
+            font-size: 9px;
+        }
+
+        /* =====================================================
+           RIGHT INSPECTOR
+           ===================================================== */
+
+        .selection-empty {
+            padding: 25px 15px;
+
+            text-align: center;
+
+            color: #566375;
+        }
+
+        .selection-empty i {
+            display: block;
+
+            margin-bottom: 10px;
+
+            font-size: 27px;
+        }
+
+        .selection-empty strong {
+            display: block;
+
+            color: #8996a8;
+
+            font-size: 11px;
+        }
+
+        .selection-empty span {
+            display: block;
+
+            margin-top: 5px;
+
+            font-size: 9px;
+            line-height: 1.7;
+        }
+
+        .object-title {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+
+        .object-icon {
+            width: 34px;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 8px;
+
+            color: #38bdf8;
+
+            background: rgba(56,189,248,.08);
+        }
+
+        .object-name strong {
+            display: block;
+
+            color: #dfe7ef;
+
+            font-size: 11px;
+        }
+
+        .object-name span {
+            display: block;
+
+            color: #617084;
+
+            font-size: 8px;
+        }
+
+        .inspector-actions {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 5px;
+
+            margin-top: 11px;
+        }
+
+        .inspector-action {
+            height: 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 6px;
+
+            background: rgba(255,255,255,.025);
+            color: #8290a0;
+
+            font-family: inherit;
+            font-size: 9px;
+
+            cursor: pointer;
+        }
+
+        .inspector-action:hover {
+            color: #fff;
+            background: rgba(255,255,255,.05);
+        }
+
+        .inspector-action.danger:hover {
+            color: #ff7580;
+            border-color: rgba(230,0,18,.25);
+        }
+
+        /* =====================================================
+           SPEAKER LIBRARY
+           ===================================================== */
+
+        .speaker-library {
+            display: grid;
+            gap: 6px;
+        }
+
+        .speaker-card {
+            padding: 9px;
+
+            display: flex;
+            align-items: center;
+            gap: 9px;
+
+            border: 1px solid rgba(255,255,255,.065);
+            border-radius: 8px;
+
+            background: rgba(255,255,255,.018);
+
+            cursor: pointer;
+
+            transition: .16s ease;
+        }
+
+        .speaker-card:hover {
+            border-color: rgba(56,189,248,.2);
+            background: rgba(56,189,248,.035);
+        }
+
+        .speaker-card-icon {
+            width: 30px;
+            height: 30px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 7px;
+
+            color: #cbd7e4;
+            background: #17202b;
+        }
+
+        .speaker-card-copy {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .speaker-card-copy strong {
+            display: block;
+
+            color: #ccd6e2;
+
+            font-size: 10px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .speaker-card-copy span {
+            display: block;
+
+            margin-top: 2px;
+
+            color: #657286;
+
+            font-size: 8px;
+        }
+
+        /* =====================================================
+           BOTTOM PANEL
+           ===================================================== */
+
+        .bottom-panels {
+            height: 220px;
+            min-height: 220px;
+
+            display: grid;
+
+            grid-template-columns:
+                1.1fr
+                1.3fr
+                1fr;
+
+            gap: 1px;
+
+            border-top: 1px solid rgba(255,255,255,.07);
+
+            background: rgba(255,255,255,.05);
+
+            overflow: hidden;
+        }
+
+        .bottom-panel {
+            min-width: 0;
+
+            padding: 12px;
+
+            background: #0c1118;
+
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .bottom-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 10px;
+        }
+
+        .bottom-panel-header strong {
+            color: #cbd5e1;
+            font-size: 10px;
+        }
+
+        .bottom-panel-header span {
+            color: #5e6c7e;
+            font-size: 8px;
+        }
+
+        /* =====================================================
+           METRIC CARDS
+           ===================================================== */
+
+        .mini-metrics {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 6px;
+        }
+
+        .mini-metric {
+            padding: 9px;
+
+            border: 1px solid rgba(255,255,255,.055);
+            border-radius: 7px;
+
+            background: rgba(255,255,255,.018);
+        }
+
+        .mini-metric-label {
+            color: #617084;
+            font-size: 8px;
+        }
+
+        .mini-metric-value {
+            margin-top: 3px;
+
+            color: #dbe4ed;
+
+            font-size: 15px;
+            font-weight: 800;
+        }
+
+        .mini-metric-unit {
+            color: #687689;
+            font-size: 7px;
+        }
+
+        /* =====================================================
+           ANALYSIS
+           ===================================================== */
+
+        .analysis-list {
+            display: grid;
+            gap: 6px;
+        }
+
+        .analysis-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 7px 8px;
+
+            border-radius: 6px;
+
+            background: rgba(255,255,255,.018);
+        }
+
+        .analysis-row-label {
+            color: #7b899b;
+            font-size: 8px;
+        }
+
+        .analysis-row-value {
+            color: #cdd7e3;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        /* =====================================================
+           BOM TABLE
+           ===================================================== */
+
+        .compact-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .compact-table th,
+        .compact-table td {
+            padding: 6px 5px;
+
+            border-bottom: 1px solid rgba(255,255,255,.05);
+
+            color: #8794a6;
+
+            font-size: 8px;
+
+            white-space: nowrap;
+
+            text-align: right;
+        }
+
+        .compact-table th {
+            color: #647184;
+            font-weight: 700;
+        }
+
+        .compact-table td strong {
+            color: #cbd5e1;
+        }
+
+        /* =====================================================
+           AUTO DESIGN CARD
+           ===================================================== */
+
+        .auto-design-card {
+            margin-top: 9px;
+
+            padding: 12px;
+
+            border: 1px solid rgba(56,189,248,.14);
+            border-radius: 9px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(56,189,248,.055),
+                    rgba(56,189,248,.01)
+                );
+        }
+
+        .auto-design-card h4 {
+            margin: 0;
+
+            color: #d8e8f4;
+
+            font-size: 11px;
+        }
+
+        .auto-design-card p {
+            margin: 5px 0 10px;
+
+            color: #718196;
+
+            font-size: 8px;
+            line-height: 1.7;
+        }
+
+        .auto-design-button {
+            width: 100%;
+            height: 34px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+
+            border: 0;
+            border-radius: 7px;
+
+            color: #fff;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #e60012,
+                    #b6000e
+                );
+
+            cursor: pointer;
+
+            font-family: inherit;
+            font-size: 10px;
+            font-weight: 700;
+
+            box-shadow:
+                0 8px 20px rgba(230,0,18,.16);
+        }
+
+        .auto-design-button:hover {
+            filter: brightness(1.1);
+        }
+
+        /* =====================================================
+           MODAL
+           ===================================================== */
+
+        .app-modal {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 3000;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background: rgba(0,0,0,.72);
+
+            backdrop-filter: blur(7px);
+        }
+
+        .app-modal.active {
+            display: flex;
+        }
+
+        .modal-card {
+            width: min(650px, 100%);
+            max-height: min(760px, calc(100vh - 40px));
+
+            display: flex;
+            flex-direction: column;
+
+            overflow: hidden;
+
+            border: 1px solid rgba(255,255,255,.09);
+            border-radius: 15px;
+
+            background: #10151d;
+
+            box-shadow:
+                0 30px 100px rgba(0,0,0,.45);
+        }
+
+        .modal-header {
+            min-height: 56px;
+
+            padding: 0 17px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            border-bottom: 1px solid rgba(255,255,255,.07);
+        }
+
+        .modal-header h3 {
+            margin: 0;
+
+            color: #e6edf5;
+
+            font-size: 14px;
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border: 0;
+            border-radius: 7px;
+
+            color: #718095;
+
+            background: transparent;
+
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            color: #fff;
+            background: rgba(255,255,255,.05);
+        }
+
+        .modal-body {
+            padding: 17px;
+
+            overflow-y: auto;
+        }
+
+        .modal-footer {
+            padding: 12px 17px;
+
+            display: flex;
+            justify-content: flex-start;
+            gap: 7px;
+
+            border-top: 1px solid rgba(255,255,255,.07);
+        }
+
+        .modal-button {
+            height: 36px;
+
+            padding: 0 14px;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 7px;
+
+            color: #aeb9c8;
+            background: #161d26;
+
+            font-family: inherit;
+            font-size: 10px;
+
+            cursor: pointer;
+        }
+
+        .modal-button.primary {
+            color: #fff;
+            background: #e60012;
+            border-color: #e60012;
+        }
+
+        /* =====================================================
+           AUTO DESIGN MODAL
+           ===================================================== */
+
+        .auto-design-options {
+            display: grid;
+            gap: 11px;
+        }
+
+        .design-mode-option {
+            padding: 13px;
+
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+
+            border: 1px solid rgba(255,255,255,.07);
+            border-radius: 9px;
+
+            background: rgba(255,255,255,.018);
+
+            cursor: pointer;
+        }
+
+        .design-mode-option:hover {
+            border-color: rgba(56,189,248,.22);
+        }
+
+        .design-mode-option input {
+            margin-top: 3px;
+        }
+
+        .design-mode-option strong {
+            display: block;
+
+            color: #d6e0ea;
+
+            font-size: 11px;
+        }
+
+        .design-mode-option span {
+            display: block;
+
+            margin-top: 4px;
+
+            color: #6c7a8e;
+
+            font-size: 9px;
+
+            line-height: 1.7;
+        }
+
+        /* =====================================================
+           DATA SHEET
+           ===================================================== */
+
+        .upload-zone {
+            padding: 28px 15px;
+
+            text-align: center;
+
+            border: 1px dashed rgba(255,255,255,.12);
+            border-radius: 11px;
+
+            background: rgba(255,255,255,.018);
+
+            cursor: pointer;
+        }
+
+        .upload-zone:hover {
+            border-color: rgba(56,189,248,.3);
+        }
+
+        .upload-zone i {
+            margin-bottom: 9px;
+
+            color: #38bdf8;
+
+            font-size: 27px;
+        }
+
+        .upload-zone strong {
+            display: block;
+
+            color: #cdd7e3;
+
+            font-size: 11px;
+        }
+
+        .upload-zone span {
+            display: block;
+
+            margin-top: 5px;
+
+            color: #617084;
+
+            font-size: 8px;
+        }
+
+        /* =====================================================
+           TOAST
+           ===================================================== */
+
+        #toastContainer {
+            position: fixed;
+
+            left: 18px;
+            bottom: 18px;
+
+            z-index: 7000;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+        .toast {
+            min-width: 250px;
+            max-width: 370px;
+
+            padding: 11px 14px;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 9px;
+
+            background: #111821;
+
+            color: #dce5ef;
+
+            font-size: 10px;
+
+            box-shadow:
+                0 15px 40px rgba(0,0,0,.35);
+        }
+
+        .toast.success {
+            border-color: rgba(34,197,94,.2);
+        }
+
+        .toast.error {
+            border-color: rgba(230,0,18,.25);
+        }
+
+        .toast.warning {
+            border-color: rgba(245,158,11,.2);
+        }
+
+        /* =====================================================
+           LOADING
+           ===================================================== */
+
+        #loadingOverlay {
+            position: fixed;
+
+            inset: 0;
+
+            z-index: 8000;
+
+            display: none;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(5,7,10,.78);
+
+            backdrop-filter: blur(7px);
+        }
+
+        #loadingOverlay.active {
+            display: flex;
+        }
+
+        .loading-box {
+            min-width: 250px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            border: 1px solid rgba(255,255,255,.08);
+            border-radius: 13px;
+
+            background: #111821;
+        }
+
+        .loading-spinner {
+            width: 38px;
+            height: 38px;
+
+            margin: 0 auto 13px;
+
+            border: 3px solid rgba(255,255,255,.08);
+            border-top-color: #38bdf8;
+
+            border-radius: 50%;
+
+            animation:
+                acousticSpin .75s linear infinite;
+        }
+
+        @keyframes acousticSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-box strong {
+            display: block;
+
+            color: #dce5ef;
+
+            font-size: 11px;
+        }
+
+        .loading-box span {
+            display: block;
+
+            margin-top: 5px;
+
+            color: #627084;
+
+            font-size: 8px;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 1250px) {
+
+            .design-layout {
+                grid-template-columns:
+                    245px
+                    minmax(300px, 1fr)
+                    265px;
+            }
+
+            .bottom-panels {
+                grid-template-columns:
+                    1fr
+                    1fr;
+            }
+
+            .bottom-panel:last-child {
+                display: none;
+            }
+        }
+
+        @media (max-width: 1000px) {
+
+            .sidebar {
+                position: fixed;
+
+                top: 0;
+                bottom: 0;
+                right: 0;
+
+                transform: translateX(100%);
+
+                box-shadow:
+                    -20px 0 60px rgba(0,0,0,.35);
+            }
+
+            .sidebar.mobile-open {
+                transform: translateX(0);
+            }
+
+            .design-layout {
+                grid-template-columns:
+                    220px
+                    minmax(300px, 1fr);
+            }
+
+            .right-panel {
+                display: none;
+            }
+
+            .project-header {
+                max-width: 220px;
+            }
+        }
+
+        @media (max-width: 760px) {
+
+            .topbar-action span,
+            .save-status span {
+                display: none;
+            }
+
+            .topbar-action {
+                width: 38px;
+                padding: 0;
+            }
+
+            .design-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                display: none;
+            }
+
+            .bottom-panels {
+                height: 190px;
+                min-height: 190px;
+            }
+
+            .canvas-info {
+                display: none;
+            }
+
+            .toolbar-dimension,
+            .toolbar-label {
+                display: none;
+            }
+        }
+
+        @media (max-width: 520px) {
+
+            .topbar {
+                height: 58px;
+                min-height: 58px;
+            }
+
+            .project-header {
+                min-width: 0;
+                flex: 1;
+            }
+
+            .project-header small {
+                display: none;
+            }
+
+            .project-header strong {
+                font-size: 11px;
+            }
+
+            .bottom-panels {
+                display: none;
+            }
+
+            .design-toolbar {
+                min-height: 46px;
+            }
+
+            .tool-button {
+                width: 33px;
+                height: 33px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div id="appShell" class="app-shell">
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside id="sidebar" class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <div class="brand-symbol">
+                <i class="fa-solid fa-wave-square"></i>
+            </div>
+
+            <div class="brand-copy">
+                <strong>هندسة صوتية</strong>
+                <span>ACOUSTIC ENGINEERING</span>
+            </div>
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <div class="nav-section-title">
+                المشروع
+            </div>
+
+            <button
+                class="nav-item active"
+                data-section="overview">
+
+                <i class="fa-solid fa-house"></i>
+                <span>نظرة عامة</span>
+
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="project">
+
+                <i class="fa-solid fa-folder-open"></i>
+                <span>بيانات المشروع</span>
+
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="room">
+
+                <i class="fa-solid fa-vector-square"></i>
+                <span>الفراغ الهندسي</span>
+
+            </button>
+
+
+            <div class="nav-section-title">
+                التصميم
+            </div>
+
+            <button
+                class="nav-item"
+                data-section="speakers">
+
+                <i class="fa-solid fa-volume-high"></i>
+                <span>السماعات</span>
+                <span id="speakerCountBadge"
+                      class="nav-badge">
+                    0
+                </span>
+
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="design">
+
+                <i class="fa-solid fa-compass-drafting"></i>
+                <span>الرسم الهندسي</span>
+
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="auto-design">
+
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>التوزيع الذكي</span>
+
+            </button>
+
+
+            <div class="nav-section-title">
+                التحليل
+            </div>
+
+            <button
+                class="nav-item"
+                data-section="analysis">
+
+                <i class="fa-solid fa-chart-line"></i>
+                <span>التحليل الصوتي</span>
+
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="bom">
+
+                <i class="fa-solid fa-list-check"></i>
+                <span>جدول الكميات</span>
+
+            </button>
+
+            <button
+                class="nav-item"
+                data-section="report">
+
+                <i class="fa-solid fa-file-pdf"></i>
+                <span>التقرير الهندسي</span>
+
+            </button>
+
+
+            <div class="nav-section-title">
+                النظام
+            </div>
+
+            <button
+                id="uploadDatasheetBtn"
+                class="nav-item">
+
+                <i class="fa-solid fa-file-arrow-up"></i>
+                <span>رفع Datasheet</span>
+
+            </button>
+
+            <button
+                id="settingsBtn"
+                class="nav-item">
+
+                <i class="fa-solid fa-gear"></i>
+                <span>الإعدادات</span>
+
+            </button>
+
+        </nav>
+
+
+        <div class="sidebar-footer">
+
+            <div class="sidebar-user">
+
+                <div class="user-avatar">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+
+                <div class="user-info">
+
+                    <strong id="sidebarUserName">
+                        مستخدم النظام
+                    </strong>
+
+                    <span id="sidebarUserRole">
+                        Engineer
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main-area">
+
+        <!-- =================================================
+             TOPBAR
+             ================================================= -->
+
+        <header class="topbar">
+
+            <button
+                id="sidebarToggle"
+                class="topbar-button"
+                type="button"
+                title="القائمة">
+
+                <i class="fa-solid fa-bars"></i>
+
+            </button>
+
+
+            <div class="project-header">
+
+                <small>
+                    المشروع الحالي
+                </small>
+
+                <strong id="projectTitle">
+                    مشروع صوتي جديد
+                </strong>
+
+            </div>
+
+
+            <div class="topbar-spacer"></div>
+
+
+            <div
+                id="saveStatus"
+                class="save-status saved">
+
+                <span class="save-status-dot"></span>
+
+                <span id="saveStatusText">
+                    محفوظ
+                </span>
+
+            </div>
+
+
+            <button
+                id="undoBtn"
+                class="topbar-button"
+                type="button"
+                title="تراجع">
+
+                <i class="fa-solid fa-rotate-left"></i>
+
+            </button>
+
+
+            <button
+                id="redoBtn"
+                class="topbar-button"
+                type="button"
+                title="إعادة">
+
+                <i class="fa-solid fa-rotate-right"></i>
+
+            </button>
+
+
+            <button
+                id="saveProjectBtn"
+                class="topbar-action"
+                type="button">
+
+                <i class="fa-solid fa-floppy-disk"></i>
+                <span>حفظ</span>
+
+            </button>
+
+
+            <button
+                id="generateReportBtn"
+                class="topbar-action primary"
+                type="button">
+
+                <i class="fa-solid fa-file-pdf"></i>
+                <span>التقرير</span>
+
+            </button>
+
+        </header>
+
+
+        <!-- =================================================
+             WORKSPACE
+             ================================================= -->
+
+        <section class="workspace">
+
+
+            <!-- =============================================
+                 DESIGN TOOLBAR
+                 ============================================= -->
+
+            <div class="design-toolbar">
+
+
+                <div class="toolbar-group">
+
+                    <button
+                        id="toolSelect"
+                        class="tool-button active"
+                        data-tool="select"
+                        type="button"
+                        title="تحديد">
+
+                        <i class="fa-solid fa-arrow-pointer"></i>
+
+                    </button>
+
+                    <button
+                        id="toolPan"
+                        class="tool-button"
+                        data-tool="pan"
+                        type="button"
+                        title="تحريك">
+
+                        <i class="fa-solid fa-hand"></i>
+
+                    </button>
+
+                </div>
+
+
+                <div class="toolbar-group">
+
+                    <button
+                        id="toolRoom"
+                        class="tool-button"
+                        data-tool="room"
+                        type="button"
+                        title="رسم الفراغ">
+
+                        <i class="fa-solid fa-vector-square"></i>
+
+                    </button>
+
+                    <button
+                        id="toolWall"
+                        class="tool-button"
+                        data-tool="wall"
+                        type="button"
+                        title="جدار">
+
+                        <i class="fa-solid fa-minus"></i>
+
+                    </button>
+
+                    <button
+                        id="toolSpeaker"
+                        class="tool-button"
+                        data-tool="speaker"
+                        type="button"
+                        title="إضافة سماعة">
+
+                        <i class="fa-solid fa-volume-high"></i>
+
+                    </button>
+
+                    <button
+                        id="toolDelay"
+                        class="tool-button"
+                        data-tool="delay"
+                        type="button"
+                        title="Delay Speaker">
+
+                        <i class="fa-solid fa-tower-broadcast"></i>
+
+                    </button>
+
+                    <button
+                        id="toolMeasure"
+                        class="tool-button"
+                        data-tool="measure"
+                        type="button"
+                        title="قياس">
+
+                        <i class="fa-solid fa-ruler"></i>
+
+                    </button>
+
+                </div>
+
+
+                <div class="toolbar-group">
+
+                    <button
+                        id="gridToggle"
+                        class="tool-button active"
+                        type="button"
+                        title="الشبكة">
+
+                        <i class="fa-solid fa-border-all"></i>
+
+                    </button>
+
+                    <button
+                        id="snapToggle"
+                        class="tool-button active"
+                        type="button"
+                        title="Snap">
+
+                        <i class="fa-solid fa-magnet"></i>
+
+                    </button>
+
+                </div>
+
+
+                <div class="toolbar-group">
+
+                    <button
+                        id="zoomOutBtn"
+                        class="tool-button"
+                        type="button"
+                        title="تصغير">
+
+                        <i class="fa-solid fa-minus"></i>
+
+                    </button>
+
+                    <button
+                        id="zoomResetBtn"
+                        class="tool-button"
+                        type="button"
+                        title="100%">
+
+                        <i class="fa-solid fa-expand"></i>
+
+                    </button>
+
+                    <button
+                        id="zoomInBtn"
+                        class="tool-button"
+                        type="button"
+                        title="تكبير">
+
+                        <i class="fa-solid fa-plus"></i>
+
+                    </button>
+
+                    <button
+                        id="fitViewBtn"
+                        class="tool-button"
+                        type="button"
+                        title="ملاءمة">
+
+                        <i class="fa-solid fa-maximize"></i>
+
+                    </button>
+
+                </div>
+
+
+                <div class="toolbar-group">
+
+                    <span class="toolbar-label">
+                        W
+                    </span>
+
+                    <input
+                        id="roomWidth"
+                        class="toolbar-input"
+                        type="number"
+                        min="1"
+                        step="0.1"
+                        value="20">
+
+                    <span class="toolbar-label">
+                        D
+                    </span>
+
+                    <input
+                        id="roomDepth"
+                        class="toolbar-input"
+                        type="number"
+                        min="1"
+                        step="0.1"
+                        value="15">
+
+                    <span class="toolbar-label">
+                        H
+                    </span>
+
+                    <input
+                        id="roomHeight"
+                        class="toolbar-input"
+                        type="number"
+                        min="1"
+                        step="0.1"
+                        value="4">
+
+                </div>
+
+
+                <div class="toolbar-group">
+
+                    <button
+                        id="deleteSelectedBtn"
+                        class="tool-button"
+                        type="button"
+                        title="حذف المحدد">
+
+                        <i class="fa-solid fa-trash"></i>
+
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <!-- =============================================
+                 DESIGN LAYOUT
+                 ============================================= -->
+
+            <div class="design-layout">
+
+
+                <!-- =========================================
+                     LEFT PANEL
+                     ========================================= -->
+
+                <aside class="left-panel">
+
+
+                    <!-- PROJECT -->
+
+                    <section class="panel-section">
+
+                        <div class="panel-heading">
+
+                            <h3>
+                                بيانات المشروع
+                            </h3>
+
+                            <span>
+                                PROJECT
+                            </span>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="projectName">
+                                اسم المشروع
+                            </label>
+
+                            <input
+                                id="projectName"
+                                type="text"
+                                placeholder="مثال: نظام صوت قاعة مناسبات">
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="clientName">
+                                العميل
+                            </label>
+
+                            <input
+                                id="clientName"
+                                type="text"
+                                placeholder="اسم العميل">
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="projectLocation">
+                                الموقع
+                            </label>
+
+                            <input
+                                id="projectLocation"
+                                type="text"
+                                placeholder="المدينة / الموقع">
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="venueType">
+                                نوع المنشأة
+                            </label>
+
+                            <select id="venueType">
+
+                                <option value="general">
+                                    مبنى عام
+                                </option>
+
+                                <option value="hotel">
+                                    فندق
+                                </option>
+
+                                <option value="garden">
+                                    حديقة
+                                </option>
+
+                                <option value="meeting">
+                                    قاعة اجتماعات
+                                </option>
+
+                                <option value="banquet">
+                                    قاعة مناسبات
+                                </option>
+
+                                <option value="gym">
+                                    صالة رياضية
+                                </option>
+
+                                <option value="office">
+                                    مكاتب
+                                </option>
+
+                                <option value="theater">
+                                    مسرح
+                                </option>
+
+                                <option value="stadium">
+                                    ملعب
+                                </option>
+
+                                <option value="mosque">
+                                    مسجد
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="projectDescription">
+                                وصف المشروع
+                            </label>
+
+                            <textarea
+                                id="projectDescription"
+                                placeholder="ملاحظات المشروع..."></textarea>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ROOM -->
+
+                    <section class="panel-section">
+
+                        <div class="panel-heading">
+
+                            <h3>
+                                أبعاد الفراغ
+                            </h3>
+
+                            <span>
+                                ROOM
+                            </span>
+
+                        </div>
+
+
+                        <div class="field-grid-3">
+
+                            <div class="field">
+
+                                <label>
+                                    العرض W
+                                </label>
+
+                                <input
+                                    id="roomWidthPanel"
+                                    type="number"
+                                    value="20"
+                                    min="1"
+                                    step=".1">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label>
+                                    العمق D
+                                </label>
+
+                                <input
+                                    id="roomDepthPanel"
+                                    type="number"
+                                    value="15"
+                                    min="1"
+                                    step=".1">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label>
+                                    الارتفاع H
+                                </label>
+
+                                <input
+                                    id="roomHeightPanel"
+                                    type="number"
+                                    value="4"
+                                    min="1"
+                                    step=".1">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="roomMaterial">
+                                مادة الفراغ
+                            </label>
+
+                            <select id="roomMaterial">
+
+                                <option value="medium">
+                                    متوسطة
+                                </option>
+
+                                <option value="concrete">
+                                    خرسانة
+                                </option>
+
+                                <option value="marble">
+                                    رخام
+                                </option>
+
+                                <option value="wood">
+                                    خشب
+                                </option>
+
+                                <option value="acoustic">
+                                    معالجة صوتياً
+                                </option>
+
+                                <option value="outdoor">
+                                    Outdoor
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="reflectionLevel">
+                                مستوى الانعكاس
+                            </label>
+
+                            <select id="reflectionLevel">
+
+                                <option value="low">
+                                    منخفض
+                                </option>
+
+                                <option value="medium" selected>
+                                    متوسط
+                                </option>
+
+                                <option value="high">
+                                    مرتفع
+                                </option>
+
+                                <option value="very-high">
+                                    مرتفع جداً
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- STAGE -->
+
+                    <section class="panel-section">
+
+                        <div class="panel-heading">
+
+                            <h3>
+                                المسرح / المنصة
+                            </h3>
+
+                            <span>
+                                STAGE
+                            </span>
+
+                        </div>
+
+
+                        <div class="field-grid">
+
+                            <div class="field">
+
+                                <label for="stageWidth">
+                                    العرض
+                                </label>
+
+                                <input
+                                    id="stageWidth"
+                                    type="number"
+                                    min="0"
+                                    step=".1"
+                                    value="8">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label for="stageDepth">
+                                    العمق
+                                </label>
+
+                                <input
+                                    id="stageDepth"
+                                    type="number"
+                                    min="0"
+                                    step=".1"
+                                    value="4">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field-grid">
+
+                            <div class="field">
+
+                                <label for="stageX">
+                                    X
+                                </label>
+
+                                <input
+                                    id="stageX"
+                                    type="number"
+                                    step=".1"
+                                    value="6">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label for="stageY">
+                                    Y
+                                </label>
+
+                                <input
+                                    id="stageY"
+                                    type="number"
+                                    step=".1"
+                                    value="0">
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- AUDIENCE -->
+
+                    <section class="panel-section">
+
+                        <div class="panel-heading">
+
+                            <h3>
+                                الجمهور
+                            </h3>
+
+                            <span>
+                                AUDIENCE
+                            </span>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="crowdSize">
+                                عدد الأشخاص
+                            </label>
+
+                            <input
+                                id="crowdSize"
+                                type="number"
+                                min="0"
+                                step="1"
+                                value="300">
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="audienceHeight">
+                                ارتفاع أذن المستمع
+                            </label>
+
+                            <input
+                                id="audienceHeight"
+                                type="number"
+                                min="0"
+                                step=".05"
+                                value="1.2">
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="mountingHeight">
+                                ارتفاع تركيب السماعة
+                            </label>
+
+                            <input
+                                id="mountingHeight"
+                                type="number"
+                                min="0"
+                                step=".1"
+                                value="3.2">
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- ENGINEERING -->
+
+                    <section class="panel-section">
+
+                        <div class="panel-heading">
+
+                            <h3>
+                                الإعدادات الهندسية
+                            </h3>
+
+                            <span>
+                                ENGINEERING
+                            </span>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="designMode">
+                                وضع التصميم
+                            </label>
+
+                            <select id="designMode">
+
+                                <option value="manual">
+                                    Manual
+                                </option>
+
+                                <option value="assisted">
+                                    Assisted Engineering
+                                </option>
+
+                                <option value="auto">
+                                    AI / Auto Design
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="engineeringProfile">
+                                الملف الهندسي
+                            </label>
+
+                            <select id="engineeringProfile">
+
+                                <option value="speech">
+                                    Speech / Voice
+                                </option>
+
+                                <option value="general">
+                                    General Purpose
+                                </option>
+
+                                <option value="music">
+                                    Music
+                                </option>
+
+                                <option value="live">
+                                    Live Event
+                                </option>
+
+                                <option value="theater">
+                                    Theater
+                                </option>
+
+                                <option value="outdoor">
+                                    Outdoor
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <div class="field-grid">
+
+                            <div class="field">
+
+                                <label for="targetSPL">
+                                    Target SPL
+                                </label>
+
+                                <input
+                                    id="targetSPL"
+                                    type="number"
+                                    value="95"
+                                    min="60"
+                                    max="130"
+                                    step="1">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label for="headroom">
+                                    Headroom
+                                </label>
+
+                                <input
+                                    id="headroom"
+                                    type="number"
+                                    value="6"
+                                    min="0"
+                                    max="20"
+                                    step="1">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="coverageTarget">
+                                نسبة التغطية المطلوبة
+                            </label>
+
+                            <input
+                                id="coverageTarget"
+                                type="number"
+                                value="90"
+                                min="1"
+                                max="100"
+                                step="1">
+
+                        </div>
+
+
+                        <div class="auto-design-card">
+
+                            <h4>
+                                التوزيع الذكي
+                            </h4>
+
+                            <p>
+                                تحليل أبعاد الفراغ ومواصفات السماعات
+                                واقتراح توزيع هندسي تلقائي.
+                            </p>
+
+                            <button
+                                id="autoDesignBtn"
+                                class="auto-design-button"
+                                type="button">
+
+                                <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                                تشغيل التصميم الذكي
+
+                            </button>
+
+                        </div>
+
+                    </section>
+
+                </aside>
+
+
+                <!-- =========================================
+                     CANVAS
+                     ========================================= -->
+
+                <section class="canvas-panel">
+
+                    <div class="canvas-header">
+
+                        <div class="canvas-title">
+
+                            <i class="fa-solid fa-compass-drafting"></i>
+
+                            <span>
+                                المخطط الهندسي
+                            </span>
+
+                        </div>
+
+
+                        <div class="canvas-info">
+
+                            <span>
+                                Cursor:
+                            </span>
+
+                            <span
+                                id="cursorCoordinates"
+                                class="canvas-coordinate">
+                                X: 0.00m | Y: 0.00m
+                            </span>
+
+                            <span>
+                                Zoom:
+                            </span>
+
+                            <span
+                                id="zoomLevel">
+                                100%
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div id="canvasContainer" class="canvas-stage">
+
+                        <svg
+                            id="designSvg"
+                            class="acoustic-canvas" style="touch-action:none;cursor:crosshair;"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 1000 700"
+                            preserveAspectRatio="xMidYMid meet"
+                            aria-label="المخطط الهندسي للنظام الصوتي">
+
+                            <defs>
+
+                                <filter id="speakerGlow">
+                                    <feGaussianBlur
+                                        stdDeviation="3">
+                                    </feGaussianBlur>
+                                </filter>
+
+                                <filter id="softGlow">
+                                    <feGaussianBlur
+                                        stdDeviation="5">
+                                    </feGaussianBlur>
+                                </filter>
+
+                                <pattern
+                                    id="canvasGridPattern"
+                                    width="20"
+                                    height="20"
+                                    patternUnits="userSpaceOnUse">
+
+                                    <path
+                                        d="M 20 0 L 0 0 0 20"
+                                        fill="none"
+                                        stroke="rgba(255,255,255,.04)"
+                                        stroke-width="1">
+                                    </path>
+
+                                </pattern>
+
+                            </defs>
+
+
+                            <rect
+                                id="canvasBackground"
+                                x="0"
+                                y="0"
+                                width="1000"
+                                height="700"
+                                fill="url(#canvasGridPattern)">
+                            </rect>
+
+
+                            <g id="gridLayer"></g>
+
+                            <g id="roomLayer">
+                                <rect
+                                    id="roomRect"
+                                    x="150"
+                                    y="100"
+                                    width="900"
+                                    height="540"
+                                    rx="2"
+                                    fill="rgba(56,189,248,.025)"
+                                    stroke="#38bdf8"
+                                    stroke-width="3">
+                                </rect>
+                                <rect
+                                    id="roomInnerRect"
+                                    x="160"
+                                    y="110"
+                                    width="880"
+                                    height="520"
+                                    rx="1"
+                                    fill="none"
+                                    stroke="rgba(255,255,255,.08)"
+                                    stroke-width="1">
+                                </rect>
+                                <text
+                                    id="roomLabel"
+                                    x="600"
+                                    y="130"
+                                    fill="rgba(255,255,255,.65)"
+                                    text-anchor="middle"
+                                    font-family="Cairo, sans-serif"
+                                    font-size="14">
+                                    12 × 8 m
+                                </text>
+                            </g>
+
+                            <g id="coverageLayer"></g>
+                            <g id="measurementLayer"></g>
+                            <g id="wallsLayer"></g>
+                            <g id="zonesLayer"></g>
+                            <g id="speakersLayer"></g>
+                            <g id="selectionLayer"></g>
+
+                            <g id="cursorPoint"></g>
+
+                        </svg>
+
+
+                        <div
+                            id="canvasEmptyState"
+                            class="canvas-empty-state">
+
+                            <i class="fa-solid fa-drafting-compass"></i>
+
+                            <strong>
+                                ابدأ التصميم الهندسي
+                            </strong>
+
+                            <span>
+                                أدخل أبعاد الفراغ من اللوحة الجانبية،
+                                ثم أضف السماعات يدوياً أو شغّل
+                                التوزيع الذكي.
+                            </span>
+
+                        </div>
+
+
+                        <div class="canvas-hud">
+
+                            <button
+                                id="canvasZoomOut"
+                                class="hud-button"
+                                type="button">
+
+                                <i class="fa-solid fa-minus"></i>
+
+                            </button>
+
+                            <span
+                                id="canvasZoomValue"
+                                class="zoom-level">
+                                100%
+                            </span>
+
+                            <button
+                                id="canvasZoomIn"
+                                class="hud-button"
+                                type="button">
+
+                                <i class="fa-solid fa-plus"></i>
+
+                            </button>
+
+                            <button
+                                id="canvasFitBtn"
+                                class="hud-button"
+                                type="button">
+
+                                <i class="fa-solid fa-maximize"></i>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =========================================
+                     RIGHT PANEL
+                     ========================================= -->
+
+                <aside class="right-panel">
+
+
+                    <!-- SELECTED OBJECT -->
+
+                    <section class="panel-section">
+
+                        <div class="panel-heading">
+
+                            <h3>
+                                العنصر المحدد
+                            </h3>
+
+                            <span>
+                                INSPECTOR
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            id="selectionEmpty"
+                            class="selection-empty">
+
+                            <i class="fa-solid fa-arrow-pointer"></i>
+
+                            <strong>
+                                لا يوجد عنصر محدد
+                            </strong>
+
+                            <span>
+                                حدد سماعة أو عنصراً من المخطط
+                                لعرض خصائصه.
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            id="selectionInfo"
+                            style="display:none;">
+
+                            <div class="object-title">
+
+                                <div class="object-icon">
+
+                                    <i class="fa-solid fa-volume-high"></i>
+
+                                </div>
+
+                                <div class="object-name">
+
+                                    <strong id="selectedObjectName">
+                                        Speaker
+                                    </strong>
+
+                                    <span id="selectedObjectType">
+                                        Loudspeaker
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="inspector-actions">
+
+                                <button
+                                    id="rotateSelectedBtn"
+                                    class="inspector-action"
+                                    type="button">
+
+                                    <i class="fa-solid fa-rotate"></i>
+                                    دوران
+
+                                </button>
+
+                                <button
+                                    id="duplicateSelectedBtn"
+                                    class="inspector-action"
+                                    type="button">
+
+                                    <i class="fa-solid fa-copy"></i>
+                                    نسخ
+
+                                </button>
+
+                                <button
+                                    id="deleteSelectedInspectorBtn"
+                                    class="inspector-action danger"
+                                    type="button">
+
+                                    <i class="fa-solid fa-trash"></i>
+                                    حذف
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- SPEAKER PROPERTIES -->
+
+                    <section class="panel-section">
+
+                        <div class="panel-heading">
+
+                            <h3>
+                                مواصفات السماعة
+                            </h3>
+
+                            <span>
+                                SPEAKER
+                            </span>
+
+                        </div>
+
+
+                        <div class="field">
+
+                            <label for="speakerModel">
+                                الموديل
+                            </label>
+
+                            <input
+                                id="speakerModel"
+                                type="text"
+                                placeholder="Speaker Model">
+
+                        </div>
+
+
+                        <div class="field-grid">
+
+                            <div class="field">
+
+                                <label for="speakerPower">
+                                    RMS / Power
+                                </label>
+
+                                <input
+                                    id="speakerPower"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    placeholder="1000">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label for="speakerSPL">
+                                    Max SPL
+                                </label>
+
+                                <input
+                                    id="speakerSPL"
+                                    type="number"
+                                    min="0"
+                                    step=".1"
+                                    placeholder="133">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field-grid">
+
+                            <div class="field">
+
+                                <label for="speakerH">
+                                    Horizontal
+                                </label>
+
+                                <input
+                                    id="speakerH"
+                                    type="number"
+                                    min="1"
+                                    max="360"
+                                    step="1"
+                                    placeholder="90">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label for="speakerV">
+                                    Vertical
+                                </label>
+
+                                <input
+                                    id="speakerV"
+                                    type="number"
+                                    min="1"
+                                    max="180"
+                                    step="1"
+                                    placeholder="60">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field-grid">
+
+                            <div class="field">
+
+                                <label for="speakerFreqLow">
+                                    Low Hz
+                                </label>
+
+                                <input
+                                    id="speakerFreqLow"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    placeholder="50">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label for="speakerFreqHigh">
+                                    High Hz
+                                </label>
+
+                                <input
+                                    id="speakerFreqHigh"
+                                    type="number"
+                                    min="0"
+                                    step="1"
+                                    placeholder="20000">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field-grid">
+
+                            <div class="field">
+
+                                <label for="speakerWeight">
+                                    الوزن kg
+                                </label>
+
+                                <input
+                                    id="speakerWeight"
+                                    type="number"
+                                    min="0"
+                                    step=".1">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label for="speakerMount">
+                                    التثبيت
+                                </label>
+
+                                <select id="speakerMount">
+
+                                    <option value="floor">
+                                        Floor
+                                    </option>
+
+                                    <option value="tripod">
+                                        Tripod
+                                    </option>
+
+                                    <option value="wall">
+                                        Wall Mount
+                                    </option>
+
+                                    <option value="ceiling">
+                                        Ceiling
+                                    </option>
+
+                                    <option value="pole">
+                                        Pole
+                                    </option>
+
+                                    <option value="truss">
+                                        Truss
+                                    </option>
+
+                                    <option value="flown">
+                                        Flown
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            id="applySpeakerPropertiesBtn"
+                            class="modal-button primary"
+                            style="width:100%;margin-top:4px;"
+                            type="button">
+
+                            <i class="fa-solid fa-check"></i>
+
+                            تطبيق المواصفات
+
+                        </button>
+
+                    </section>
+
+
+                    <!-- POSITION -->
+
+                    <section class="panel-section">
+
+                        <div class="panel-heading">
+
+                            <h3>
+                                الموقع والاتجاه
+                            </h3>
+
+                            <span>
+                                POSITION
+                            </span>
+
+                        </div>
+
+
+                        <div class="field-grid-3">
+
+                            <div class="field">
+
+                                <label>
+                                    X
+                                </label>
+
+                                <input
+                                    id="selectedX"
+                                    type="number"
+                                    step=".01"
+                                    value="0">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label>
+                                    Y
+                                </label>
+
+                                <input
+                                    id="selectedY"
+                                    type="number"
+                                    step=".01"
+                                    value="0">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label>
+                                    Z
+                                </label>
+
+                                <input
+                                    id="selectedZ"
+                                    type="number"
+                                    step=".01"
+                                    value="3">
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="field-grid">
+
+                            <div class="field">
+
+                                <label>
+                                    Rotation °
+                                </label>
+
+                                <input
+                                    id="selectedRotation"
+                                    type="number"
+                                    step="1"
+                                    value="0">
+
+                            </div>
+
+                            <div class="field">
+
+                                <label>
+                                    Delay ms
+                                </label>
+
+                                <input
+                                    id="selectedDelay"
+                                    type="number"
+                                    min="0"
+                                    step=".01"
+                                    value="0">
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            id="applyPositionBtn"
+                            class="modal-button primary"
+                            style="width:100%;"
+                            type="button">
+
+                            <i class="fa-solid fa-location-arrow"></i>
+
+                            تطبيق الموقع
+
+                        </button>
+
+                    </section>
+
+
+                    <!-- COVERAGE -->
+
+                    <section class="panel-section">
+
+                        <div class="panel-heading">
+
+                            <h3>
+                                التغطية
+                            </h3>
+
+                            <span>
+                                COVERAGE
+                            </span>
+
+                        </div>
+
+
+                        <div class="mini-metrics">
+
+                            <div class="mini-metric">
+
+                                <div class="mini-metric-label">
+                                    Horizontal
+                                </div>
+
+                                <div
+                                    id="selectedCoverageH"
+                                    class="mini-metric-value">
+                                    —
+                                </div>
+
+                                <span class="mini-metric-unit">
+                                    deg
+                                </span>
+
+                            </div>
+
+                            <div class="mini-metric">
+
+                                <div class="mini-metric-label">
+                                    Vertical
+                                </div>
+
+                                <div
+                                    id="selectedCoverageV"
+                                    class="mini-metric-value">
+                                    —
+                                </div>
+
+                                <span class="mini-metric-unit">
+                                    deg
+                                </span>
+
+                            </div>
+
+                            <div class="mini-metric">
+
+                                <div class="mini-metric-label">
+                                    Throw
+                                </div>
+
+                                <div
+                                    id="selectedThrow"
+                                    class="mini-metric-value">
+                                    —
+                                </div>
+
+                                <span class="mini-metric-unit">
+                                    m
+                                </span>
+
+                            </div>
+
+                            <div class="mini-metric">
+
+                                <div class="mini-metric-label">
+                                    SPL
+                                </div>
+
+                                <div
+                                    id="selectedSPL"
+                                    class="mini-metric-value">
+                                    —
+                                </div>
+
+                                <span class="mini-metric-unit">
+                                    dB
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </section>
+
+
+                    <!-- SPEAKER LIBRARY -->
+
+                    <section class="panel-section">
+
+                        <div class="panel-heading">
+
+                            <h3>
+                                مكتبة السماعات
+                            </h3>
+
+                            <span>
+                                LIBRARY
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            id="speakerLibrary"
+                            class="speaker-library">
+
+                            <div
+                                class="speaker-card"
+                                data-speaker-preset="generic-fullrange">
+
+                                <div class="speaker-card-icon">
+                                    <i class="fa-solid fa-volume-high"></i>
+                                </div>
+
+                                <div class="speaker-card-copy">
+
+                                    <strong>
+                                        Generic Full Range
+                                    </strong>
+
+                                    <span>
+                                        1000W · 133dB · 90°×60°
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="speaker-card"
+                                data-speaker-preset="ceiling">
+
+                                <div class="speaker-card-icon">
+                                    <i class="fa-solid fa-circle-dot"></i>
+                                </div>
+
+                                <div class="speaker-card-copy">
+
+                                    <strong>
+                                        Ceiling Speaker
+                                    </strong>
+
+                                    <span>
+                                        30W · Wide Coverage
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="speaker-card"
+                                data-speaker-preset="column">
+
+                                <div class="speaker-card-icon">
+                                    <i class="fa-solid fa-bars-staggered"></i>
+                                </div>
+
+                                <div class="speaker-card-copy">
+
+                                    <strong>
+                                        Column Speaker
+                                    </strong>
+
+                                    <span>
+                                        Vertical Array
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="speaker-card"
+                                data-speaker-preset="subwoofer">
+
+                                <div class="speaker-card-icon">
+                                    <i class="fa-solid fa-box"></i>
+                                </div>
+
+                                <div class="speaker-card-copy">
+
+                                    <strong>
+                                        Subwoofer
+                                    </strong>
+
+                                    <span>
+                                        Low Frequency
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <button
+                            id="addSpeakerBtn"
+                            class="modal-button primary"
+                            style="width:100%;margin-top:9px;"
+                            type="button">
+
+                            <i class="fa-solid fa-plus"></i>
+
+                            إضافة سماعة جديدة
+
+                        </button>
+
+                    </section>
+
+                </aside>
+
+            </div>
+
+
+            <!-- =============================================
+                 BOTTOM PANELS
+                 ============================================= -->
+
+            <section class="bottom-panels">
+
+
+                <!-- METRICS -->
+
+                <div class="bottom-panel">
+
+                    <div class="bottom-panel-header">
+
+                        <strong>
+                            مؤشرات التصميم
+                        </strong>
+
+                        <span>
+                            LIVE
+                        </span>
+
+                    </div>
+
+
+                    <div class="mini-metrics">
+
+                        <div class="mini-metric">
+
+                            <div class="mini-metric-label">
+                                Coverage
+                            </div>
+
+                            <div
+                                id="metricCoverage"
+                                class="mini-metric-value">
+                                —
+                            </div>
+
+                            <span class="mini-metric-unit">
+                                %
+                            </span>
+
+                        </div>
+
+
+                        <div class="mini-metric">
+
+                            <div class="mini-metric-label">
+                                Average SPL
+                            </div>
+
+                            <div
+                                id="metricAverageSPL"
+                                class="mini-metric-value">
+                                —
+                            </div>
+
+                            <span class="mini-metric-unit">
+                                dB
+                            </span>
+
+                        </div>
+
+
+                        <div class="mini-metric">
+
+                            <div class="mini-metric-label">
+                                Min SPL
+                            </div>
+
+                            <div
+                                id="metricMinimumSPL"
+                                class="mini-metric-value">
+                                —
+                            </div>
+
+                            <span class="mini-metric-unit">
+                                dB
+                            </span>
+
+                        </div>
+
+
+                        <div class="mini-metric">
+
+                            <div class="mini-metric-label">
+                                Max SPL
+                            </div>
+
+                            <div
+                                id="metricMaximumSPL"
+                                class="mini-metric-value">
+                                —
+                            </div>
+
+                            <span class="mini-metric-unit">
+                                dB
+                            </span>
+
+                        </div>
+
+
+                        <div class="mini-metric">
+
+                            <div class="mini-metric-label">
+                                Uniformity
+                            </div>
+
+                            <div
+                                id="metricUniformity"
+                                class="mini-metric-value">
+                                —
+                            </div>
+
+                            <span class="mini-metric-unit">
+                                dB
+                            </span>
+
+                        </div>
+
+
+                        <div class="mini-metric">
+
+                            <div class="mini-metric-label">
+                                Speakers
+                            </div>
+
+                            <div
+                                id="metricSpeakerCount"
+                                class="mini-metric-value">
+                                0
+                            </div>
+
+                            <span class="mini-metric-unit">
+                                units
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ANALYSIS -->
+
+                <div class="bottom-panel">
+
+                    <div class="bottom-panel-header">
+
+                        <strong>
+                            التحليل الهندسي
+                        </strong>
+
+                        <span>
+                            ANALYSIS
+                        </span>
+
+                    </div>
+
+
+                    <div
+                        id="analysisContainer"
+                        class="analysis-list">
+
+                        <div class="analysis-row">
+
+                            <span class="analysis-row-label">
+                                حالة التحليل
+                            </span>
+
+                            <span
+                                id="analysisStatus"
+                                class="analysis-row-value">
+                                جاهز
+                            </span>
+
+                        </div>
+
+
+                        <div class="analysis-row">
+
+                            <span class="analysis-row-label">
+                                Coverage
+                            </span>
+
+                            <span
+                                id="analysisCoverage"
+                                class="analysis-row-value">
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <div class="analysis-row">
+
+                            <span class="analysis-row-label">
+                                Average SPL
+                            </span>
+
+                            <span
+                                id="analysisAverageSPL"
+                                class="analysis-row-value">
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <div class="analysis-row">
+
+                            <span class="analysis-row-label">
+                                Uniformity
+                            </span>
+
+                            <span
+                                id="analysisUniformity"
+                                class="analysis-row-value">
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <div class="analysis-row">
+
+                            <span class="analysis-row-label">
+                                Warnings
+                            </span>
+
+                            <span
+                                id="analysisWarnings"
+                                class="analysis-row-value">
+                                0
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BOM -->
+
+                <div class="bottom-panel">
+
+                    <div class="bottom-panel-header">
+
+                        <strong>
+                            جدول الكميات
+                        </strong>
+
+                        <span>
+                            BOM
+                        </span>
+
+                    </div>
+
+
+                    <div style="overflow:auto;max-height:165px;">
+
+                        <table class="compact-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>
+                                        الموديل
+                                    </th>
+
+                                    <th>
+                                        النوع
+                                    </th>
+
+                                    <th>
+                                        Qty
+                                    </th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody id="bomTableBody">
+
+                                <tr>
+
+                                    <td colspan="3"
+                                        style="text-align:center;">
+
+                                        لا توجد سماعات
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =========================================================
+     PROJECT MODAL
+     ========================================================= -->
+
+<div
+    id="projectModal"
+    class="app-modal">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <h3>
+                مشروع جديد
+            </h3>
+
+            <button
+                class="modal-close"
+                data-close-modal="projectModal"
+                type="button">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="field">
+
+                <label>
+                    اسم المشروع
+                </label>
+
+                <input
+                    id="newProjectName"
+                    type="text"
+                    placeholder="اسم المشروع">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    العميل
+                </label>
+
+                <input
+                    id="newClientName"
+                    type="text"
+                    placeholder="اسم العميل">
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    الموقع
+                </label>
+
+                <input
+                    id="newProjectLocation"
+                    type="text"
+                    placeholder="الموقع">
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                id="cancelProjectBtn"
+                class="modal-button"
+                type="button">
+
+                إلغاء
+
+            </button>
+
+            <button
+                id="createProjectBtn"
+                class="modal-button primary"
+                type="button">
+
+                <i class="fa-solid fa-plus"></i>
+                إنشاء المشروع
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     SPEAKER MODAL
+     ========================================================= -->
+
+<div
+    id="speakerModal"
+    class="app-modal">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <h3>
+                إضافة سماعة
+            </h3>
+
+            <button
+                class="modal-close"
+                data-close-modal="speakerModal"
+                type="button">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="field">
+
+                <label>
+                    اسم / موديل السماعة
+                </label>
+
+                <input
+                    id="modalSpeakerModel"
+                    type="text"
+                    placeholder="Speaker Model">
+
+            </div>
+
+
+            <div class="field-grid">
+
+                <div class="field">
+
+                    <label>
+                        RMS Power
+                    </label>
+
+                    <input
+                        id="modalSpeakerPower"
+                        type="number"
+                        value="1000">
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Max SPL
+                    </label>
+
+                    <input
+                        id="modalSpeakerSPL"
+                        type="number"
+                        value="133">
+
+                </div>
+
+            </div>
+
+
+            <div class="field-grid">
+
+                <div class="field">
+
+                    <label>
+                        Horizontal °
+                    </label>
+
+                    <input
+                        id="modalSpeakerH"
+                        type="number"
+                        value="90">
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Vertical °
+                    </label>
+
+                    <input
+                        id="modalSpeakerV"
+                        type="number"
+                        value="60">
+
+                </div>
+
+            </div>
+
+
+            <div class="field-grid">
+
+                <div class="field">
+
+                    <label>
+                        Frequency Low
+                    </label>
+
+                    <input
+                        id="modalSpeakerFreqLow"
+                        type="number"
+                        value="50">
+
+                </div>
+
+                <div class="field">
+
+                    <label>
+                        Frequency High
+                    </label>
+
+                    <input
+                        id="modalSpeakerFreqHigh"
+                        type="number"
+                        value="20000">
+
+                </div>
+
+            </div>
+
+
+            <div class="field">
+
+                <label>
+                    نوع التثبيت
+                </label>
+
+                <select id="modalSpeakerMount">
+
+                    <option value="floor">
+                        Floor
+                    </option>
+
+                    <option value="tripod">
+                        Tripod
+                    </option>
+
+                    <option value="wall">
+                        Wall Mount
+                    </option>
+
+                    <option value="ceiling">
+                        Ceiling
+                    </option>
+
+                    <option value="pole">
+                        Pole
+                    </option>
+
+                    <option value="truss">
+                        Truss
+                    </option>
+
+                    <option value="flown">
+                        Flown
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="modal-button"
+                data-close-modal="speakerModal"
+                type="button">
+
+                إلغاء
+
+            </button>
+
+            <button
+                id="saveSpeakerBtn"
+                class="modal-button primary"
+                type="button">
+
+                <i class="fa-solid fa-check"></i>
+
+                إضافة
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     DATASHEET MODAL
+     ========================================================= -->
+
+<div
+    id="datasheetModal"
+    class="app-modal">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <h3>
+                رفع Datasheet
+            </h3>
+
+            <button
+                class="modal-close"
+                data-close-modal="datasheetModal"
+                type="button">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div
+                id="datasheetUploadZone"
+                class="upload-zone">
+
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+
+                <strong>
+                    اسحب ملف المواصفات هنا
+                </strong>
+
+                <span>
+                    PDF / XLSX / CSV / JSON / TXT
+                </span>
+
+                <input
+                    id="datasheetFile"
+                    type="file"
+                    accept=".pdf,.xlsx,.xls,.csv,.json,.txt"
+                    style="display:none;">
+
+            </div>
+
+
+            <div
+                id="datasheetUploadStatus"
+                style="
+                    margin-top:10px;
+                    color:#68778a;
+                    font-size:9px;
+                    text-align:center;
+                ">
+
+                لم يتم اختيار ملف
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="modal-button"
+                data-close-modal="datasheetModal"
+                type="button">
+
+                إغلاق
+
+            </button>
+
+            <button
+                id="processDatasheetBtn"
+                class="modal-button primary"
+                type="button">
+
+                <i class="fa-solid fa-microchip"></i>
+
+                تحليل المواصفات
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     AUTO DESIGN MODAL
+     ========================================================= -->
+
+<div
+    id="autoDesignModal"
+    class="app-modal">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <h3>
+                التوزيع الذكي
+            </h3>
+
+            <button
+                class="modal-close"
+                data-close-modal="autoDesignModal"
+                type="button">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <p style="
+                margin-top:0;
+                color:#7c8a9d;
+                font-size:10px;
+                line-height:1.8;
+            ">
+
+                اختر طريقة التوزيع التي تريد استخدامها.
+                سيقوم محرك الهندسة بتحليل أبعاد الفراغ،
+                ارتفاع التركيب، اتجاه السماعات، زاوية التغطية
+                وهدف SPL.
+
+            </p>
+
+
+            <div class="auto-design-options">
+
+                <label class="design-mode-option">
+
+                    <input
+                        type="radio"
+                        name="autoDesignMode"
+                        value="front-fill"
+                        checked>
+
+                    <div>
+
+                        <strong>
+                            Main / Front System
+                        </strong>
+
+                        <span>
+                            توزيع رئيسي أمامي مناسب للقاعات
+                            والمسارح والفعاليات.
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+                <label class="design-mode-option">
+
+                    <input
+                        type="radio"
+                        name="autoDesignMode"
+                        value="distributed">
+
+                    <div>
+
+                        <strong>
+                            Distributed System
+                        </strong>
+
+                        <span>
+                            توزيع متقارب ومتجانس للتغطية،
+                            مناسب للمساجد والاجتماعات والمباني.
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+                <label class="design-mode-option">
+
+                    <input
+                        type="radio"
+                        name="autoDesignMode"
+                        value="delay-fill">
+
+                    <div>
+
+                        <strong>
+                            Main + Delay Fills
+                        </strong>
+
+                        <span>
+                            نظام رئيسي مع مناطق Delay عند
+                            الحاجة للمسافات الطويلة.
+                        </span>
+
+                    </div>
+
+                </label>
+
+
+                <label class="design-mode-option">
+
+                    <input
+                        type="radio"
+                        name="autoDesignMode"
+                        value="ceiling-grid">
+
+                    <div>
+
+                        <strong>
+                            Ceiling Grid
+                        </strong>
+
+                        <span>
+                            توزيع شبكي للسماعات السقفية.
+                        </span>
+
+                    </div>
+
+                </label>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="modal-button"
+                data-close-modal="autoDesignModal"
+                type="button">
+
+                إلغاء
+
+            </button>
+
+            <button
+                id="runAutoDesignBtn"
+                class="modal-button primary"
+                type="button">
+
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+
+                تنفيذ التصميم
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     SETTINGS MODAL
+     ========================================================= -->
+
+<div
+    id="settingsModal"
+    class="app-modal">
+
+    <div class="modal-card">
+
+        <div class="modal-header">
+
+            <h3>
+                إعدادات النظام
+            </h3>
+
+            <button
+                class="modal-close"
+                data-close-modal="settingsModal"
+                type="button">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="toggle-row">
+
+                <span class="toggle-label">
+                    الحفظ التلقائي
+                </span>
+
+                <label class="switch">
+
+                    <input
+                        id="autoSaveToggle"
+                        type="checkbox"
+                        checked>
+
+                    <span class="switch-slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="toggle-row">
+
+                <span class="toggle-label">
+                    إظهار الشبكة
+                </span>
+
+                <label class="switch">
+
+                    <input
+                        id="settingsGridToggle"
+                        type="checkbox"
+                        checked>
+
+                    <span class="switch-slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="toggle-row">
+
+                <span class="toggle-label">
+                    Snap to Grid
+                </span>
+
+                <label class="switch">
+
+                    <input
+                        id="settingsSnapToggle"
+                        type="checkbox"
+                        checked>
+
+                    <span class="switch-slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="toggle-row">
+
+                <span class="toggle-label">
+                    إظهار مخاريط التغطية
+                </span>
+
+                <label class="switch">
+
+                    <input
+                        id="coverageToggle"
+                        type="checkbox"
+                        checked>
+
+                    <span class="switch-slider"></span>
+
+                </label>
+
+            </div>
+
+
+            <div class="field" style="margin-top:15px;">
+
+                <label>
+                    لغة الواجهة
+                </label>
+
+                <select id="languageSelect">
+
+                    <option value="ar">
+                        العربية
+                    </option>
+
+                    <option value="en">
+                        English
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="modal-button"
+                data-close-modal="settingsModal"
+                type="button">
+
+                إغلاق
+
+            </button>
+
+            <button
+                id="saveSettingsBtn"
+                class="modal-button primary"
+                type="button">
+
+                حفظ الإعدادات
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     CONFIRM MODAL
+     ========================================================= -->
+
+<div
+    id="confirmModal"
+    class="app-modal">
+
+    <div class="modal-card"
+         style="max-width:400px;">
+
+        <div class="modal-header">
+
+            <h3 id="confirmTitle">
+                تأكيد العملية
+            </h3>
+
+            <button
+                class="modal-close"
+                data-close-modal="confirmModal"
+                type="button">
+
+                <i class="fa-solid fa-xmark"></i>
+
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <p
+                id="confirmMessage"
+                style="
+                    margin:0;
+                    color:#9aa7b7;
+                    font-size:11px;
+                    line-height:1.8;
+                ">
+
+                هل أنت متأكد من تنفيذ هذه العملية؟
+
+            </p>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="modal-button"
+                data-close-modal="confirmModal"
+                type="button">
+
+                إلغاء
+
+            </button>
+
+            <button
+                id="confirmActionBtn"
+                class="modal-button primary"
+                type="button">
+
+                تأكيد
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+     ========================================================= -->
+
+<div id="toastContainer"></div>
+
+
+<!-- =========================================================
+     LOADING
+     ========================================================= -->
+
+<div id="loadingOverlay">
+
+    <div class="loading-box">
+
+        <div class="loading-spinner"></div>
+
+        <strong id="loadingText">
+            جارٍ تجهيز النظام...
+        </strong>
+
+        <span id="loadingSubtext">
+            يرجى الانتظار
+        </span>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     JAVASCRIPT
+     IMPORTANT: ORDER
+     ========================================================= -->
+
+<script src="js/config.js"></script>
+
+<script src="js/firebase.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/storage.js"></script>
+
+<script src="js/geometry.js"></script>
+<script src="js/speaker.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/canvas.js"></script>
+
+<script src="js/report.js"></script>
+<script src="js/app.js"></script>
+
+
+<!-- =========================================================
+     PAGE BRIDGE
+     ========================================================= -->
+
+<script>
+
+(function () {
+
+    "use strict";
+
+
+    const AE =
+        window.AcousticEngineering ||
+        {};
+
+
+    function $(id) {
+        return document.getElementById(id);
+    }
+
+
+    /* =====================================================
+       SIDEBAR
+       ===================================================== */
+
+    const sidebar =
+        $("sidebar");
+
+    const sidebarToggle =
+        $("sidebarToggle");
+
+
+    if (sidebarToggle) {
+
+        sidebarToggle.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    window.innerWidth <= 1000
+                ) {
+
+                    sidebar.classList.toggle(
+                        "mobile-open"
+                    );
+
+                } else {
+
+                    sidebar.classList.toggle(
+                        "collapsed"
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       NAVIGATION
+       ===================================================== */
+
+    document
+        .querySelectorAll(".nav-item[data-section]")
+        .forEach(function (item) {
+
+            item.addEventListener(
+                "click",
+                function () {
+
+                    document
+                        .querySelectorAll(
+                            ".nav-item[data-section]"
+                        )
+                        .forEach(function (nav) {
+                            nav.classList.remove(
+                                "active"
+                            );
+                        });
+
+                    item.classList.add(
+                        "active"
+                    );
+
+                    const section =
+                        item.dataset.section;
+
+                    if (
+                        section === "report"
+                    ) {
+
+                        if (
+                            AE.report &&
+                            typeof AE.report.open ===
+                            "function"
+                        ) {
+                            AE.report.open();
+                        } else {
+                            window.location.href =
+                                "report.html";
+                        }
+
+                    } else if (
+                        section === "auto-design"
+                    ) {
+
+                        openModal(
+                            "autoDesignModal"
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       MODALS
+       ===================================================== */
+
+    function openModal(id) {
+
+        const modal = $(id);
+
+        if (!modal) return;
+
+        modal.classList.add("active");
+
+    }
+
+
+    function closeModal(id) {
+
+        const modal = $(id);
+
+        if (!modal) return;
+
+        modal.classList.remove("active");
+
+    }
+
+
+    document
+        .querySelectorAll(
+            "[data-close-modal]"
+        )
+        .forEach(function (button) {
+
+            button.addEventListener(
+                "click",
+                function () {
+
+                    closeModal(
+                        button.dataset.closeModal
+                    );
+
+                }
+            );
+
+        });
+
+
+    document
+        .querySelectorAll(".app-modal")
+        .forEach(function (modal) {
+
+            modal.addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        event.target === modal
+                    ) {
+
+                        modal.classList.remove(
+                            "active"
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+
+    /* =====================================================
+       NEW PROJECT
+       ===================================================== */
+
+    const newProjectButton =
+        $("newProjectBtn");
+
+
+    if (newProjectButton) {
+
+        newProjectButton.addEventListener(
+            "click",
+            function () {
+                openModal("projectModal");
+            }
+        );
+
+    }
+
+
+    const createProjectBtn =
+        $("createProjectBtn");
+
+
+    if (createProjectBtn) {
+
+        createProjectBtn.addEventListener(
+            "click",
+            async function () {
+
+                const name =
+                    $("newProjectName")?.value ||
+                    "مشروع صوتي جديد";
+
+                const client =
+                    $("newClientName")?.value ||
+                    "";
+
+                const location =
+                    $("newProjectLocation")?.value ||
+                    "";
+
+                try {
+
+                    if (
+                        AE.storage &&
+                        typeof AE.storage.createProject ===
+                        "function"
+                    ) {
+
+                        const project =
+                            await AE.storage.createProject({
+                                projectName: name,
+                                clientName: client,
+                                projectLocation: location
+                            });
+
+                        if (
+                            window.AcousticApp &&
+                            typeof window.AcousticApp.loadProject ===
+                            "function"
+                        ) {
+
+                            await window.AcousticApp
+                                .loadProject(project);
+
+                        }
+
+                    }
+
+                    $("projectName").value =
+                        name;
+
+                    $("clientName").value =
+                        client;
+
+                    $("projectLocation").value =
+                        location;
+
+                    $("projectTitle").textContent =
+                        name;
+
+                    closeModal(
+                        "projectModal"
+                    );
+
+                } catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SPEAKER MODAL
+       ===================================================== */
+
+    const addSpeakerButton =
+        $("addSpeakerBtn");
+
+
+    if (addSpeakerButton) {
+
+        addSpeakerButton.addEventListener(
+            "click",
+            function () {
+
+                openModal(
+                    "speakerModal"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       DATASHEET
+       ===================================================== */
+
+    const uploadDatasheetBtn =
+        $("uploadDatasheetBtn");
+
+
+    if (uploadDatasheetBtn) {
+
+        uploadDatasheetBtn.addEventListener(
+            "click",
+            function () {
+
+                openModal(
+                    "datasheetModal"
+                );
+
+            }
+        );
+
+    }
+
+
+    const uploadZone =
+        $("datasheetUploadZone");
+
+    const datasheetFile =
+        $("datasheetFile");
+
+
+    if (uploadZone && datasheetFile) {
+
+        uploadZone.addEventListener(
+            "click",
+            function () {
+                datasheetFile.click();
+            }
+        );
+
+
+        datasheetFile.addEventListener(
+            "change",
+            function () {
+
+                const file =
+                    datasheetFile.files?.[0];
+
+                const status =
+                    $("datasheetUploadStatus");
+
+                if (!file) {
+
+                    if (status) {
+                        status.textContent =
+                            "لم يتم اختيار ملف";
+                    }
+
+                    return;
+                }
+
+                if (status) {
+
+                    status.textContent =
+                        `تم اختيار: ${file.name}`;
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       AUTO DESIGN
+       ===================================================== */
+
+    const autoDesignBtn =
+        $("autoDesignBtn");
+
+
+    if (autoDesignBtn) {
+
+        autoDesignBtn.addEventListener(
+            "click",
+            function () {
+
+                openModal(
+                    "autoDesignModal"
+                );
+
+            }
+        );
+
+    }
+
+
+    const runAutoDesignBtn =
+        $("runAutoDesignBtn");
+
+
+    if (runAutoDesignBtn) {
+
+        runAutoDesignBtn.addEventListener(
+            "click",
+            async function () {
+
+                closeModal(
+                    "autoDesignModal"
+                );
+
+                if (
+                    window.AcousticApp &&
+                    typeof window.AcousticApp
+                        .runAutoDesign ===
+                    "function"
+                ) {
+
+                    await window.AcousticApp
+                        .runAutoDesign();
+
+                } else if (
+                    AE.engine &&
+                    typeof AE.engine.autoDesign ===
+                    "function"
+                ) {
+
+                    try {
+
+                        await AE.engine.autoDesign();
+
+                    } catch (error) {
+
+                        console.error(
+                            error
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SETTINGS
+       ===================================================== */
+
+    const settingsBtn =
+        $("settingsBtn");
+
+
+    if (settingsBtn) {
+
+        settingsBtn.addEventListener(
+            "click",
+            function () {
+
+                openModal(
+                    "settingsModal"
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       CANVAS HUD
+       ===================================================== */
+
+    const canvasZoomIn =
+        $("canvasZoomIn");
+
+    const canvasZoomOut =
+        $("canvasZoomOut");
+
+    const canvasFitBtn =
+        $("canvasFitBtn");
+
+
+    if (canvasZoomIn) {
+
+        canvasZoomIn.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    window.AcousticCanvas &&
+                    typeof window.AcousticCanvas.zoomIn ===
+                    "function"
+                ) {
+
+                    window.AcousticCanvas.zoomIn();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (canvasZoomOut) {
+
+        canvasZoomOut.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    window.AcousticCanvas &&
+                    typeof window.AcousticCanvas.zoomOut ===
+                    "function"
+                ) {
+
+                    window.AcousticCanvas.zoomOut();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    if (canvasFitBtn) {
+
+        canvasFitBtn.addEventListener(
+            "click",
+            function () {
+
+                if (
+                    window.AcousticCanvas &&
+                    typeof window.AcousticCanvas.fitView ===
+                    "function"
+                ) {
+
+                    window.AcousticCanvas.fitView();
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       KEYBOARD
+       ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (
+                event.key === "Escape"
+            ) {
+
+                document
+                    .querySelectorAll(
+                        ".app-modal.active"
+                    )
+                    .forEach(function (modal) {
+
+                        modal.classList.remove(
+                            "active"
+                        );
+
+                    });
+
+            }
+
+
+            if (
+                (event.ctrlKey || event.metaKey) &&
+                event.key.toLowerCase() === "s"
+            ) {
+
+                event.preventDefault();
+
+                const save =
+                    $("saveProjectBtn");
+
+                if (save) {
+                    save.click();
+                }
+
+            }
+
+
+            if (
+                event.key === "Delete"
+            ) {
+
+                const deleteButton =
+                    $("deleteSelectedBtn");
+
+                if (deleteButton) {
+                    deleteButton.click();
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       MIRROR ROOM DIMENSIONS
+       ===================================================== */
+
+    function mirrorValue(
+        sourceId,
+        targetId
+    ) {
+
+        const source =
+            $(sourceId);
+
+        const target =
+            $(targetId);
+
+        if (!source || !target) return;
+
+        source.addEventListener(
+            "input",
+            function () {
+
+                target.value =
+                    source.value;
+
+                target.dispatchEvent(
+                    new Event("change", {
+                        bubbles: true
+                    })
+                );
+
+            }
+        );
+
+    }
+
+
+    mirrorValue(
+        "roomWidth",
+        "roomWidthPanel"
+    );
+
+    mirrorValue(
+        "roomDepth",
+        "roomDepthPanel"
+    );
+
+    mirrorValue(
+        "roomHeight",
+        "roomHeightPanel"
+    );
+
+
+    mirrorValue(
+        "roomWidthPanel",
+        "roomWidth"
+    );
+
+    mirrorValue(
+        "roomDepthPanel",
+        "roomDepth"
+    );
+
+    mirrorValue(
+        "roomHeightPanel",
+        "roomHeight"
+    );
+
+
+    /* =====================================================
+       MOBILE OUTSIDE SIDEBAR
+       ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                window.innerWidth > 1000 ||
+                !sidebar ||
+                !sidebar.classList.contains(
+                    "mobile-open"
+                )
+            ) {
+                return;
+            }
+
+            if (
+                sidebar.contains(event.target) ||
+                sidebarToggle?.contains(event.target)
+            ) {
+                return;
+            }
+
+            sidebar.classList.remove(
+                "mobile-open"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       STARTUP
+       ===================================================== */
+
+    function startup() {
+
+        const title =
+            $("projectTitle");
+
+        const projectName =
+            $("projectName");
+
+        if (
+            title &&
+            projectName &&
+            projectName.value
+        ) {
+
+            title.textContent =
+                projectName.value;
+
+        }
+
+    }
+
+
+    if (
+        document.readyState === "loading"
+    ) {
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            startup,
+            { once: true }
+        );
+
+    } else {
+
+        startup();
+
+    }
+
+})();
+
+</script>
+
+</body>
+</html>
