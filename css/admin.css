@@ -1,0 +1,430 @@
+/* ============================================================
+   Acoustic Engineering — css/admin.css
+   Admin Panel specific styles
+   ============================================================ */
+
+.admin-shell {
+    min-height: 100vh;
+    display: flex;
+    background: #080b12;
+    color: #f5f7fa;
+    font-family: "Cairo", sans-serif;
+}
+
+/* ============================================================
+   Sidebar
+============================================================ */
+.admin-sidebar {
+    width: 260px;
+    flex: 0 0 260px;
+    background: #0b1018;
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    flex-direction: column;
+    padding: 20px 12px;
+    height: 100vh;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.admin-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 10px 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 16px;
+}
+
+.admin-brand-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #e60012, #8d0010);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    flex-shrink: 0;
+    box-shadow: 0 8px 25px rgba(230, 0, 18, 0.22);
+}
+
+.admin-brand-text strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.admin-brand-text span {
+    display: block;
+    color: #667182;
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+/* ============================================================
+   Navigation
+============================================================ */
+.admin-nav {
+    padding: 8px 0;
+    flex: 1;
+    overflow-y: auto;
+}
+
+.admin-nav::-webkit-scrollbar { width: 4px; }
+.admin-nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,.08); border-radius: 10px; }
+
+.admin-nav button {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 0;
+    border-radius: 10px;
+    color: #8792a3;
+    background: transparent;
+    cursor: pointer;
+    text-align: right;
+    font-family: inherit;
+    font-size: 13px;
+    transition: all 0.2s ease;
+}
+
+.admin-nav button:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: #fff;
+}
+
+.admin-nav button.active {
+    background: rgba(230, 0, 18, 0.1);
+    color: #fff;
+    border-right: 3px solid #e60012;
+    box-shadow: inset 0 0 20px rgba(230, 0, 18, 0.05);
+}
+
+.admin-nav button i {
+    width: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* ============================================================
+   Main Content
+============================================================ */
+.admin-main {
+    flex: 1;
+    min-width: 0;
+    padding: 24px;
+    overflow-y: auto;
+    max-width: 1700px;
+}
+
+.admin-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0 24px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    margin-bottom: 24px;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.admin-topbar h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.admin-topbar p {
+    margin: 4px 0 0;
+    color: #8792a3;
+    font-size: 12px;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+/* ============================================================
+   Stats Cards
+============================================================ */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    padding: 20px;
+    background: #10151f;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+    border-color: rgba(56, 189, 248, 0.25);
+    transform: translateY(-2px);
+}
+
+.stat-card .stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+.stat-card .stat-value {
+    font-size: 28px;
+    font-weight: 800;
+    margin-top: 6px;
+    color: #fff;
+}
+
+.stat-card .stat-label {
+    color: #8792a3;
+    font-size: 12px;
+}
+
+.stat-card.blue .stat-icon { background: rgba(56, 189, 248, 0.12); color: #38bdf8; }
+.stat-card.green .stat-icon { background: rgba(34, 197, 94, 0.12); color: #22c55e; }
+.stat-card.red .stat-icon { background: rgba(230, 0, 18, 0.12); color: #e60012; }
+.stat-card.purple .stat-icon { background: rgba(167, 139, 250, 0.12); color: #a78bfa; }
+.stat-card.orange .stat-icon { background: rgba(245, 158, 11, 0.12); color: #f59e0b; }
+
+/* ============================================================
+   Panels
+============================================================ */
+.admin-panel {
+    background: #10151f;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.admin-panel-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.admin-panel-header h3 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.admin-panel-body {
+    padding: 20px;
+}
+
+/* ============================================================
+   Tables
+============================================================ */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.admin-table th,
+.admin-table td {
+    padding: 12px 10px;
+    text-align: right;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 12px;
+    vertical-align: middle;
+}
+
+.admin-table th {
+    color: #8792a3;
+    font-weight: 700;
+    font-size: 11px;
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.admin-table .user-cell {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.admin-table .user-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #1b2738, #111822);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #38bdf8;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.admin-table .user-name {
+    color: #e7ebf0;
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.admin-table .user-email {
+    color: #667182;
+    font-size: 10px;
+    direction: ltr;
+    text-align: right;
+    display: inline-block;
+}
+
+/* ============================================================
+   Badges
+============================================================ */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.badge.admin { background: rgba(230, 0, 18, 0.12); color: #ff7d87; }
+.badge.engineer { background: rgba(167, 139, 250, 0.12); color: #c0a9f8; }
+.badge.user { background: rgba(56, 189, 248, 0.12); color: #8fd4ff; }
+.badge.owner { background: rgba(245, 158, 11, 0.12); color: #f7c66d; }
+.badge.online { background: rgba(34, 197, 94, 0.12); color: #6ee69a; }
+.badge.offline { background: rgba(255, 255, 255, 0.05); color: #8b96a5; }
+
+/* ============================================================
+   Empty State
+============================================================ */
+.admin-empty {
+    padding: 50px 20px;
+    text-align: center;
+    color: #657081;
+}
+
+.admin-empty i {
+    font-size: 32px;
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.admin-empty strong {
+    display: block;
+    color: #909aaa;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.admin-empty span {
+    font-size: 11px;
+}
+
+/* ============================================================
+   Buttons
+============================================================ */
+.admin-btn {
+    height: 38px;
+    padding: 0 14px;
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    color: #a8b2c0;
+    font-size: 11px;
+    font-family: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.admin-btn:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.admin-btn.primary {
+    background: rgba(56, 189, 248, 0.12);
+    border-color: rgba(56, 189, 248, 0.2);
+    color: #38bdf8;
+}
+
+.admin-btn.danger {
+    background: rgba(230, 0, 18, 0.08);
+    border-color: rgba(230, 0, 18, 0.2);
+    color: #ff7883;
+}
+
+.admin-btn.danger:hover {
+    background: rgba(230, 0, 18, 0.15);
+}
+
+/* ============================================================
+   Responsive
+============================================================ */
+@media (max-width: 1024px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+    .admin-sidebar {
+        position: fixed;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        box-shadow: -20px 0 50px rgba(0, 0, 0, 0.4);
+        z-index: 200;
+    }
+
+    .admin-sidebar.open { transform: translateX(0); }
+
+    .admin-main { padding: 16px; }
+
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    .stat-card { padding: 14px; }
+    .stat-card .stat-value { font-size: 22px; }
+
+    .admin-topbar { padding: 12px 0 18px; }
+    .admin-topbar h1 { font-size: 18px; }
+}
+
+@media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+}
