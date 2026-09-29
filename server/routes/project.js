@@ -67,4 +67,4 @@ router.delete("/:id", requireLogin, (req, res) => {
     res.json({ success: result.changes > 0 });
 });
 
-module.exports = router;
+module.exports = router; 
