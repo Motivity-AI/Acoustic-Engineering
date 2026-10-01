@@ -347,10 +347,7 @@
 
 </div>
 
-<!-- ============================================================
-     SCRIPTS — ⚠️ الترتيب مهم:
-     config → firebase → backend → auth → storage
-     ============================================================ -->
+<!-- ⚠️ الترتيب مهم: config → firebase → backend → auth → storage -->
 <script src="js/config.js"></script>
 <script src="js/firebase.js"></script>
 <script src="js/backend.js"></script>
@@ -364,7 +361,6 @@
     const $ = (id) => document.getElementById(id);
 
     function toast(message, duration = 3000) {
-        // toast بسيط
         let el = document.getElementById("__ae_toast");
         if (!el) {
             el = document.createElement("div");
@@ -395,9 +391,6 @@
         }, duration);
     }
 
-    /* ------------------------------------------------------
-       Auth API resolver
-    ------------------------------------------------------ */
     function resolveAuth() {
         return window.AcousticEngineering?.auth
             || window.AE?.auth
@@ -409,7 +402,6 @@
     async function isUserAuthenticated() {
         const auth = resolveAuth();
         if (!auth) return false;
-
         try {
             if (typeof auth.isAuthenticated === "function") {
                 return !!(await Promise.resolve(auth.isAuthenticated()));
@@ -417,30 +409,14 @@
             if (typeof auth.getCurrentUser === "function") {
                 return !!(await Promise.resolve(auth.getCurrentUser()));
             }
-        } catch (err) {
-            console.warn("[index] auth check failed:", err);
-        }
+        } catch (err) { console.warn("[index] auth check failed:", err); }
         return false;
     }
 
-    /* ------------------------------------------------------
-       Navigation
-    ------------------------------------------------------ */
-    function goToRegister() {
-        window.location.href = "register.html";
-    }
+    function goToRegister() { window.location.href = "register.html"; }
+    function goToLogin() { window.location.href = "register.html?mode=login"; }
+    function goToApp() { window.location.href = "app.html"; }
 
-    function goToLogin() {
-        window.location.href = "register.html?mode=login";
-    }
-
-    function goToApp() {
-        window.location.href = "app.html";
-    }
-
-    /* ------------------------------------------------------
-       Start Design click
-    ------------------------------------------------------ */
     async function handleStartDesign() {
         const btn = $("startDesignBtn");
         const originalHTML = btn?.innerHTML;
@@ -450,15 +426,9 @@
                 btn.disabled = true;
                 btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جارٍ التحقق...';
             }
-
             const isAuth = await isUserAuthenticated();
-
-            if (isAuth) {
-                goToApp();
-            } else {
-                goToRegister();
-            }
-
+            if (isAuth) goToApp();
+            else goToRegister();
         } catch {
             goToRegister();
         } finally {
@@ -469,9 +439,6 @@
         }
     }
 
-    /* ------------------------------------------------------
-       Check existing session on load
-    ------------------------------------------------------ */
     async function checkExistingSession() {
         try {
             const auth = resolveAuth();
@@ -487,32 +454,21 @@
             const isAuth = await isUserAuthenticated();
             if (isAuth) {
                 const btn = $("startDesignBtn");
-                if (btn) {
-                    btn.innerHTML = '<i class="fa-solid fa-arrow-right"></i> متابعة التصميم';
-                }
+                if (btn) btn.innerHTML = '<i class="fa-solid fa-arrow-right"></i> متابعة التصميم';
             }
-        } catch (err) {
-            console.warn("[index] session check:", err);
-        }
+        } catch (err) { console.warn("[index] session check:", err); }
     }
 
-    /* ------------------------------------------------------
-       Event bindings
-    ------------------------------------------------------ */
     function bindEvents() {
         $("startDesignBtn")?.addEventListener("click", handleStartDesign);
         $("registerNavBtn")?.addEventListener("click", goToRegister);
         $("loginNavBtn")?.addEventListener("click", goToLogin);
         $("loginHeroBtn")?.addEventListener("click", goToLogin);
-
         $("aboutBtn")?.addEventListener("click", () => {
             toast("منصة هندسية لتصميم أنظمة الصوت وتحليل التغطية وإعداد التقارير.");
         });
     }
 
-    /* ------------------------------------------------------
-       Init
-    ------------------------------------------------------ */
     document.addEventListener("DOMContentLoaded", () => {
         bindEvents();
         checkExistingSession();
