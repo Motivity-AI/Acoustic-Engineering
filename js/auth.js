@@ -1,6 +1,6 @@
 /* ============================================================
    Acoustic Engineering — js/auth.js v2.0.0
-   Auth layer on top of backend — إصلاحات جوهرية
+   Auth layer on top of backend
    ============================================================ */
 (function () {
     "use strict";
@@ -8,20 +8,17 @@
     window.AcousticEngineering = window.AcousticEngineering || {};
     const AE = window.AcousticEngineering;
 
-    /* ═══════════════ Dynamic resolution (لا تجميد) ═══════════════ */
-
     function getConfig() {
         return AE.config || window.AcousticConfig || {};
     }
 
+    /* ✅ Backend resolution ديناميكي — لا تجميد */
     function getBackend() {
         return AE.backend
             || window.AcousticBackend
             || window.AcousticAPI
             || null;
     }
-
-    /* ═══════════════ State ═══════════════ */
 
     const state = {
         initialized: false,
@@ -35,11 +32,8 @@
         loginAt: null
     };
 
-    /* ═══════════════ Ready Promise ═══════════════ */
     let resolveReady;
     const readyPromise = new Promise(resolve => { resolveReady = resolve; });
-
-    /* ═══════════════ Events ═══════════════ */
 
     function emit(name, detail = {}) {
         try {
@@ -61,13 +55,8 @@
         };
     }
 
-    /* ═══════════════ Role helpers ═══════════════ */
-
     function getRole() {
-        return state.profile?.role
-            || state.user?.role
-            || state.role
-            || "visitor";
+        return state.profile?.role || state.user?.role || state.role || "visitor";
     }
 
     function isAdmin()    { return ["admin", "owner"].includes(getRole()); }
@@ -76,44 +65,30 @@
     function isVisitor()  { return getRole() === "visitor"; }
 
     const ROLE_HIERARCHY = Object.freeze({
-        visitor: 0,
-        user: 1,
-        engineer: 2,
-        admin: 3,
-        owner: 4
+        visitor: 0, user: 1, engineer: 2, admin: 3, owner: 4
     });
 
     function hasRole(role) {
         if (!role) return true;
-        const current = getRole();
-        const currentLevel = ROLE_HIERARCHY[current] ?? 0;
+        const currentLevel = ROLE_HIERARCHY[getRole()] ?? 0;
         const targetLevel = ROLE_HIERARCHY[role] ?? 0;
         return currentLevel >= targetLevel;
     }
 
-    /* ═══════════════ Return URL ═══════════════ */
-
+    /* ─── Return URL ─── */
     const RETURN_URL_KEY = "acoustic_return_url";
 
     function setReturnUrl(url) {
-        try {
-            if (url && typeof url === "string") {
-                sessionStorage.setItem(RETURN_URL_KEY, url);
-            }
-        } catch { /* ignore */ }
+        try { if (url) sessionStorage.setItem(RETURN_URL_KEY, url); } catch {}
     }
-
     function getReturnUrl() {
-        try { return sessionStorage.getItem(RETURN_URL_KEY); }
-        catch { return null; }
+        try { return sessionStorage.getItem(RETURN_URL_KEY); } catch { return null; }
     }
-
     function clearReturnUrl() {
-        try { sessionStorage.removeItem(RETURN_URL_KEY); }
-        catch { /* ignore */ }
+        try { sessionStorage.removeItem(RETURN_URL_KEY); } catch {}
     }
 
-    /* ═══════════════ Core operations ═══════════════ */
+    /* ─── Core operations ─── */
 
     async function register(data) {
         const Backend = getBackend();
@@ -161,16 +136,12 @@
 
     async function logout() {
         const Backend = getBackend();
-
         try {
-            if (Backend?.auth?.logout) {
-                await Backend.auth.logout();
-            }
+            if (Backend?.auth?.logout) await Backend.auth.logout();
         } catch (err) {
             console.warn("[Auth] logout backend error:", err);
         }
 
-        // امسح الحالة محلياً دائماً — حتى لو فشل الخادم
         state.user = null;
         state.profile = null;
         state.role = "visitor";
@@ -187,25 +158,15 @@
 
     async function resetPassword(email) {
         const Backend = getBackend();
-
         if (!Backend?.auth?.resetPassword) {
-            return {
-                success: false,
-                message: "خدمة استعادة كلمة المرور غير متاحة"
-            };
+            return { success: false, message: "خدمة استعادة كلمة المرور غير متاحة" };
         }
-
         try {
             return await Backend.auth.resetPassword(email);
         } catch (err) {
-            return {
-                success: false,
-                message: err?.message || "تعذّر إرسال رابط الاستعادة"
-            };
+            return { success: false, message: err?.message || "تعذّر إرسال رابط الاستعادة" };
         }
     }
-
-    /* ═══════════════ Page protection ═══════════════ */
 
     function protectPage(options = {}) {
         const requireAuth = options.requireAuth !== false;
@@ -217,11 +178,7 @@
         if (!requireAuth) return true;
 
         if (!state.authenticated) {
-            // احفظ الصفحة الحالية للعودة بعد الدخول
-            try {
-                setReturnUrl(location.pathname + location.search);
-            } catch { /* ignore */ }
-
+            try { setReturnUrl(location.pathname + location.search); } catch {}
             window.location.href = redirectTo;
             return false;
         }
@@ -241,12 +198,9 @@
         window.location.href = target;
     }
 
-    /* ═══════════════ Subscription ═══════════════ */
-
     function onAuthStateChanged(cb) {
         if (typeof cb !== "function") return () => {};
 
-        // أطلق القيمة الحالية فوراً
         try { cb(getSnapshot()); } catch (err) {
             console.warn("[Auth] initial onAuthStateChanged error:", err);
         }
@@ -261,12 +215,9 @@
         return () => window.removeEventListener("auth:changed", handler);
     }
 
-    /* ═══════════════ Initialization ═══════════════ */
-
     let initializePromise = null;
 
     async function initialize() {
-        // idempotent — أعِد نفس الوعد عند الاستدعاء الثاني
         if (state.initialized) {
             return initializePromise || Promise.resolve(state);
         }
@@ -278,8 +229,16 @@
             try {
                 const Backend = getBackend();
 
+                if (Backend?.waitForReady) {
+                    try {
+                        await Promise.race([
+                            Backend.waitForReady(),
+                            new Promise(r => setTimeout(r, 3000))
+                        ]);
+                    } catch {}
+                }
+
                 if (Backend?.auth?.getCurrentUser) {
-                    // timeout 5 ثواني
                     const user = await Promise.race([
                         Promise.resolve(Backend.auth.getCurrentUser()),
                         new Promise((_, rej) =>
@@ -306,7 +265,7 @@
                 emit("auth:ready", snapshot);
                 emit("auth:changed", snapshot);
 
-                try { resolveReady(state); } catch { /* ignore */ }
+                try { resolveReady(state); } catch {}
             }
 
             return state;
@@ -315,17 +274,10 @@
         return initializePromise;
     }
 
-    /**
-     * وعد يُحل عند اكتمال التهيئة
-     * يُستخدم عندما يحتاج الكود الانتظار قبل الفحص
-     */
     function waitUntilReady() {
         return readyPromise;
     }
 
-    /**
-     * أعد التحقق من الجلسة (يُستخدَم عند العودة للتبويب)
-     */
     async function refresh() {
         if (!state.authenticated) return state;
 
@@ -333,17 +285,13 @@
             const Backend = getBackend();
             if (!Backend?.auth?.getCurrentUser) return state;
 
-            const user = await Promise.resolve(
-                Backend.auth.getCurrentUser()
-            );
+            const user = await Promise.resolve(Backend.auth.getCurrentUser());
 
             if (!user) {
-                // الجلسة انتهت على الخادم
                 state.user = null;
                 state.profile = null;
                 state.role = "visitor";
                 state.authenticated = false;
-
                 emit("auth:changed", getSnapshot());
                 emit("auth:expired");
             } else {
@@ -359,102 +307,67 @@
         return state;
     }
 
-    /* ═══════════════ Validators ═══════════════ */
-
     function validateEmail(email) {
         const cfg = getConfig();
-        if (typeof cfg.isValidEmail === "function") {
-            return cfg.isValidEmail(email);
-        }
+        if (typeof cfg.isValidEmail === "function") return cfg.isValidEmail(email);
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || ""));
     }
 
     function validatePassword(password) {
         const cfg = getConfig();
-        if (typeof cfg.isValidPassword === "function") {
-            return cfg.isValidPassword(password);
-        }
-        // ✅ 8 أحرف — يطابق server/auth.js
+        if (typeof cfg.isValidPassword === "function") return cfg.isValidPassword(password);
         return String(password || "").length >= 8;
     }
 
     function validatePhone(phone) {
         const cfg = getConfig();
-        if (typeof cfg.isValidPhone === "function") {
-            return cfg.isValidPhone(phone);
-        }
+        if (typeof cfg.isValidPhone === "function") return cfg.isValidPhone(phone);
         return /^[+]?[0-9\s\-()]{7,30}$/.test(String(phone || ""));
     }
 
-    /* ═══════════════ API Export ═══════════════ */
-
     const AuthAPI = {
-        // الحالة
         state,
         getSnapshot,
-
-        // التهيئة
         initialize,
         waitUntilReady,
         refresh,
-
-        // العمليات
         register,
         login,
         logout,
         resetPassword,
-
-        // المستخدم
         getCurrentUser: () => state.user,
         getProfile: () => state.profile,
         isAuthenticated: () => !!state.authenticated,
-
-        // الأدوار
         getRole,
         isAdmin,
         isEngineer,
         isOwner,
         isVisitor,
         hasRole,
-
-        // الحماية
         protectPage,
         continueAfterLogin,
-
-        // العودة
         getReturnUrl,
         setReturnUrl,
         clearReturnUrl,
-
-        // الاشتراك
         onAuthStateChanged,
-
-        // التحقق
         validateEmail,
         validatePassword,
         validatePhone
     };
 
-    /* ═══════════════ Exposure (متعدد) ═══════════════ */
     AE.auth = AuthAPI;
     window.AcousticAuth = AuthAPI;
     window.AuthManager = AuthAPI;
     window.Auth = window.Auth || AuthAPI;
 
-    /* ═══════════════ Auto-init ═══════════════ */
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", () => {
-            initialize().catch(err => {
-                console.warn("[Auth] auto-init failed:", err);
-            });
+            initialize().catch(err => console.warn("[Auth] auto-init failed:", err));
         }, { once: true });
     } else {
-        initialize().catch(err => {
-            console.warn("[Auth] auto-init failed:", err);
-        });
+        initialize().catch(err => console.warn("[Auth] auto-init failed:", err));
     }
 
-    /* ═══════════════ Visibility refresh ═══════════════ */
     let lastHidden = 0;
     document.addEventListener("visibilitychange", () => {
         if (document.visibilityState === "hidden") {
@@ -465,7 +378,7 @@
             && Date.now() - lastHidden > 30000
             && state.authenticated
         ) {
-            refresh().catch(() => { /* ignore */ });
+            refresh().catch(() => {});
         }
     });
 
