@@ -309,7 +309,7 @@
                                 <i class="fa-solid fa-eye"></i>
                             </button>
                         </div>
-                        <div class="field-error" id="passwordError">6 أحرف على الأقل.</div>
+                        <div class="field-error" id="passwordError">8 أحرف على الأقل.</div>
                     </div>
 
                     <div class="form-group" id="confirmGroup">
@@ -353,10 +353,7 @@
     </div>
 </div>
 
-<!-- ============================================================
-     SCRIPTS — ⚠️ الترتيب مهم جداً:
-     config → firebase → backend → auth → storage
-     ============================================================ -->
+<!-- ⚠️ الترتيب مهم: config → firebase → backend → auth → storage -->
 <script src="js/config.js"></script>
 <script src="js/firebase.js"></script>
 <script src="js/backend.js"></script>
@@ -364,9 +361,6 @@
 <script src="js/storage.js"></script>
 
 <script>
-/* ============================================================
-   REGISTER / LOGIN PAGE — v2.1.0
-   ============================================================ */
 (function () {
     "use strict";
 
@@ -380,17 +374,13 @@
     const statusText = byId("statusText");
     const statusIcon = byId("statusIcon");
 
-    /* ------------------------------------------------------
-       Auth API — كشف متعدد المسارات
-    ------------------------------------------------------ */
     function resolveAuth() {
         const candidates = [
             window.AcousticEngineering?.auth,
             window.AE?.auth,
             window.AcousticAuth,
             window.AuthManager,
-            window.Auth,
-            window.auth
+            window.Auth
         ];
         for (const api of candidates) {
             if (api && typeof api === "object") {
@@ -403,18 +393,13 @@
         return null;
     }
 
-    /* ------------------------------------------------------
-       Status
-    ------------------------------------------------------ */
     function showStatus(msg, type = "info") {
         statusBox.className = "form-status show " + type;
         statusText.textContent = msg;
-
         const iconClass =
             type === "error"   ? "fa-circle-exclamation" :
             type === "success" ? "fa-circle-check" :
                                  "fa-circle-info";
-
         statusIcon.className = "fa-solid " + iconClass;
     }
 
@@ -422,17 +407,11 @@
         statusBox.className = "form-status";
     }
 
-    /* ------------------------------------------------------
-       Loading
-    ------------------------------------------------------ */
     function setLoading(on, text) {
         byId("loadingOverlay").classList.toggle("show", on);
         if (text) byId("loadingText").textContent = text;
     }
 
-    /* ------------------------------------------------------
-       Field Errors
-    ------------------------------------------------------ */
     function clearErrors() {
         document.querySelectorAll(".form-group.invalid")
             .forEach(el => el.classList.remove("invalid"));
@@ -446,15 +425,9 @@
         if (err && msg) err.textContent = msg;
     }
 
-    /* ------------------------------------------------------
-       Mode Switch
-    ------------------------------------------------------ */
     function setMode(newMode, opts = {}) {
         mode = newMode;
-        if (!opts.silent) {
-            hideStatus();
-            clearErrors();
-        }
+        if (!opts.silent) { hideStatus(); clearErrors(); }
 
         const show = (id, v) => {
             const el = byId(id);
@@ -464,48 +437,37 @@
         if (mode === "login") {
             byId("formTitle").textContent = "تسجيل الدخول";
             byId("formSubtitle").textContent = "أدخل بياناتك للوصول إلى حسابك.";
-
             show("nameGroup", "none");
             show("companyGroup", "none");
             show("confirmGroup", "none");
-
             byId("submitBtnText").textContent = "دخول";
             byId("submitBtn").querySelector("i").className = "fa-solid fa-right-to-bracket";
             byId("switchText").textContent = "ليس لديك حساب؟";
             byId("switchMode").textContent = "إنشاء حساب جديد";
             byId("registerEmail").placeholder = "البريد الإلكتروني";
             byId("registerPhone").placeholder = "أو رقم الهاتف";
-
             byId("emailReq").style.display = "none";
             byId("phoneReq").style.display = "none";
-
             byId("registerEmail").type = "text";
-
         } else {
             byId("formTitle").textContent = "إنشاء حساب";
             byId("formSubtitle").textContent = "أنشئ حسابك للبدء في مشاريع التصميم الهندسي.";
-
             show("nameGroup", "");
             show("companyGroup", "");
             show("confirmGroup", "");
-
             byId("submitBtnText").textContent = "إنشاء الحساب والبدء";
             byId("submitBtn").querySelector("i").className = "fa-solid fa-user-plus";
             byId("switchText").textContent = "لديك حساب بالفعل؟";
             byId("switchMode").textContent = "تسجيل الدخول";
             byId("registerEmail").placeholder = "name@example.com";
             byId("registerPhone").placeholder = "0912345678";
-
             byId("emailReq").style.display = "";
             byId("phoneReq").style.display = "";
-
             byId("registerEmail").type = "email";
         }
 
         setTimeout(() => {
-            const first = mode === "signup"
-                ? byId("registerName")
-                : byId("registerEmail");
+            const first = mode === "signup" ? byId("registerName") : byId("registerEmail");
             try { first?.focus({ preventScroll: true }); } catch { first?.focus(); }
         }, 60);
 
@@ -514,24 +476,15 @@
             if (mode === "login") url.searchParams.set("mode", "login");
             else url.searchParams.delete("mode");
             history.replaceState(null, "", url);
-        } catch { /* ignore */ }
+        } catch {}
     }
 
-    /* ------------------------------------------------------
-       Validation
-    ------------------------------------------------------ */
-    function validEmail(v) {
-        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-    }
-
-    function validPhone(v) {
-        return /^[+]?[0-9\s\-()]{7,30}$/.test(v);
-    }
+    function validEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+    function validPhone(v) { return /^[+]?[0-9\s\-()]{7,30}$/.test(v); }
 
     function validateSignup() {
         clearErrors();
         let ok = true;
-
         const name    = byId("registerName").value.trim();
         const email   = byId("registerEmail").value.trim();
         const phone   = byId("registerPhone").value.trim();
@@ -543,14 +496,12 @@
         if (!validPhone(phone)) { fieldError("phoneGroup");    ok = false; }
         if (pass.length < 8)    { fieldError("passwordGroup", "8 أحرف على الأقل"); ok = false; }
         if (pass !== confirm)   { fieldError("confirmGroup");  ok = false; }
-
         return ok;
     }
 
     function validateLogin() {
         clearErrors();
         let ok = true;
-
         const email = byId("registerEmail").value.trim();
         const phone = byId("registerPhone").value.trim();
         const pass  = byId("registerPassword").value;
@@ -569,60 +520,37 @@
                 ok = false;
             }
         }
-
-        if (!pass) {
-            fieldError("passwordGroup", "أدخل كلمة المرور");
-            ok = false;
-        }
-
+        if (!pass) { fieldError("passwordGroup", "أدخل كلمة المرور"); ok = false; }
         return ok;
     }
 
-    /* ------------------------------------------------------
-       Error translation
-    ------------------------------------------------------ */
     function translateAuthError(err) {
         const raw = (err && (err.code || err.message || err.error)) || "";
         const s = String(raw).toLowerCase();
 
-        if (s.includes("email-already-in-use")
-            || s.includes("already-exists")
-            || s.includes("already registered")) {
+        if (s.includes("email-already-in-use") || s.includes("already-exists") || s.includes("already registered"))
             return "هذا البريد الإلكتروني مسجّل بالفعل. سجّل الدخول بدلاً من ذلك.";
-        }
-        if (s.includes("invalid-email")) {
+        if (s.includes("invalid-email"))
             return "صيغة البريد الإلكتروني غير صحيحة.";
-        }
-        if (s.includes("weak-password")) {
+        if (s.includes("weak-password"))
             return "كلمة المرور ضعيفة جداً. استخدم 8 أحرف على الأقل.";
-        }
-        if (s.includes("user-not-found")) {
+        if (s.includes("user-not-found"))
             return "لا يوجد حساب بهذا المعرّف. تحقق من البيانات.";
-        }
-        if (s.includes("wrong-password")
-            || s.includes("invalid-credential")
-            || s.includes("invalid-login")) {
+        if (s.includes("wrong-password") || s.includes("invalid-credential") || s.includes("invalid-login"))
             return "بيانات الدخول غير صحيحة.";
-        }
-        if (s.includes("too-many-requests")) {
+        if (s.includes("too-many-requests"))
             return "محاولات كثيرة. حاول بعد قليل.";
-        }
-        if (s.includes("network")) {
+        if (s.includes("network"))
             return "تعذّر الاتصال. تحقق من الشبكة.";
-        }
-        if (s.includes("unauthorized-domain")) {
+        if (s.includes("unauthorized-domain"))
             return "النطاق غير مصرّح به. أضف motivity-ai.github.io إلى Firebase Console.";
-        }
-        if (s.includes("operation-not-allowed")) {
+        if (s.includes("operation-not-allowed"))
             return "تسجيل البريد الإلكتروني غير مُفعّل في Firebase Console.";
-        }
-
+        if (s.includes("غير متاح"))
+            return "نظام المصادقة غير محمّل. أعد تحميل الصفحة.";
         return (err && err.message) || raw || "حدث خطأ غير متوقّع.";
     }
 
-    /* ------------------------------------------------------
-       Submit
-    ------------------------------------------------------ */
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
         if (submitting) return;
@@ -630,18 +558,14 @@
 
         const auth = resolveAuth();
         if (!auth) {
-            showStatus(
-                "نظام المصادقة غير محمّل. تحقّق من اتصال الإنترنت وأعد تحميل الصفحة.",
-                "error"
-            );
-            console.error("[register] auth module not found. Check script order.");
+            showStatus("نظام المصادقة غير محمّل. أعد تحميل الصفحة.", "error");
+            console.error("[register] auth module not found");
             return;
         }
 
         try {
             if (mode === "signup") {
                 if (!validateSignup()) return;
-
                 submitting = true;
                 setLoading(true, "جارٍ إنشاء حسابك...");
 
@@ -651,8 +575,7 @@
 
                 const result = await auth.register({
                     name: byId("registerName").value.trim(),
-                    email,
-                    phone,
+                    email, phone,
                     company: byId("registerCompany").value.trim(),
                     password,
                     confirmPassword: byId("registerConfirm").value
@@ -662,7 +585,7 @@
                     throw result || new Error("تعذر إنشاء الحساب");
                 }
 
-                // محاولة تسجيل الدخول التلقائي إن لم يفعلها register
+                // محاولة login تلقائي
                 try {
                     let signedIn = false;
                     if (typeof auth.isAuthenticated === "function") {
@@ -671,16 +594,15 @@
                     if (!signedIn && typeof auth.login === "function") {
                         await auth.login(email || phone, password).catch(() => {});
                     }
-                } catch { /* نتجاهل — التوجيه كافٍ */ }
+                } catch {}
 
                 showStatus("✓ تم إنشاء الحساب بنجاح! جارٍ الدخول...", "success");
                 setTimeout(() => { window.location.href = "app.html"; }, 800);
                 return;
             }
 
-            /* ---------------- LOGIN ---------------- */
+            /* LOGIN */
             if (!validateLogin()) return;
-
             submitting = true;
             setLoading(true, "جارٍ تسجيل الدخول...");
 
@@ -698,19 +620,12 @@
             for (const id of identifiers) {
                 try {
                     const r = await auth.login(id, password);
-                    if (r && r.success !== false) {
-                        result = r;
-                        break;
-                    }
+                    if (r && r.success !== false) { result = r; break; }
                     lastError = r || new Error("بيانات الدخول غير صحيحة");
-                } catch (err) {
-                    lastError = err;
-                }
+                } catch (err) { lastError = err; }
             }
 
-            if (!result) {
-                throw lastError || new Error("تعذر تسجيل الدخول");
-            }
+            if (!result) throw lastError || new Error("تعذر تسجيل الدخول");
 
             showStatus("✓ تم تسجيل الدخول بنجاح!", "success");
             setTimeout(() => { window.location.href = "app.html"; }, 700);
@@ -724,17 +639,11 @@
         }
     });
 
-    /* ------------------------------------------------------
-       Switch Mode
-    ------------------------------------------------------ */
     byId("switchMode").addEventListener("click", function (e) {
         e.preventDefault();
         setMode(mode === "signup" ? "login" : "signup");
     });
 
-    /* ------------------------------------------------------
-       Password Toggle
-    ------------------------------------------------------ */
     document.querySelectorAll("[data-toggle]").forEach(btn => {
         btn.addEventListener("click", function () {
             const input = byId(btn.dataset.toggle);
@@ -743,48 +652,34 @@
             if (input.type === "password") {
                 input.type = "text";
                 icon.className = "fa-solid fa-eye-slash";
-                btn.setAttribute("aria-label", "إخفاء كلمة المرور");
             } else {
                 input.type = "password";
                 icon.className = "fa-solid fa-eye";
-                btn.setAttribute("aria-label", "إظهار كلمة المرور");
             }
         });
     });
 
-    /* ------------------------------------------------------
-       Check existing session
-    ------------------------------------------------------ */
     async function checkExistingSession() {
         const auth = resolveAuth();
         if (!auth) return;
-
         try {
             let isAuth = false;
-
             if (typeof auth.isAuthenticated === "function") {
                 isAuth = await Promise.resolve(auth.isAuthenticated());
             } else if (typeof auth.getCurrentUser === "function") {
                 isAuth = !!(await Promise.resolve(auth.getCurrentUser()));
             }
-
             if (isAuth) {
                 showStatus("أنت مسجل الدخول بالفعل. جارٍ التحويل...", "info");
                 setTimeout(() => { window.location.href = "app.html"; }, 800);
             }
-        } catch (err) {
-            console.warn("[auth] session check failed:", err);
-        }
+        } catch (err) { console.warn("[auth] session check failed:", err); }
     }
 
-    /* ------------------------------------------------------
-       Init
-    ------------------------------------------------------ */
     document.addEventListener("DOMContentLoaded", async () => {
         const urlMode = new URL(location.href).searchParams.get("mode");
         setMode(urlMode === "login" ? "login" : "signup", { silent: true });
 
-        // انتظر تهيئة auth
         try {
             if (window.AcousticEngineering?.auth?.initialize) {
                 await Promise.race([
@@ -792,7 +687,7 @@
                     new Promise(r => setTimeout(r, 3000))
                 ]);
             }
-        } catch { /* ignore */ }
+        } catch {}
 
         await checkExistingSession();
 
