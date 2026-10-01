@@ -2,23 +2,17 @@
 <html lang="ar" dir="rtl" id="reportHtml">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>التقرير الهندسي | Acoustic Engineering</title>
-
+    <meta name="description" content="تقرير هندسي لتصميم وتحليل الأنظمة الصوتية - Acoustic Engineering">
     <meta name="theme-color" content="#0b0f14">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet">
-
-    <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/app.css">
@@ -41,37 +35,24 @@
             --report-yellow: #f59e0b;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
-        html,
-        body {
+        html, body {
             margin: 0;
             padding: 0;
             min-height: 100%;
         }
 
         body {
-            font-family: "Cairo", sans-serif;
+            font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
             background:
-                radial-gradient(
-                    circle at 80% 0%,
-                    rgba(56,189,248,.07),
-                    transparent 30%
-                ),
-                radial-gradient(
-                    circle at 10% 20%,
-                    rgba(230,0,18,.06),
-                    transparent 25%
-                ),
+                radial-gradient(circle at 80% 0%, rgba(56,189,248,.07), transparent 30%),
+                radial-gradient(circle at 10% 20%, rgba(230,0,18,.06), transparent 25%),
                 var(--report-bg);
             color: var(--report-text);
         }
 
-        button {
-            font-family: inherit;
-        }
+        button { font-family: inherit; }
 
         /* =====================================================
            HEADER
@@ -81,18 +62,14 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-
             min-height: 72px;
             padding: 12px 24px;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 20px;
-
             background: rgba(8,11,16,.94);
             backdrop-filter: blur(16px);
-
             border-bottom: 1px solid var(--report-border);
         }
 
@@ -105,27 +82,15 @@
         .report-brand-icon {
             width: 44px;
             height: 44px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             border-radius: 12px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--report-red),
-                    #8c0010
-                );
-
-            box-shadow:
-                0 10px 30px rgba(230,0,18,.22);
+            background: linear-gradient(135deg, var(--report-red), #8c0010);
+            box-shadow: 0 10px 30px rgba(230,0,18,.22);
         }
 
-        .report-brand-icon i {
-            font-size: 20px;
-        }
+        .report-brand-icon i { font-size: 20px; }
 
         .report-brand-text strong {
             display: block;
@@ -150,20 +115,17 @@
         .report-btn {
             height: 40px;
             padding: 0 14px;
-
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-
             border: 1px solid var(--report-border);
             border-radius: 9px;
-
             color: var(--report-text);
             background: var(--report-panel);
-
             cursor: pointer;
             transition: .2s ease;
+            font-size: 13px;
         }
 
         .report-btn:hover {
@@ -171,24 +133,73 @@
             transform: translateY(-1px);
         }
 
+        .report-btn:focus-visible {
+            outline: 2px solid var(--report-blue);
+            outline-offset: 2px;
+        }
+
         .report-btn.primary {
             background: var(--report-red);
             border-color: var(--report-red);
+            color: #fff;
         }
 
-        .report-btn.primary:hover {
-            background: #c90010;
+        .report-btn.primary:hover { background: #c90010; }
+
+        .report-btn.secondary {
+            background: transparent;
+            color: var(--report-muted);
+            font-size: 12px;
         }
 
-        .report-btn.blue {
-            background: rgba(56,189,248,.1);
-            border-color: rgba(56,189,248,.3);
+        .report-btn.secondary:hover {
+            color: var(--report-text);
+            background: rgba(255,255,255,.03);
+        }
+
+        /* قائمة تصدير منسدلة */
+        .export-menu {
+            position: relative;
+        }
+
+        .export-menu-list {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            min-width: 200px;
+            display: none;
+            flex-direction: column;
+            padding: 6px;
+            background: #0e131b;
+            border: 1px solid var(--report-border);
+            border-radius: 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,.5);
+            z-index: 1200;
+        }
+
+        .export-menu.open .export-menu-list { display: flex; }
+
+        .export-menu-list button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 9px 12px;
+            background: transparent;
+            border: 0;
+            border-radius: 7px;
+            color: var(--report-text);
+            font-size: 12px;
+            cursor: pointer;
+            text-align: right;
+        }
+
+        .export-menu-list button:hover {
+            background: rgba(56,189,248,.08);
             color: var(--report-blue);
         }
 
-        .report-btn.danger {
-            color: #ff8c96;
-        }
+        .export-menu-list i { width: 16px; text-align: center; }
 
         /* =====================================================
            PAGE
@@ -202,41 +213,22 @@
         .report-header {
             position: relative;
             overflow: hidden;
-
             padding: 34px;
-
             border: 1px solid var(--report-border);
             border-radius: 18px;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    rgba(255,255,255,.035),
-                    rgba(255,255,255,.012)
-                );
-
+            background: linear-gradient(135deg, rgba(255,255,255,.035), rgba(255,255,255,.012));
             box-shadow: 0 25px 80px rgba(0,0,0,.2);
         }
 
         .report-header::after {
             content: "";
-
             position: absolute;
             width: 300px;
             height: 300px;
-
             left: -130px;
             top: -150px;
-
             border-radius: 50%;
-
-            background:
-                radial-gradient(
-                    circle,
-                    rgba(230,0,18,.15),
-                    transparent 68%
-                );
-
+            background: radial-gradient(circle, rgba(230,0,18,.15), transparent 68%);
             pointer-events: none;
         }
 
@@ -263,20 +255,15 @@
 
         .report-meta-grid {
             margin-top: 26px;
-
             display: grid;
-            grid-template-columns:
-                repeat(4, minmax(0, 1fr));
-
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 12px;
         }
 
         .meta-card {
             padding: 14px 16px;
-
             border: 1px solid var(--report-border);
             border-radius: 12px;
-
             background: rgba(0,0,0,.16);
         }
 
@@ -298,18 +285,13 @@
 
         .report-status {
             margin-top: 16px;
-
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             gap: 12px;
-
             padding: 14px 16px;
-
             border: 1px solid var(--report-border);
             border-radius: 12px;
-
             background: var(--report-panel);
         }
 
@@ -337,15 +319,8 @@
             box-shadow: 0 0 12px rgba(230,0,18,.45);
         }
 
-        .status-text {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .status-score {
-            font-size: 12px;
-            color: var(--report-muted);
-        }
+        .status-text { font-size: 13px; font-weight: 600; }
+        .status-score { font-size: 12px; color: var(--report-muted); }
 
         /* =====================================================
            SECTION
@@ -353,12 +328,9 @@
 
         .report-section {
             margin-top: 18px;
-
             padding: 24px;
-
             border: 1px solid var(--report-border);
             border-radius: 16px;
-
             background: var(--report-panel);
         }
 
@@ -366,9 +338,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-
             gap: 15px;
-
             margin-bottom: 20px;
         }
 
@@ -381,13 +351,10 @@
         .section-icon {
             width: 38px;
             height: 38px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             border-radius: 10px;
-
             color: var(--report-blue);
             background: rgba(56,189,248,.09);
             border: 1px solid rgba(56,189,248,.15);
@@ -411,21 +378,15 @@
 
         .summary-box {
             padding: 18px;
-
             border-right: 3px solid var(--report-red);
-
             border-radius: 10px;
-
             background: rgba(255,255,255,.025);
-
             line-height: 1.9;
             color: #dbe3ed;
             font-size: 13px;
         }
 
-        .summary-box strong {
-            color: #fff;
-        }
+        .summary-box strong { color: #fff; }
 
         /* =====================================================
            METRICS
@@ -433,32 +394,19 @@
 
         .metrics-grid {
             display: grid;
-            grid-template-columns:
-                repeat(4, minmax(0, 1fr));
-
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             gap: 12px;
         }
 
         .metric-card {
             padding: 18px;
-
             border: 1px solid var(--report-border);
             border-radius: 12px;
-
             background: rgba(255,255,255,.018);
         }
 
-        .metric-label {
-            color: var(--report-muted);
-            font-size: 11px;
-        }
-
-        .metric-value {
-            margin-top: 6px;
-            font-size: 25px;
-            font-weight: 800;
-        }
-
+        .metric-label { color: var(--report-muted); font-size: 11px; }
+        .metric-value { margin-top: 6px; font-size: 25px; font-weight: 800; }
         .metric-unit {
             margin-right: 4px;
             color: var(--report-muted);
@@ -473,7 +421,6 @@
         .table-wrap {
             width: 100%;
             overflow-x: auto;
-
             border: 1px solid var(--report-border);
             border-radius: 11px;
         }
@@ -481,16 +428,14 @@
         .report-table {
             width: 100%;
             border-collapse: collapse;
-            min-width: 650px;
+            min-width: 800px;
         }
 
         .report-table th,
         .report-table td {
             padding: 11px 13px;
             text-align: right;
-
             border-bottom: 1px solid var(--report-border);
-
             font-size: 12px;
             white-space: nowrap;
         }
@@ -501,17 +446,9 @@
             font-weight: 800;
         }
 
-        .report-table td {
-            color: #bdc8d6;
-        }
-
-        .report-table tr:last-child td {
-            border-bottom: 0;
-        }
-
-        .report-table tr:hover td {
-            background: rgba(255,255,255,.018);
-        }
+        .report-table td { color: #bdc8d6; }
+        .report-table tr:last-child td { border-bottom: 0; }
+        .report-table tr:hover td { background: rgba(255,255,255,.018); }
 
         /* =====================================================
            DIAGRAM
@@ -519,36 +456,20 @@
 
         .diagram-container {
             min-height: 360px;
-
             display: flex;
             align-items: center;
             justify-content: center;
-
             padding: 16px;
-
             border: 1px solid var(--report-border);
             border-radius: 12px;
-
             background:
-                linear-gradient(
-                    rgba(255,255,255,.018) 1px,
-                    transparent 1px
-                ),
-                linear-gradient(
-                    90deg,
-                    rgba(255,255,255,.018) 1px,
-                    transparent 1px
-                );
-
+                linear-gradient(rgba(255,255,255,.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
             background-size: 25px 25px;
-
             overflow: hidden;
         }
 
-        .diagram-container svg {
-            max-width: 100%;
-            height: auto;
-        }
+        .diagram-container svg { max-width: 100%; height: auto; }
 
         /* =====================================================
            TWO COLUMN
@@ -556,10 +477,7 @@
 
         .report-two-column {
             display: grid;
-            grid-template-columns:
-                minmax(0, 1fr)
-                minmax(0, 1fr);
-
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
             gap: 18px;
         }
 
@@ -567,33 +485,22 @@
            WARNING
            ===================================================== */
 
-        .warnings {
-            display: grid;
-            gap: 9px;
-        }
+        .warnings { display: grid; gap: 9px; }
 
         .warning-item {
             display: flex;
             align-items: flex-start;
             gap: 10px;
-
             padding: 12px 14px;
-
             border-radius: 9px;
-
             border: 1px solid rgba(245,158,11,.16);
             background: rgba(245,158,11,.055);
-
             color: #e9d5a4;
-
             font-size: 12px;
             line-height: 1.7;
         }
 
-        .warning-item i {
-            margin-top: 3px;
-            color: var(--report-yellow);
-        }
+        .warning-item i { margin-top: 3px; color: var(--report-yellow); }
 
         .warning-item.danger {
             border-color: rgba(230,0,18,.2);
@@ -601,9 +508,7 @@
             color: #f4b3b9;
         }
 
-        .warning-item.danger i {
-            color: var(--report-red);
-        }
+        .warning-item.danger i { color: var(--report-red); }
 
         /* =====================================================
            ENGINEERING NOTES
@@ -615,31 +520,21 @@
             line-height: 2;
         }
 
-        .engineering-text p {
-            margin: 0 0 12px;
-        }
-
-        .engineering-text p:last-child {
-            margin-bottom: 0;
-        }
+        .engineering-text p { margin: 0 0 12px; }
+        .engineering-text p:last-child { margin-bottom: 0; }
 
         .formula-box {
             margin-top: 15px;
-
             padding: 15px;
-
             border-radius: 10px;
-
             border: 1px dashed rgba(56,189,248,.25);
-
             background: rgba(56,189,248,.04);
-
             direction: ltr;
-            text-align: left;
-
-            font-family: monospace;
+            text-align: center;
+            font-family: "SFMono-Regular", Consolas, "Courier New", monospace;
             color: #9ddfff;
             font-size: 12px;
+            line-height: 1.8;
         }
 
         /* =====================================================
@@ -648,19 +543,13 @@
 
         .report-footer {
             margin-top: 24px;
-
             padding: 20px;
-
             text-align: center;
-
             color: var(--report-muted);
-
             font-size: 11px;
         }
 
-        .report-footer strong {
-            color: #dce5ef;
-        }
+        .report-footer strong { color: #dce5ef; }
 
         /* =====================================================
            LOADING
@@ -670,50 +559,36 @@
             position: fixed;
             inset: 0;
             z-index: 5000;
-
             display: none;
             align-items: center;
             justify-content: center;
-
             background: rgba(5,7,10,.88);
             backdrop-filter: blur(8px);
         }
 
-        #reportLoading.active {
-            display: flex;
-        }
+        #reportLoading.active { display: flex; }
 
         .loading-card {
             width: min(360px, calc(100% - 40px));
-
             padding: 28px;
-
             text-align: center;
-
             border: 1px solid var(--report-border);
             border-radius: 16px;
-
             background: var(--report-panel);
         }
 
         .loading-spinner {
             width: 40px;
             height: 40px;
-
             margin: 0 auto 15px;
-
             border: 3px solid rgba(255,255,255,.1);
             border-top-color: var(--report-blue);
-
             border-radius: 50%;
-
             animation: reportSpin .8s linear infinite;
         }
 
         @keyframes reportSpin {
-            to {
-                transform: rotate(360deg);
-            }
+            to { transform: rotate(360deg); }
         }
 
         /* =====================================================
@@ -722,45 +597,36 @@
 
         #toastContainer {
             position: fixed;
-            left: 20px;
+            right: 20px;
             bottom: 20px;
-
             z-index: 6000;
-
             display: flex;
             flex-direction: column;
             gap: 8px;
+            pointer-events: none;
         }
 
         .toast {
             min-width: 260px;
             max-width: 380px;
-
             padding: 12px 15px;
-
             border: 1px solid var(--report-border);
             border-radius: 10px;
-
             background: #111720;
             color: #fff;
-
             box-shadow: 0 15px 40px rgba(0,0,0,.3);
-
             font-size: 12px;
-
             animation: toastIn .2s ease;
+            pointer-events: auto;
         }
 
-        @keyframes toastIn {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
+        .toast.success { border-color: rgba(34,197,94,.4); }
+        .toast.error   { border-color: rgba(230,0,18,.4); }
+        .toast.info    { border-color: rgba(56,189,248,.4); }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         /* =====================================================
@@ -770,13 +636,9 @@
         @media (max-width: 1000px) {
             .report-meta-grid,
             .metrics-grid {
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
-
-            .report-two-column {
-                grid-template-columns: 1fr;
-            }
+            .report-two-column { grid-template-columns: 1fr; }
         }
 
         @media (max-width: 650px) {
@@ -784,39 +646,19 @@
                 padding: 10px 14px;
                 align-items: flex-start;
             }
-
-            .report-actions {
-                justify-content: flex-end;
-            }
-
-            .report-btn span {
-                display: none;
-            }
-
-            .report-btn {
-                width: 40px;
-                padding: 0;
-            }
-
+            .report-actions { justify-content: flex-end; }
+            .report-btn span { display: none; }
+            .report-btn { width: 40px; padding: 0; }
+            .export-menu-list { left: auto; right: 0; }
             .report-page {
                 width: min(100% - 18px, 1500px);
                 margin-top: 10px;
             }
-
             .report-header,
-            .report-section {
-                padding: 17px;
-                border-radius: 13px;
-            }
-
+            .report-section { padding: 17px; border-radius: 13px; }
             .report-meta-grid,
-            .metrics-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .report-title {
-                font-size: 25px;
-            }
+            .metrics-grid { grid-template-columns: 1fr; }
+            .report-title { font-size: 25px; }
         }
 
         /* =====================================================
@@ -824,33 +666,26 @@
            ===================================================== */
 
         @media print {
-
             @page {
                 size: A4;
-                margin: 12mm;
+                margin: 15mm;
             }
 
-            html,
-            body {
+            html, body {
                 background: #fff !important;
                 color: #111 !important;
             }
 
             body {
-                font-family: "Cairo", Arial, sans-serif;
+                font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
             }
 
             .report-topbar,
             #toastContainer,
             #reportLoading,
-            .no-print {
-                display: none !important;
-            }
+            .no-print { display: none !important; }
 
-            .report-page {
-                width: 100%;
-                margin: 0;
-            }
+            .report-page { width: 100%; margin: 0; }
 
             .report-header,
             .report-section,
@@ -864,25 +699,19 @@
                 box-shadow: none !important;
             }
 
-            .report-header {
-                border: 1px solid #ccc !important;
-            }
+            .report-header { border: 1px solid #ccc !important; }
 
             .report-title,
             .section-title,
             .meta-value,
-            .metric-value {
-                color: #111 !important;
-            }
+            .metric-value { color: #111 !important; }
 
             .report-subtitle,
             .meta-label,
             .metric-label,
             .section-caption,
             .report-footer,
-            .report-table td {
-                color: #555 !important;
-            }
+            .report-table td { color: #555 !important; }
 
             .report-table th {
                 color: #111 !important;
@@ -890,31 +719,25 @@
             }
 
             .summary-box,
-            .engineering-text {
-                color: #222 !important;
-            }
+            .engineering-text { color: #222 !important; }
 
-            .report-section {
-                page-break-inside: avoid;
-            }
+            .report-section,
+            .report-two-column { page-break-inside: avoid; }
 
-            .report-two-column {
-                page-break-inside: avoid;
-            }
+            .diagram-container { min-height: 300px; }
 
-            .diagram-container {
-                min-height: 300px;
-            }
-
-            a {
-                color: #111 !important;
-                text-decoration: none !important;
-            }
+            a { color: #111 !important; text-decoration: none !important; }
         }
     </style>
 </head>
 
 <body>
+
+<noscript>
+    <div style="padding:20px;text-align:center;background:#e60012;color:#fff;">
+        هذا التقرير يحتاج JavaScript لعرض البيانات. الرجاء تفعيله.
+    </div>
+</noscript>
 
 <!-- =========================================================
      TOP BAR
@@ -923,16 +746,13 @@
 <header class="report-topbar no-print">
 
     <div class="report-brand">
-
         <div class="report-brand-icon">
             <i class="fa-solid fa-wave-square"></i>
         </div>
-
         <div class="report-brand-text">
             <strong>هندسة صوتية</strong>
             <span>Acoustic Engineering Report</span>
         </div>
-
     </div>
 
     <div class="report-actions">
@@ -940,41 +760,43 @@
         <button
             id="backToAppBtn"
             class="report-btn"
-            type="button">
-
+            type="button"
+            aria-label="العودة إلى صفحة التصميم">
             <i class="fa-solid fa-arrow-right"></i>
             <span>العودة للتصميم</span>
-
         </button>
 
-        <button
-            id="downloadReportBtn"
-            class="report-btn blue"
-            type="button">
-
-            <i class="fa-solid fa-file-code"></i>
-            <span>HTML</span>
-
-        </button>
-
-        <button
-            id="exportReportJSONBtn"
-            class="report-btn"
-            type="button">
-
-            <i class="fa-solid fa-file-export"></i>
-            <span>JSON</span>
-
-        </button>
+        <div class="export-menu" id="exportMenu">
+            <button
+                id="exportMenuBtn"
+                class="report-btn secondary"
+                type="button"
+                aria-haspopup="true"
+                aria-expanded="false"
+                aria-label="خيارات التصدير">
+                <i class="fa-solid fa-download"></i>
+                <span>تصدير</span>
+                <i class="fa-solid fa-chevron-down" style="font-size:10px"></i>
+            </button>
+            <div class="export-menu-list" role="menu">
+                <button id="downloadReportBtn" type="button" role="menuitem">
+                    <i class="fa-solid fa-file-code"></i>
+                    تنزيل كملف HTML
+                </button>
+                <button id="exportReportJSONBtn" type="button" role="menuitem">
+                    <i class="fa-solid fa-file-export"></i>
+                    تصدير البيانات JSON
+                </button>
+            </div>
+        </div>
 
         <button
             id="printReportBtn"
             class="report-btn primary"
-            type="button">
-
+            type="button"
+            aria-label="طباعة التقرير أو حفظه PDF">
             <i class="fa-solid fa-print"></i>
-            <span>طباعة التقرير</span>
-
+            <span>طباعة / PDF</span>
         </button>
 
     </div>
@@ -996,848 +818,393 @@
             ENGINEERING ACOUSTIC SYSTEM DESIGN
         </div>
 
-        <h1
-            id="reportTitle"
-            class="report-title">
+        <h1 id="reportTitle" class="report-title">
             التقرير الهندسي للنظام الصوتي
         </h1>
 
-        <p
-            id="reportSubtitle"
-            class="report-subtitle">
+        <p id="reportSubtitle" class="report-subtitle">
             تقرير تصميم وتحليل وتوزيع منظومة صوتية
         </p>
 
         <div class="report-meta-grid">
-
             <div class="meta-card">
-                <div class="meta-label">
-                    اسم المشروع
-                </div>
-
-                <div
-                    id="projectName"
-                    class="meta-value">
-                    —
-                </div>
+                <div class="meta-label">اسم المشروع</div>
+                <div id="projectName" class="meta-value">—</div>
             </div>
-
             <div class="meta-card">
-                <div class="meta-label">
-                    العميل
-                </div>
-
-                <div
-                    id="clientName"
-                    class="meta-value">
-                    —
-                </div>
+                <div class="meta-label">العميل</div>
+                <div id="clientName" class="meta-value">—</div>
             </div>
-
             <div class="meta-card">
-                <div class="meta-label">
-                    الموقع
-                </div>
-
-                <div
-                    id="projectLocation"
-                    class="meta-value">
-                    —
-                </div>
+                <div class="meta-label">الموقع</div>
+                <div id="projectLocation" class="meta-value">—</div>
             </div>
-
             <div class="meta-card">
-                <div class="meta-label">
-                    نوع المنشأة
-                </div>
-
-                <div
-                    id="venueType"
-                    class="meta-value">
-                    —
-                </div>
+                <div class="meta-label">نوع المنشأة</div>
+                <div id="venueType" class="meta-value">—</div>
             </div>
-
         </div>
 
         <div class="report-status">
-
             <div class="status-left">
-
-                <span
-                    id="statusDot"
-                    class="status-dot">
-                </span>
-
-                <span
-                    id="statusText"
-                    class="status-text">
-                    جارٍ تحليل التصميم...
-                </span>
-
+                <span id="statusDot" class="status-dot"></span>
+                <span id="statusText" class="status-text">جارٍ تحليل التصميم...</span>
             </div>
-
-            <div
-                id="statusScore"
-                class="status-score">
-                —
-            </div>
-
+            <div id="statusScore" class="status-score">—</div>
         </div>
 
     </section>
 
 
-    <!-- =====================================================
-         EXECUTIVE SUMMARY
-         ===================================================== -->
+    <!-- EXECUTIVE SUMMARY -->
 
     <section class="report-section">
-
         <div class="section-heading">
-
             <div class="section-title-wrap">
-
-                <div class="section-icon">
-                    <i class="fa-solid fa-file-lines"></i>
-                </div>
-
+                <div class="section-icon"><i class="fa-solid fa-file-lines"></i></div>
                 <div>
-                    <h2 class="section-title">
-                        الملخص التنفيذي
-                    </h2>
-
-                    <p class="section-caption">
-                        Executive Summary
-                    </p>
+                    <h2 class="section-title">الملخص التنفيذي</h2>
+                    <p class="section-caption">Executive Summary</p>
                 </div>
-
             </div>
-
         </div>
-
-        <div
-            id="executiveSummary"
-            class="summary-box">
-
+        <div id="executiveSummary" class="summary-box">
             يتم تحميل الملخص الهندسي...
-
         </div>
-
     </section>
 
 
-    <!-- =====================================================
-         KEY METRICS
-         ===================================================== -->
+    <!-- KEY METRICS -->
 
     <section class="report-section">
-
         <div class="section-heading">
-
             <div class="section-title-wrap">
-
-                <div class="section-icon">
-                    <i class="fa-solid fa-gauge-high"></i>
-                </div>
-
+                <div class="section-icon"><i class="fa-solid fa-gauge-high"></i></div>
                 <div>
-                    <h2 class="section-title">
-                        المؤشرات الهندسية
-                    </h2>
-
-                    <p class="section-caption">
-                        Key Engineering Metrics
-                    </p>
+                    <h2 class="section-title">المؤشرات الهندسية</h2>
+                    <p class="section-caption">Key Engineering Metrics</p>
                 </div>
-
             </div>
-
         </div>
 
         <div class="metrics-grid">
-
             <div class="metric-card">
-
-                <div class="metric-label">
-                    نسبة التغطية
-                </div>
-
-                <div
-                    id="metricCoverage"
-                    class="metric-value">
-                    —
-                </div>
-
+                <div class="metric-label">نسبة التغطية</div>
+                <div id="metricCoverage" class="metric-value">—</div>
                 <span class="metric-unit">%</span>
-
             </div>
-
             <div class="metric-card">
-
-                <div class="metric-label">
-                    متوسط SPL
-                </div>
-
-                <div
-                    id="metricAverageSPL"
-                    class="metric-value">
-                    —
-                </div>
-
+                <div class="metric-label">متوسط SPL</div>
+                <div id="metricAverageSPL" class="metric-value">—</div>
                 <span class="metric-unit">dB</span>
-
             </div>
-
             <div class="metric-card">
-
-                <div class="metric-label">
-                    تجانس التغطية
-                </div>
-
-                <div
-                    id="metricUniformity"
-                    class="metric-value">
-                    —
-                </div>
-
+                <div class="metric-label">تجانس التغطية</div>
+                <div id="metricUniformity" class="metric-value">—</div>
                 <span class="metric-unit">dB</span>
-
             </div>
-
             <div class="metric-card">
-
-                <div class="metric-label">
-                    عدد السماعات
-                </div>
-
-                <div
-                    id="metricSpeakerCount"
-                    class="metric-value">
-                    —
-                </div>
-
+                <div class="metric-label">عدد السماعات</div>
+                <div id="metricSpeakerCount" class="metric-value">—</div>
                 <span class="metric-unit">وحدة</span>
-
             </div>
-
         </div>
-
     </section>
 
 
-    <!-- =====================================================
-         ROOM + TARGET
-         ===================================================== -->
+    <!-- ROOM + TARGET -->
 
     <div class="report-two-column">
 
         <section class="report-section">
-
             <div class="section-heading">
-
                 <div class="section-title-wrap">
-
-                    <div class="section-icon">
-                        <i class="fa-solid fa-cube"></i>
-                    </div>
-
+                    <div class="section-icon"><i class="fa-solid fa-cube"></i></div>
                     <div>
-                        <h2 class="section-title">
-                            بيانات الفراغ
-                        </h2>
-
-                        <p class="section-caption">
-                            Room Geometry
-                        </p>
+                        <h2 class="section-title">بيانات الفراغ</h2>
+                        <p class="section-caption">Room Geometry</p>
                     </div>
-
                 </div>
-
             </div>
 
             <div class="table-wrap">
-
                 <table class="report-table">
-
                     <tbody id="roomTableBody">
-
-                        <tr>
-                            <th>العنصر</th>
-                            <th>القيمة</th>
-                        </tr>
-
-                        <tr>
-                            <td>العرض</td>
-                            <td>—</td>
-                        </tr>
-
-                        <tr>
-                            <td>الطول</td>
-                            <td>—</td>
-                        </tr>
-
-                        <tr>
-                            <td>الارتفاع</td>
-                            <td>—</td>
-                        </tr>
-
-                        <tr>
-                            <td>المساحة</td>
-                            <td>—</td>
-                        </tr>
-
-                        <tr>
-                            <td>الحجم</td>
-                            <td>—</td>
-                        </tr>
-
+                        <tr><th>العنصر</th><th>القيمة</th></tr>
+                        <tr><td>العرض</td><td>—</td></tr>
+                        <tr><td>الطول</td><td>—</td></tr>
+                        <tr><td>الارتفاع</td><td>—</td></tr>
+                        <tr><td>المساحة</td><td>—</td></tr>
+                        <tr><td>الحجم</td><td>—</td></tr>
                     </tbody>
-
                 </table>
-
             </div>
-
         </section>
 
-
         <section class="report-section">
-
             <div class="section-heading">
-
                 <div class="section-title-wrap">
-
-                    <div class="section-icon">
-                        <i class="fa-solid fa-bullseye"></i>
-                    </div>
-
+                    <div class="section-icon"><i class="fa-solid fa-bullseye"></i></div>
                     <div>
-                        <h2 class="section-title">
-                            أهداف التصميم
-                        </h2>
-
-                        <p class="section-caption">
-                            Engineering Targets
-                        </p>
+                        <h2 class="section-title">أهداف التصميم</h2>
+                        <p class="section-caption">Engineering Targets</p>
                     </div>
-
                 </div>
-
             </div>
 
             <div class="table-wrap">
-
                 <table class="report-table">
-
                     <tbody id="targetTableBody">
-
-                        <tr>
-                            <th>المعيار</th>
-                            <th>القيمة</th>
-                        </tr>
-
-                        <tr>
-                            <td>Target SPL</td>
-                            <td>—</td>
-                        </tr>
-
-                        <tr>
-                            <td>Headroom</td>
-                            <td>—</td>
-                        </tr>
-
-                        <tr>
-                            <td>Coverage Target</td>
-                            <td>—</td>
-                        </tr>
-
-                        <tr>
-                            <td>ارتفاع المستمع</td>
-                            <td>—</td>
-                        </tr>
-
+                        <tr><th>المعيار</th><th>القيمة</th></tr>
+                        <tr><td>Target SPL</td><td>—</td></tr>
+                        <tr><td>Headroom</td><td>—</td></tr>
+                        <tr><td>Coverage Target</td><td>—</td></tr>
+                        <tr><td>ارتفاع المستمع</td><td>—</td></tr>
                     </tbody>
-
                 </table>
-
             </div>
-
         </section>
 
     </div>
 
 
-    <!-- =====================================================
-         PLAN
-         ===================================================== -->
+    <!-- PLAN -->
 
     <section class="report-section">
-
         <div class="section-heading">
-
             <div class="section-title-wrap">
-
-                <div class="section-icon">
-                    <i class="fa-solid fa-compass-drafting"></i>
-                </div>
-
+                <div class="section-icon"><i class="fa-solid fa-compass-drafting"></i></div>
                 <div>
-                    <h2 class="section-title">
-                        المخطط الهندسي
-                    </h2>
-
-                    <p class="section-caption">
-                        Engineering Layout
-                    </p>
+                    <h2 class="section-title">المخطط الهندسي</h2>
+                    <p class="section-caption">Engineering Layout</p>
                 </div>
-
             </div>
-
         </div>
-
-        <div
-            id="planDiagram"
-            class="diagram-container">
-
+        <div id="planDiagram" class="diagram-container">
             <!-- report.js يضع SVG هنا -->
-
         </div>
-
     </section>
 
 
-    <!-- =====================================================
-         COVERAGE / HEATMAP
-         ===================================================== -->
+    <!-- COVERAGE / HEATMAP -->
 
     <section class="report-section">
-
         <div class="section-heading">
-
             <div class="section-title-wrap">
-
-                <div class="section-icon">
-                    <i class="fa-solid fa-chart-area"></i>
-                </div>
-
+                <div class="section-icon"><i class="fa-solid fa-chart-area"></i></div>
                 <div>
-                    <h2 class="section-title">
-                        تحليل التغطية الصوتية
-                    </h2>
-
-                    <p class="section-caption">
-                        Acoustic Coverage Analysis
-                    </p>
+                    <h2 class="section-title">تحليل التغطية الصوتية</h2>
+                    <p class="section-caption">Acoustic Coverage Analysis</p>
                 </div>
-
             </div>
-
         </div>
-
-        <div
-            id="heatmapDiagram"
-            class="diagram-container">
-
+        <div id="heatmapDiagram" class="diagram-container">
             <!-- report.js يضع Heatmap SVG هنا -->
-
         </div>
-
     </section>
 
 
-    <!-- =====================================================
-         SPEAKER BOM
-         ===================================================== -->
+    <!-- SPEAKER BOM -->
 
     <section class="report-section">
-
         <div class="section-heading">
-
             <div class="section-title-wrap">
-
-                <div class="section-icon">
-                    <i class="fa-solid fa-volume-high"></i>
-                </div>
-
+                <div class="section-icon"><i class="fa-solid fa-volume-high"></i></div>
                 <div>
-                    <h2 class="section-title">
-                        جدول السماعات والكميات
-                    </h2>
-
-                    <p class="section-caption">
-                        Speaker Schedule / BOM
-                    </p>
+                    <h2 class="section-title">مواصفات السماعات والكميات</h2>
+                    <p class="section-caption">Speaker Specifications / BOM</p>
                 </div>
-
             </div>
-
         </div>
 
         <div class="table-wrap">
-
             <table class="report-table">
-
                 <thead>
-
                     <tr>
                         <th>#</th>
                         <th>الشركة</th>
                         <th>الموديل</th>
                         <th>النوع</th>
                         <th>الكمية</th>
-                        <th>RMS</th>
-                        <th>Max SPL</th>
-                        <th>التغطية</th>
+                        <th>RMS (W)</th>
+                        <th>الحساسية (dB)</th>
+                        <th>Max SPL (dB)</th>
+                        <th>المعاوقة (Ω)</th>
+                        <th>زاوية التغطية</th>
                     </tr>
-
                 </thead>
-
                 <tbody id="speakerTableBody">
-
                     <tr>
-                        <td colspan="8"
-                            style="text-align:center;">
-                            لا توجد بيانات بعد
+                        <td colspan="10" style="text-align:center;color:var(--report-muted)">
+                            جارٍ تحميل مواصفات السماعات...
                         </td>
                     </tr>
-
                 </tbody>
-
             </table>
-
         </div>
-
     </section>
 
 
-    <!-- =====================================================
-         SPEAKER POSITIONS
-         ===================================================== -->
+    <!-- SPEAKER POSITIONS -->
 
     <section class="report-section">
-
         <div class="section-heading">
-
             <div class="section-title-wrap">
-
-                <div class="section-icon">
-                    <i class="fa-solid fa-location-dot"></i>
-                </div>
-
+                <div class="section-icon"><i class="fa-solid fa-location-dot"></i></div>
                 <div>
-                    <h2 class="section-title">
-                        مواقع السماعات
-                    </h2>
-
-                    <p class="section-caption">
-                        Speaker Position Schedule
-                    </p>
+                    <h2 class="section-title">مواقع السماعات</h2>
+                    <p class="section-caption">Speaker Position Schedule</p>
                 </div>
-
             </div>
-
         </div>
 
         <div class="table-wrap">
-
             <table class="report-table">
-
                 <thead>
-
                     <tr>
                         <th>#</th>
                         <th>الموديل</th>
-                        <th>X</th>
-                        <th>Y</th>
-                        <th>Z</th>
+                        <th>X (m)</th>
+                        <th>Y (m)</th>
+                        <th>Z (m)</th>
                         <th>الدوران</th>
                         <th>التثبيت</th>
-                        <th>Delay</th>
+                        <th>Delay (ms)</th>
                     </tr>
-
                 </thead>
-
                 <tbody id="speakerPositionTableBody">
-
                     <tr>
-                        <td colspan="8"
-                            style="text-align:center;">
-                            لا توجد مواقع مسجلة
+                        <td colspan="8" style="text-align:center;color:var(--report-muted)">
+                            جارٍ تحميل المواقع...
                         </td>
                     </tr>
-
                 </tbody>
-
             </table>
-
         </div>
-
     </section>
 
 
-    <!-- =====================================================
-         ANALYSIS
-         ===================================================== -->
+    <!-- ANALYSIS -->
 
     <section class="report-section">
-
         <div class="section-heading">
-
             <div class="section-title-wrap">
-
-                <div class="section-icon">
-                    <i class="fa-solid fa-microscope"></i>
-                </div>
-
+                <div class="section-icon"><i class="fa-solid fa-microscope"></i></div>
                 <div>
-                    <h2 class="section-title">
-                        التحليل الهندسي
-                    </h2>
-
-                    <p class="section-caption">
-                        Engineering Analysis
-                    </p>
+                    <h2 class="section-title">التحليل الهندسي</h2>
+                    <p class="section-caption">Engineering Analysis</p>
                 </div>
-
             </div>
-
         </div>
 
-        <div
-            id="analysisTable"
-            class="table-wrap">
-
+        <div id="analysisTable" class="table-wrap">
             <table class="report-table">
-
                 <thead>
-
                     <tr>
                         <th>المؤشر</th>
                         <th>القيمة</th>
                         <th>الحالة</th>
                     </tr>
-
                 </thead>
-
                 <tbody id="analysisTableBody">
-
                     <tr>
-                        <td colspan="3"
-                            style="text-align:center;">
+                        <td colspan="3" style="text-align:center;color:var(--report-muted)">
                             جارٍ التحليل...
                         </td>
                     </tr>
-
                 </tbody>
-
             </table>
-
         </div>
-
     </section>
 
 
-    <!-- =====================================================
-         ENGINEERING NARRATIVE
-         ===================================================== -->
+    <!-- ENGINEERING NARRATIVE -->
 
     <section class="report-section">
-
         <div class="section-heading">
-
             <div class="section-title-wrap">
-
-                <div class="section-icon">
-                    <i class="fa-solid fa-ruler-combined"></i>
-                </div>
-
+                <div class="section-icon"><i class="fa-solid fa-ruler-combined"></i></div>
                 <div>
-                    <h2 class="section-title">
-                        المنهجية والحسابات
-                    </h2>
-
-                    <p class="section-caption">
-                        Engineering Methodology
-                    </p>
+                    <h2 class="section-title">المنهجية والحسابات</h2>
+                    <p class="section-caption">Engineering Methodology</p>
                 </div>
-
             </div>
-
         </div>
 
-        <div
-            id="engineeringNarrative"
-            class="engineering-text">
-
-            <p>
-                يتم تحميل المنهجية الهندسية...
-            </p>
-
+        <div id="engineeringNarrative" class="engineering-text">
+            <p>يتم تحميل المنهجية الهندسية...</p>
         </div>
 
         <div class="formula-box">
-
             SPL₂ = SPL₁ − 20 × log₁₀(r₂ / r₁)
-
             <br><br>
-
-            SPL<sub>total</sub>
-            =
-            10 × log₁₀
-            (
-            Σ 10<sup>SPLᵢ / 10</sup>
-            )
-
+            SPL<sub>total</sub> = 10 × log₁₀( Σ 10<sup>SPLᵢ / 10</sup> )
             <br><br>
-
-            Coverage =
-            Covered Area / Total Target Area × 100
-
+            Coverage = Covered Area / Total Target Area × 100
         </div>
-
     </section>
 
 
-    <!-- =====================================================
-         WARNINGS
-         ===================================================== -->
+    <!-- WARNINGS -->
 
     <section class="report-section">
-
         <div class="section-heading">
-
             <div class="section-title-wrap">
-
-                <div class="section-icon">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                </div>
-
+                <div class="section-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
                 <div>
-                    <h2 class="section-title">
-                        الملاحظات والتحذيرات
-                    </h2>
-
-                    <p class="section-caption">
-                        Engineering Warnings
-                    </p>
+                    <h2 class="section-title">الملاحظات والتحذيرات</h2>
+                    <p class="section-caption">Engineering Warnings</p>
                 </div>
-
             </div>
-
         </div>
 
-        <div
-            id="warningsContainer"
-            class="warnings">
-
+        <div id="warningsContainer" class="warnings">
             <div class="warning-item">
-
                 <i class="fa-solid fa-circle-info"></i>
-
-                <span>
-                    لم يتم تسجيل أي تحذيرات حتى الآن.
-                </span>
-
+                <span>لم يتم تسجيل أي تحذيرات حتى الآن.</span>
             </div>
-
         </div>
-
     </section>
 
 
-    <!-- =====================================================
-         DESIGN INFORMATION
-         ===================================================== -->
+    <!-- DESIGN INFORMATION -->
 
     <section class="report-section">
-
         <div class="section-heading">
-
             <div class="section-title-wrap">
-
-                <div class="section-icon">
-                    <i class="fa-solid fa-circle-info"></i>
-                </div>
-
+                <div class="section-icon"><i class="fa-solid fa-circle-info"></i></div>
                 <div>
-                    <h2 class="section-title">
-                        معلومات التقرير
-                    </h2>
-
-                    <p class="section-caption">
-                        Document Information
-                    </p>
+                    <h2 class="section-title">معلومات التقرير</h2>
+                    <p class="section-caption">Document Information</p>
                 </div>
-
             </div>
-
         </div>
 
         <div class="table-wrap">
-
             <table class="report-table">
-
                 <tbody>
-
-                    <tr>
-                        <th>رقم التقرير</th>
-                        <td id="reportNumber">—</td>
-                    </tr>
-
-                    <tr>
-                        <th>تاريخ التقرير</th>
-                        <td id="reportDate">—</td>
-                    </tr>
-
-                    <tr>
-                        <th>وقت التقرير</th>
-                        <td id="reportTime">—</td>
-                    </tr>
-
-                    <tr>
-                        <th>إصدار البرنامج</th>
-                        <td id="softwareVersion">Acoustic Engineering 1.0</td>
-                    </tr>
-
-                    <tr>
-                        <th>وضع التصميم</th>
-                        <td id="designModeInfo">—</td>
-                    </tr>
-
-                    <tr>
-                        <th>الملف الهندسي</th>
-                        <td id="designFileInfo">—</td>
-                    </tr>
-
+                    <tr><th>رقم التقرير</th><td id="reportNumber">—</td></tr>
+                    <tr><th>تاريخ التقرير</th><td id="reportDate">—</td></tr>
+                    <tr><th>وقت التقرير</th><td id="reportTime">—</td></tr>
+                    <tr><th>إصدار البرنامج</th><td id="softwareVersion">Acoustic Engineering 1.0</td></tr>
+                    <tr><th>وضع التصميم</th><td id="designModeInfo">—</td></tr>
+                    <tr><th>الملف الهندسي</th><td id="designFileInfo">—</td></tr>
                 </tbody>
-
             </table>
-
         </div>
-
     </section>
 
 
-    <!-- =====================================================
-         FOOTER
-         ===================================================== -->
+    <!-- FOOTER -->
 
     <footer class="report-footer">
-
-        <strong>
-            Acoustic Engineering
-        </strong>
-
+        <strong>Acoustic Engineering</strong>
         <br>
-
         نظام هندسة وتصميم وتحليل الأنظمة الصوتية
-
         <br><br>
-
         هذا التقرير يمثل الحسابات الهندسية الناتجة عن بيانات المشروع
         والإعدادات المدخلة في النظام، ويجب مراجعة ظروف الموقع الفعلية
         قبل التنفيذ النهائي.
-
     </footer>
 
 </main>
@@ -1847,26 +1214,14 @@
      LOADING
      ========================================================= -->
 
-<div id="reportLoading">
-
+<div id="reportLoading" aria-hidden="true">
     <div class="loading-card">
-
         <div class="loading-spinner"></div>
-
-        <strong>
-            جارٍ إنشاء التقرير...
-        </strong>
-
-        <p style="
-            margin:8px 0 0;
-            color:var(--report-muted);
-            font-size:12px;
-        ">
+        <strong>جارٍ إنشاء التقرير...</strong>
+        <p style="margin:8px 0 0;color:var(--report-muted);font-size:12px;">
             يتم تجهيز المخططات والحسابات والجداول
         </p>
-
     </div>
-
 </div>
 
 
@@ -1892,348 +1247,289 @@
 <script src="js/canvas.js"></script>
 
 <script src="js/report.js"></script>
-<script src="js/app.js"></script>
+<!-- ملاحظة: تم إزالة app.js لأنها خاصة بـ app.html وقد تسبب تعارضاً -->
 
 
 <script>
+/* ============================================================
+   REPORT PAGE BOOTSTRAP — v1.1.0
+   ============================================================ */
 (function () {
     "use strict";
 
-    /* =====================================================
-       REPORT PAGE BOOTSTRAP
-       ===================================================== */
+    /* ---------------------- Helpers ---------------------- */
 
-    const AE =
-        window.AcousticEngineering ||
-        {};
+    const $ = id => document.getElementById(id);
 
-    function $(id) {
-        return document.getElementById(id);
+    function safeText(v, fb = "—") {
+        return (v === null || v === undefined || v === "")
+            ? fb : String(v);
     }
 
-    function safeText(value, fallback = "—") {
-        if (
-            value === null ||
-            value === undefined ||
-            value === ""
-        ) {
-            return fallback;
-        }
-
-        return String(value);
+    function escapeHtml(str) {
+        return String(str).replace(/[&<>"']/g, c => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;",
+            '"': "&quot;", "'": "&#39;"
+        }[c]));
     }
+
+    /* ---------- Toast (متاح لبقية الوحدات) ---------- */
+
+    function toast(message, type = "info", durationMs = 3200) {
+        const container = $("toastContainer");
+        if (!container) return;
+        const el = document.createElement("div");
+        el.className = "toast " + type;
+        el.textContent = message;
+        container.appendChild(el);
+        setTimeout(() => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(8px)";
+            setTimeout(() => el.remove(), 200);
+        }, durationMs);
+    }
+
+    /* ---------- Namespace موحّد ---------- */
+
+    window.AE = window.AE || {};
+    window.AE.ui = {
+        showLoading() { $("reportLoading")?.classList.add("active"); },
+        hideLoading() { $("reportLoading")?.classList.remove("active"); },
+        toast,
+        escapeHtml,
+        safeText
+    };
+
+    /* ---------------------- Project ---------------------- */
 
     function getProject() {
-
         try {
-
-            if (
-                AE.storage &&
-                typeof AE.storage.getCurrentProject === "function"
-            ) {
-                const project =
-                    AE.storage.getCurrentProject();
-
-                if (project) {
-                    return project;
-                }
+            const s = window.AE?.storage;
+            if (s && typeof s.getCurrentProject === "function") {
+                const p = s.getCurrentProject();
+                if (p) return p;
             }
-
-        } catch (error) {
-            console.warn(
-                "Unable to read current project",
-                error
-            );
+        } catch (err) {
+            console.warn("[report] storage error:", err);
         }
 
-        try {
+        const keys = [
+            "acousticEngineering_currentProject",
+            "AE_currentProject",
+            "currentProject"
+        ];
 
-            const raw =
-                localStorage.getItem(
-                    "acousticEngineering_currentProject"
-                );
-
-            if (raw) {
-                return JSON.parse(raw);
+        for (const key of keys) {
+            try {
+                const raw = localStorage.getItem(key);
+                if (raw) return JSON.parse(raw);
+            } catch (err) {
+                console.warn("[report] parse error:", key, err);
             }
-
-        } catch (error) {
-            console.warn(error);
         }
 
         return null;
     }
 
+    /* ---------------------- Report API detection ---------------------- */
+
+    function resolveReportApi() {
+        const candidates = [
+            window.AE?.report,
+            window.AcousticEngineering?.report,
+            window.Report,
+            window.AcousticReport,
+            window.ReportModule
+        ];
+
+        for (const api of candidates) {
+            if (!api || typeof api !== "object") continue;
+            for (const fn of ["open", "generate", "build", "render"]) {
+                if (typeof api[fn] === "function") {
+                    return { api, fn };
+                }
+            }
+        }
+        return null;
+    }
+
+    /* ---------------------- Fill basic info ---------------------- */
+
     function fillBasicProjectInfo() {
+        const p = getProject();
+        if (!p) return;
 
-        const project = getProject();
+        const name = p.projectName || p.name;
+        const client = p.clientName || p.client || p.owner;
+        const loc = p.projectLocation || p.location;
+        const venue = p.venueType || p.venue || p.buildingType;
 
-        if (!project) return;
+        const set = (id, v) => {
+            const el = $(id);
+            if (el) el.textContent = safeText(v);
+        };
 
-        const projectName =
-            project.projectName ||
-            project.name;
+        set("projectName", name);
+        set("clientName", client);
+        set("projectLocation", loc);
+        set("venueType", venue);
 
-        const client =
-            project.clientName ||
-            project.client ||
-            project.owner;
-
-        const location =
-            project.projectLocation ||
-            project.location;
-
-        const venue =
-            project.venueType ||
-            project.venue ||
-            project.buildingType;
-
-        if ($("projectName")) {
-            $("projectName").textContent =
-                safeText(projectName);
-        }
-
-        if ($("clientName")) {
-            $("clientName").textContent =
-                safeText(client);
-        }
-
-        if ($("projectLocation")) {
-            $("projectLocation").textContent =
-                safeText(location);
-        }
-
-        if ($("venueType")) {
-            $("venueType").textContent =
-                safeText(venue);
-        }
-
-        if (projectName) {
-
-            document.title =
-                `${projectName} | التقرير الهندسي`;
+        if (name) {
+            document.title = `${name} | التقرير الهندسي`;
         }
     }
 
+    function fillDocumentInfo() {
+        const now = new Date();
+        const set = (id, v) => {
+            const el = $(id);
+            if (el) el.textContent = v;
+        };
+
+        try {
+            set("reportDate", now.toLocaleDateString("ar", {
+                year: "numeric", month: "long", day: "numeric"
+            }));
+            set("reportTime", now.toLocaleTimeString("ar", {
+                hour: "2-digit", minute: "2-digit"
+            }));
+        } catch {
+            set("reportDate", now.toISOString().slice(0, 10));
+            set("reportTime", now.toTimeString().slice(0, 5));
+        }
+
+        const p = getProject();
+        const id = p?.id || p?.projectId || Date.now();
+        set("reportNumber", "AE-" +
+            String(id).replace(/[^a-zA-Z0-9]/g, "").slice(-12).toUpperCase());
+
+        const ver = window.AE?.config?.version || "1.0";
+        set("softwareVersion", `Acoustic Engineering ${ver}`);
+        set("designModeInfo", p?.design?.mode || p?.design?.designMode || "—");
+        set("designFileInfo",
+            p?.fileName || p?.sourceFile || p?.id || "مشروع محلي");
+    }
+
+    /* ---------------------- Firebase wait ---------------------- */
+
+    async function waitForFirebase(timeoutMs = 4000) {
+        const fb = window.AE?.firebase;
+        if (!fb) return;
+
+        const ready = typeof fb.ready === "function"
+            ? fb.ready()
+            : fb.readyPromise;
+
+        if (!ready || typeof ready.then !== "function") return;
+
+        try {
+            await Promise.race([
+                ready,
+                new Promise(r => setTimeout(r, timeoutMs))
+            ]);
+        } catch (err) {
+            console.warn("[report] firebase wait error:", err);
+        }
+    }
+
+    /* ---------------------- Generate ---------------------- */
+
+    async function generateReport() {
+        const resolved = resolveReportApi();
+
+        if (!resolved) {
+            console.error("[report] لا يوجد report API. تأكد من تحميل js/report.js بشكل صحيح.");
+            const summary = $("executiveSummary");
+            if (summary) {
+                summary.textContent =
+                    "⚠️ لم يتم تحميل وحدة التقرير. تحقق من وجود js/report.js.";
+            }
+            return;
+        }
+
+        console.info(`[report] استدعاء AE.report.${resolved.fn}()`);
+
+        try {
+            await resolved.api[resolved.fn]();
+        } catch (err) {
+            console.error("[report] فشل توليد التقرير:", err);
+            const summary = $("executiveSummary");
+            if (summary) {
+                summary.textContent =
+                    "⚠️ حدث خطأ أثناء إنشاء التقرير: " +
+                    (err && err.message ? err.message : err);
+            }
+        }
+    }
+
+    /* ---------------------- Export menu ---------------------- */
+
+    function bindExportMenu() {
+        const menu = $("exportMenu");
+        const btn = $("exportMenuBtn");
+        if (!menu || !btn) return;
+
+        btn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const open = menu.classList.toggle("open");
+            btn.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+
+        document.addEventListener("click", () => {
+            menu.classList.remove("open");
+            btn.setAttribute("aria-expanded", "false");
+        });
+
+        menu.addEventListener("click", (e) => e.stopPropagation());
+    }
+
+    /* ---------------------- Back button ---------------------- */
+
     function bindBackButton() {
+        const btn = $("backToAppBtn");
+        if (!btn) return;
 
-        const button =
-            $("backToAppBtn");
-
-        if (!button) return;
-
-        button.addEventListener(
-            "click",
-            function () {
-
-                if (
-                    document.referrer &&
-                    document.referrer !== window.location.href
-                ) {
+        btn.addEventListener("click", () => {
+            try {
+                const ref = new URL(document.referrer, location.href);
+                if (ref.origin === location.origin
+                    && ref.pathname !== location.pathname) {
                     history.back();
                     return;
                 }
+            } catch { /* ignore */ }
 
-                window.location.href =
-                    "app.html";
-            }
-        );
+            location.href = "app.html";
+        });
     }
 
-    function showLoading() {
-
-        const element =
-            $("reportLoading");
-
-        if (element) {
-            element.classList.add("active");
-        }
-    }
-
-    function hideLoading() {
-
-        const element =
-            $("reportLoading");
-
-        if (element) {
-            element.classList.remove("active");
-        }
-    }
-
-    async function generateReport() {
-
-        fillBasicProjectInfo();
-
-        if (
-            AE.report &&
-            typeof AE.report.open === "function"
-        ) {
-
-            try {
-
-                await AE.report.open();
-
-                return;
-
-            } catch (error) {
-
-                console.error(
-                    "Report generation error:",
-                    error
-                );
-            }
-        }
-
-        /*
-         * Fallback:
-         * إذا تم فتح الصفحة مباشرة ولم يكن
-         * report.js قادراً على بناء التقرير،
-         * نظهر البيانات الأساسية بدلاً من ترك
-         * الصفحة فارغة.
-         */
-
-        fillBasicProjectInfo();
-    }
-
-    /* =====================================================
-       DOCUMENT INFORMATION
-       ===================================================== */
-
-    function fillDocumentInfo() {
-
-        const now =
-            new Date();
-
-        const date =
-            now.toLocaleDateString(
-                "ar",
-                {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric"
-                }
-            );
-
-        const time =
-            now.toLocaleTimeString(
-                "ar",
-                {
-                    hour: "2-digit",
-                    minute: "2-digit"
-                }
-            );
-
-        if ($("reportDate")) {
-            $("reportDate").textContent =
-                date;
-        }
-
-        if ($("reportTime")) {
-            $("reportTime").textContent =
-                time;
-        }
-
-        const project =
-            getProject();
-
-        if ($("reportNumber")) {
-
-            const id =
-                project?.id ||
-                project?.projectId ||
-                Date.now();
-
-            $("reportNumber").textContent =
-                "AE-" +
-                String(id)
-                    .replace(/[^a-zA-Z0-9]/g, "")
-                    .slice(-12)
-                    .toUpperCase();
-        }
-
-        const config =
-            AE.config ||
-            {};
-
-        if ($("softwareVersion")) {
-
-            $("softwareVersion").textContent =
-                config.version
-                    ? `Acoustic Engineering ${config.version}`
-                    : "Acoustic Engineering 1.0";
-        }
-
-        if ($("designModeInfo")) {
-
-            $("designModeInfo").textContent =
-                project?.design?.mode ||
-                project?.design?.designMode ||
-                "—";
-        }
-
-        if ($("designFileInfo")) {
-
-            $("designFileInfo").textContent =
-                project?.id ||
-                project?.projectId ||
-                "Local Project";
-        }
-    }
-
-    /* =====================================================
-       INITIALIZATION
-       ===================================================== */
+    /* ---------------------- Initialization ---------------------- */
 
     async function init() {
-
-        showLoading();
+        window.AE.ui.showLoading();
 
         try {
-
             fillDocumentInfo();
-
             fillBasicProjectInfo();
+            bindExportMenu();
+            bindBackButton();
 
-            /*
-             * نعطي ملفات النظام وقتاً بسيطاً
-             * للتهيئة خصوصاً عند تحميل Firebase
-             * بشكل ديناميكي.
-             */
-
-            await new Promise(
-                resolve =>
-                    setTimeout(resolve, 250)
-            );
-
+            await waitForFirebase();
             await generateReport();
 
-        } catch (error) {
-
-            console.error(
-                "Report initialization error:",
-                error
-            );
-
+        } catch (err) {
+            console.error("[report] init error:", err);
+            toast("فشل تحميل التقرير: " + (err?.message || err), "error", 5000);
         } finally {
-
-            hideLoading();
+            window.AE.ui.hideLoading();
         }
     }
 
-    bindBackButton();
+    /* ---------------------- Go ---------------------- */
 
-    if (
-        document.readyState === "loading"
-    ) {
-
-        document.addEventListener(
-            "DOMContentLoaded",
-            init,
-            { once: true }
-        );
-
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init, { once: true });
     } else {
-
         init();
     }
 
