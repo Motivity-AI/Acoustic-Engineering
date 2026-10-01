@@ -135,6 +135,7 @@
             box-shadow: 0 12px 30px rgba(230,0,18,.18);
             font-size: 13px; font-weight: 800; cursor: pointer;
             transition: .2s ease; margin-top: 8px;
+            display: inline-flex; align-items: center; justify-content: center; gap: 9px;
         }
         .register-btn:hover:not(:disabled) {
             transform: translateY(-1px);
@@ -354,7 +355,7 @@
 
 <!-- ============================================================
      SCRIPTS
-     ملاحظة: speaker.js أُزيلت لأنها لا علاقة لها بصفحة التسجيل.
+     ملاحظة: speaker.js أُزيلت — لا علاقة لها بصفحة التسجيل.
      ============================================================ -->
 <script src="js/config.js"></script>
 <script src="js/firebase.js"></script>
@@ -412,7 +413,6 @@
             type === "success" ? "fa-circle-check" :
                                  "fa-circle-info";
 
-        // BUG FIX: لا نضيف "status-icon" غير المعرّفة
         statusIcon.className = "fa-solid " + iconClass;
     }
 
@@ -466,7 +466,6 @@
             show("nameGroup", "none");
             show("companyGroup", "none");
             show("confirmGroup", "none");
-            // نبقي email و phone ظاهرين لتمكين الدخول بأي منهما
 
             byId("submitBtnText").textContent = "دخول";
             byId("submitBtn").querySelector("i").className = "fa-solid fa-right-to-bracket";
@@ -475,11 +474,9 @@
             byId("registerEmail").placeholder = "البريد الإلكتروني";
             byId("registerPhone").placeholder = "أو رقم الهاتف";
 
-            // في وضع الدخول: خيار بديل (إما بريد أو هاتف)
             byId("emailReq").style.display = "none";
             byId("phoneReq").style.display = "none";
 
-            // السماح بأي صيغة في الحقلين
             byId("registerEmail").type = "text";
 
         } else {
@@ -503,7 +500,6 @@
             byId("registerEmail").type = "email";
         }
 
-        // Focus على أول حقل مرئي
         setTimeout(() => {
             const first = mode === "signup"
                 ? byId("registerName")
@@ -511,7 +507,6 @@
             try { first?.focus({ preventScroll: true }); } catch { first?.focus(); }
         }, 60);
 
-        // حدّث الـ URL بدون إعادة تحميل
         try {
             const url = new URL(location.href);
             if (mode === "login") url.searchParams.set("mode", "login");
@@ -541,11 +536,11 @@
         const pass    = byId("registerPassword").value;
         const confirm = byId("registerConfirm").value;
 
-        if (name.length < 2)         { fieldError("nameGroup");      ok = false; }
-        if (!validEmail(email))      { fieldError("emailGroup");     ok = false; }
-        if (!validPhone(phone))      { fieldError("phoneGroup");     ok = false; }
-        if (pass.length < 6)         { fieldError("passwordGroup");  ok = false; }
-        if (pass !== confirm)        { fieldError("confirmGroup");   ok = false; }
+        if (name.length < 2)    { fieldError("nameGroup");     ok = false; }
+        if (!validEmail(email)) { fieldError("emailGroup");    ok = false; }
+        if (!validPhone(phone)) { fieldError("phoneGroup");    ok = false; }
+        if (pass.length < 6)    { fieldError("passwordGroup"); ok = false; }
+        if (pass !== confirm)   { fieldError("confirmGroup");  ok = false; }
 
         return ok;
     }
@@ -558,14 +553,12 @@
         const phone = byId("registerPhone").value.trim();
         const pass  = byId("registerPassword").value;
 
-        // يجب أن يوجد واحد على الأقل
         if (!email && !phone) {
             fieldError("emailGroup", "أدخل البريد الإلكتروني أو رقم الهاتف");
             fieldError("phoneGroup", "أدخل رقم الهاتف أو البريد الإلكتروني");
             ok = false;
         } else {
             if (email && !validEmail(email) && !validPhone(email)) {
-                // قد يكون المستخدم أدخل رقم هاتف في حقل البريد
                 fieldError("emailGroup", "أدخل بريداً أو رقم هاتف صحيحاً");
                 ok = false;
             }
@@ -584,13 +577,15 @@
     }
 
     /* ------------------------------------------------------
-       Error mapping — رسائل أوضح
+       Error translation
     ------------------------------------------------------ */
     function translateAuthError(err) {
         const raw = (err && (err.code || err.message)) || "";
         const s = String(raw).toLowerCase();
 
-        if (s.includes("email-already-in-use") || s.includes("already-exists") || s.includes("already registered")) {
+        if (s.includes("email-already-in-use")
+            || s.includes("already-exists")
+            || s.includes("already registered")) {
             return "هذا البريد الإلكتروني مسجّل بالفعل. سجّل الدخول بدلاً من ذلك.";
         }
         if (s.includes("invalid-email")) {
@@ -602,7 +597,9 @@
         if (s.includes("user-not-found")) {
             return "لا يوجد حساب بهذا المعرّف. تحقق من البيانات.";
         }
-        if (s.includes("wrong-password") || s.includes("invalid-credential") || s.includes("invalid-login")) {
+        if (s.includes("wrong-password")
+            || s.includes("invalid-credential")
+            || s.includes("invalid-login")) {
             return "بيانات الدخول غير صحيحة.";
         }
         if (s.includes("too-many-requests")) {
@@ -652,7 +649,7 @@
                     throw result || new Error("تعذر إنشاء الحساب");
                 }
 
-                // Auto-login إذا التسجيل لا يسجّل الدخول تلقائياً
+                // محاولة تسجيل الدخول التلقائي إن لم يفعلها register
                 try {
                     let signedIn = false;
                     if (typeof auth.isAuthenticated === "function") {
@@ -661,7 +658,7 @@
                     if (!signedIn && typeof auth.login === "function") {
                         await auth.login(email, password).catch(() => {});
                     }
-                } catch { /* نتجاهل الخطأ، إعادة التوجيه كافية */ }
+                } catch { /* تجاهل، سنُعيد التوجيه على أي حال */ }
 
                 showStatus("✓ تم إنشاء الحساب بنجاح! جارٍ الدخول...", "success");
                 setTimeout(() => { window.location.href = "app.html"; }, 800);
@@ -678,7 +675,6 @@
             const phone    = byId("registerPhone").value.trim();
             const password = byId("registerPassword").value;
 
-            // ابنِ قائمة المعرّفات: أحدهما على الأقل
             const identifiers = [];
             if (email) identifiers.push(email);
             if (phone && phone !== email) identifiers.push(phone);
@@ -774,14 +770,11 @@
        Init
     ------------------------------------------------------ */
     document.addEventListener("DOMContentLoaded", async () => {
-        // اقرأ الوضع من الـ URL إن وُجد
         const urlMode = new URL(location.href).searchParams.get("mode");
         setMode(urlMode === "login" ? "login" : "signup", { silent: true });
 
-        // تحقق من جلسة حالية
         await checkExistingSession();
 
-        // تسجيل Service Worker
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("./sw.js").catch(() => {});
         }
