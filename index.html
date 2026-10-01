@@ -2,35 +2,20 @@
 <html lang="ar" dir="rtl" id="mainHtml">
 <head>
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>هندسة صوتية | Acoustic Engineering</title>
-
     <meta name="description" content="منصة هندسية متكاملة لتصميم أنظمة الصوت وتوزيع السماعات وتحليل التغطية وإعداد التقارير الهندسية.">
-
     <meta name="theme-color" content="#0b0f14">
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0f14">
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#0b0f14">
-
     <link rel="manifest" href="manifest.json">
-
-    <!-- iOS -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="هندسة صوتية">
-    <link rel="apple-touch-icon" href="./assets/icon-192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicon-32.png">
-
+    <link rel="apple-touch-icon" href="./assets/icon-192.PNG">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
     <link rel="stylesheet" href="css/style.css">
-
     <style>
         :root {
             --ae-bg: #080b10;
@@ -44,708 +29,210 @@
             --ae-green: #22c55e;
             --ae-shadow: 0 25px 80px rgba(0,0,0,.45);
         }
-
         * { box-sizing: border-box; }
-
         html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100%;
+            margin: 0; padding: 0;
+            width: 100%; min-height: 100%;
             font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
-            background: var(--ae-bg);
-            color: var(--ae-text);
+            background: var(--ae-bg); color: var(--ae-text);
         }
-
-        body {
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
+        body { min-height: 100vh; overflow-x: hidden; }
         button, input { font-family: inherit; }
         button { cursor: pointer; }
-        button:focus-visible,
-        input:focus-visible {
+        button:focus-visible, input:focus-visible, a:focus-visible {
             outline: 2px solid var(--ae-blue);
             outline-offset: 2px;
         }
-
         .landing-page {
-            min-height: 100vh;
-            position: relative;
-            overflow: hidden;
+            min-height: 100vh; position: relative; overflow: hidden;
             background:
                 radial-gradient(circle at 75% 20%, rgba(56,189,248,.08), transparent 30%),
                 radial-gradient(circle at 15% 75%, rgba(230,0,18,.08), transparent 28%),
                 var(--ae-bg);
         }
-
-        /* BACKGROUND GRID */
         .engineering-grid {
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            opacity: .16;
-
+            position: absolute; inset: 0; pointer-events: none; opacity: .16;
             background-image:
                 linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
-
             background-size: 50px 50px;
-
             -webkit-mask-image: linear-gradient(to bottom, black, transparent 90%);
             mask-image: linear-gradient(to bottom, black, transparent 90%);
         }
-
-        .glow {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(90px);
-            pointer-events: none;
-        }
-
-        .glow-red {
-            width: 300px;
-            height: 300px;
-            background: rgba(230,0,18,.12);
-            top: 15%;
-            left: -120px;
-        }
-
-        .glow-blue {
-            width: 400px;
-            height: 400px;
-            background: rgba(56,189,248,.09);
-            right: -150px;
-            bottom: 5%;
-        }
-
-        /* HEADER */
+        .glow { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; }
+        .glow-red { width: 300px; height: 300px; background: rgba(230,0,18,.12); top: 15%; left: -120px; }
+        .glow-blue { width: 400px; height: 400px; background: rgba(56,189,248,.09); right: -150px; bottom: 5%; }
         .landing-header {
-            position: relative;
-            z-index: 10;
-            height: 82px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            position: relative; z-index: 10;
+            height: 82px; display: flex; align-items: center; justify-content: space-between;
             padding: 0 6%;
             border-bottom: 1px solid var(--ae-border);
-            background: rgba(8,11,16,.72);
-            backdrop-filter: blur(20px);
+            background: rgba(8,11,16,.72); backdrop-filter: blur(20px);
         }
-
-        .landing-brand {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-        }
-
+        .landing-brand { display: flex; align-items: center; gap: 13px; }
         .landing-brand-icon {
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 13px;
-            background: linear-gradient(135deg, var(--ae-red), #8d0010);
-            box-shadow: 0 10px 30px rgba(230,0,18,.25);
-            color: #fff;
+            width: 45px; height: 45px; display: flex; align-items: center; justify-content: center;
+            border-radius: 13px; background: linear-gradient(135deg, var(--ae-red), #8d0010);
+            box-shadow: 0 10px 30px rgba(230,0,18,.25); color: #fff;
         }
-
         .landing-brand-icon i { font-size: 21px; }
-
-        .landing-brand-text {
-            display: flex;
-            flex-direction: column;
-            line-height: 1.15;
-        }
-
-        .landing-brand-text strong {
-            font-size: 17px;
-            font-weight: 900;
-        }
-
-        .landing-brand-text span {
-            margin-top: 4px;
-            color: var(--ae-muted);
-            font-size: 10px;
-            direction: ltr;
-        }
-
-        .landing-nav {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
+        .landing-brand-text { display: flex; flex-direction: column; line-height: 1.15; }
+        .landing-brand-text strong { font-size: 17px; font-weight: 900; }
+        .landing-brand-text span { margin-top: 4px; color: var(--ae-muted); font-size: 10px; direction: ltr; }
+        .landing-nav { display: flex; align-items: center; gap: 10px; }
         .nav-link {
-            border: 0;
-            background: transparent;
-            color: #b6c0cc;
-            padding: 10px 14px;
-            border-radius: 9px;
-            transition: .2s ease;
-            font-size: 13px;
+            border: 0; background: transparent; color: #b6c0cc;
+            padding: 10px 14px; border-radius: 9px; transition: .2s ease; font-size: 13px;
         }
-
-        .nav-link:hover {
-            color: white;
-            background: rgba(255,255,255,.05);
-        }
-
-        /* HERO */
+        .nav-link:hover { color: white; background: rgba(255,255,255,.05); }
         .hero {
-            position: relative;
-            z-index: 2;
+            position: relative; z-index: 2;
             min-height: calc(100vh - 82px);
-            max-width: 1450px;
-            margin: auto;
+            max-width: 1450px; margin: auto;
             padding: 80px 6% 90px;
-            display: grid;
-            grid-template-columns: 1.05fr .95fr;
-            align-items: center;
-            gap: 70px;
+            display: grid; grid-template-columns: 1.05fr .95fr;
+            align-items: center; gap: 70px;
         }
-
         .hero-content { max-width: 720px; }
-
         .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 7px 13px;
-            border-radius: 999px;
-            color: #d9f3ff;
-            background: rgba(56,189,248,.08);
+            display: inline-flex; align-items: center; gap: 9px;
+            padding: 7px 13px; border-radius: 999px;
+            color: #d9f3ff; background: rgba(56,189,248,.08);
             border: 1px solid rgba(56,189,248,.18);
-            font-size: 12px;
-            font-weight: 700;
+            font-size: 12px; font-weight: 700;
         }
-
         .hero-badge span {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--ae-green);
-            box-shadow: 0 0 12px var(--ae-green);
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--ae-green); box-shadow: 0 0 12px var(--ae-green);
         }
-
         .hero h1 {
             margin: 25px 0 18px;
             font-size: clamp(42px, 5.5vw, 76px);
-            line-height: 1.08;
-            font-weight: 900;
-            letter-spacing: -2px;
+            line-height: 1.08; font-weight: 900; letter-spacing: -2px;
         }
-
         .hero h1 .accent {
             display: block;
             background: linear-gradient(90deg, #fff, #a7dff5, var(--ae-blue));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            -webkit-background-clip: text; background-clip: text; color: transparent;
         }
-
         .hero-description {
-            max-width: 650px;
-            color: #9ca8b6;
-            font-size: 17px;
-            line-height: 2;
-            margin-bottom: 30px;
+            max-width: 650px; color: #9ca8b6;
+            font-size: 17px; line-height: 2; margin-bottom: 30px;
         }
-
-        .hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 13px;
-        }
-
-        .primary-action,
-        .secondary-action {
-            min-height: 52px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 0 24px;
-            border-radius: 11px;
-            font-size: 14px;
-            font-weight: 800;
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 13px; }
+        .primary-action, .secondary-action {
+            min-height: 52px; display: inline-flex; align-items: center; justify-content: center;
+            gap: 10px; padding: 0 24px; border-radius: 11px;
+            font-size: 14px; font-weight: 800;
             transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
             text-decoration: none;
         }
-
         .primary-action {
-            border: 0;
-            color: white;
+            border: 0; color: white;
             background: linear-gradient(135deg, var(--ae-red), #a5000e);
             box-shadow: 0 12px 35px rgba(230,0,18,.22);
         }
-
         .primary-action:hover:not(:disabled) {
             transform: translateY(-2px);
             box-shadow: 0 18px 45px rgba(230,0,18,.32);
         }
-
-        .primary-action:disabled {
-            opacity: .7;
-            cursor: wait;
-        }
-
+        .primary-action:disabled { opacity: .7; cursor: wait; }
         .secondary-action {
-            border: 1px solid rgba(255,255,255,.1);
-            color: white;
+            border: 1px solid rgba(255,255,255,.1); color: white;
             background: rgba(255,255,255,.035);
         }
-
         .secondary-action:hover {
-            transform: translateY(-2px);
-            background: rgba(255,255,255,.07);
+            transform: translateY(-2px); background: rgba(255,255,255,.07);
         }
-
-        /* HERO VISUAL */
         .hero-visual {
-            position: relative;
-            min-height: 520px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: relative; min-height: 520px;
+            display: flex; align-items: center; justify-content: center;
         }
-
         .engineering-card {
-            width: min(100%, 570px);
-            position: relative;
-            padding: 18px;
-            border: 1px solid rgba(255,255,255,.1);
-            border-radius: 22px;
+            width: min(100%, 570px); position: relative; padding: 18px;
+            border: 1px solid rgba(255,255,255,.1); border-radius: 22px;
             background: linear-gradient(145deg, rgba(255,255,255,.07), rgba(255,255,255,.015));
             box-shadow: var(--ae-shadow);
             backdrop-filter: blur(20px);
             transform: perspective(1000px) rotateY(-4deg) rotateX(2deg);
         }
-
         .engineering-window {
-            position: relative;
-            height: 420px;
-            overflow: hidden;
+            position: relative; height: 420px; overflow: hidden;
             border-radius: 15px;
-            background:
-                radial-gradient(circle at center, rgba(56,189,248,.08), transparent 50%),
-                #080c11;
+            background: radial-gradient(circle at center, rgba(56,189,248,.08), transparent 50%), #080c11;
             border: 1px solid rgba(255,255,255,.08);
         }
-
         .window-top {
-            height: 42px;
-            display: flex;
-            align-items: center;
-            gap: 7px;
+            height: 42px; display: flex; align-items: center; gap: 7px;
             padding: 0 14px;
             border-bottom: 1px solid rgba(255,255,255,.07);
             background: rgba(255,255,255,.025);
         }
-
-        .window-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #697482;
-        }
-
-        .window-title {
-            margin-right: 10px;
-            color: #7f8a97;
-            font-size: 9px;
-        }
-
+        .window-dot { width: 8px; height: 8px; border-radius: 50%; background: #697482; }
+        .window-title { margin-right: 10px; color: #7f8a97; font-size: 9px; }
         .floor-grid {
-            position: absolute;
-            inset: 42px 0 0;
+            position: absolute; inset: 42px 0 0;
             background-image:
                 linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
             background-size: 30px 30px;
         }
-
         .room-outline {
-            position: absolute;
-            width: 72%;
-            height: 62%;
-            left: 14%;
-            top: 18%;
+            position: absolute; width: 72%; height: 62%; left: 14%; top: 18%;
             border: 2px solid rgba(56,189,248,.7);
-            box-shadow:
-                inset 0 0 30px rgba(56,189,248,.035),
-                0 0 25px rgba(56,189,248,.08);
+            box-shadow: inset 0 0 30px rgba(56,189,248,.035), 0 0 25px rgba(56,189,248,.08);
         }
-
         .stage-shape {
-            position: absolute;
-            width: 28%;
-            height: 14%;
-            left: 36%;
-            top: 22%;
-            border: 1px solid rgba(230,0,18,.8);
-            background: rgba(230,0,18,.09);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ff6d78;
-            font-size: 9px;
-            font-weight: 800;
+            position: absolute; width: 28%; height: 14%; left: 36%; top: 22%;
+            border: 1px solid rgba(230,0,18,.8); background: rgba(230,0,18,.09);
+            display: flex; align-items: center; justify-content: center;
+            color: #ff6d78; font-size: 9px; font-weight: 800;
         }
-
         .speaker-point {
-            position: absolute;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--ae-red);
-            border: 2px solid white;
-            box-shadow:
-                0 0 0 5px rgba(230,0,18,.1),
-                0 0 20px rgba(230,0,18,.55);
+            position: absolute; width: 12px; height: 12px; border-radius: 50%;
+            background: var(--ae-red); border: 2px solid white;
+            box-shadow: 0 0 0 5px rgba(230,0,18,.1), 0 0 20px rgba(230,0,18,.55);
         }
-
-        .speaker-cone {
-            position: absolute;
-            width: 170px;
-            height: 120px;
-            border-radius: 50% 50% 0 0;
-            background: linear-gradient(to bottom, rgba(230,0,18,.2), rgba(230,0,18,0));
-            transform-origin: bottom center;
-            pointer-events: none;
-        }
-
-        .sp1 { left: 29%; top: 31%; }
-        .sp2 { left: 68%; top: 31%; }
-        .sp3 { left: 29%; top: 68%; }
-        .sp4 { left: 68%; top: 68%; }
-
-        .cone1 { left: 17%; top: 35%; transform: rotate(-10deg); }
-        .cone2 { left: 51%; top: 35%; transform: rotate(10deg); }
-        .cone3 { left: 17%; top: 54%; transform: rotate(-165deg); }
-        .cone4 { left: 51%; top: 54%; transform: rotate(165deg); }
-
-        .measurement-line {
-            position: absolute;
-            height: 1px;
-            background: rgba(56,189,248,.7);
-            font-size: 8px;
-        }
-
-        .measurement-line span {
-            position: absolute;
-            top: -16px;
-            right: 50%;
-            transform: translateX(50%);
-            color: #8ddfff;
-            white-space: nowrap;
-        }
-
-        .measure-width {
-            left: 14%;
-            width: 72%;
-            top: 84%;
-        }
-
-        .measure-height {
-            width: 1px;
-            height: 62%;
-            top: 18%;
-            left: 10%;
-            background: rgba(56,189,248,.7);
-        }
-
-        .measure-height span {
-            right: auto;
-            left: -30px;
-            top: 50%;
-            transform: rotate(-90deg);
-        }
-
-        /* FEATURE STRIP */
+        .sp1 { left: 29%; top: 31%; } .sp2 { left: 68%; top: 31%; }
+        .sp3 { left: 29%; top: 68%; } .sp4 { left: 68%; top: 68%; }
         .feature-strip {
-            position: relative;
-            z-index: 3;
-            max-width: 1450px;
-            margin: -30px auto 40px;
-            padding: 0 6%;
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
+            position: relative; z-index: 3;
+            max-width: 1450px; margin: -30px auto 40px; padding: 0 6%;
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
         }
-
         .feature-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            display: flex; align-items: center; gap: 10px;
             padding: 11px 13px;
-            border: 1px solid rgba(255,255,255,.06);
-            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,.06); border-radius: 10px;
             background: rgba(255,255,255,.025);
-            color: #aeb9c6;
-            font-size: 11px;
+            color: #aeb9c6; font-size: 11px;
         }
-
         .feature-item i { color: var(--ae-blue); }
-
-        /* MODAL */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 999;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background: rgba(0,0,0,.72);
-            backdrop-filter: blur(12px);
-        }
-
-        .modal-overlay.show { display: flex; }
-
-        .login-modal {
-            width: min(100%, 440px);
-            padding: 30px;
-            border: 1px solid rgba(255,255,255,.1);
-            border-radius: 18px;
-            background: #0e131a;
-            box-shadow: 0 30px 100px rgba(0,0,0,.55);
-            animation: modalIn .2s ease;
-        }
-
-        @keyframes modalIn {
-            from { opacity: 0; transform: translateY(10px) scale(.98); }
-            to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        .modal-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            margin-bottom: 25px;
-        }
-
-        .modal-header h2 {
-            margin: 0 0 5px;
-            font-size: 22px;
-        }
-
-        .modal-header p {
-            margin: 0;
-            color: var(--ae-muted);
-            font-size: 12px;
-        }
-
-        .close-modal {
-            width: 35px;
-            height: 35px;
-            border: 1px solid rgba(255,255,255,.08);
-            border-radius: 8px;
-            color: #9aa5b2;
-            background: rgba(255,255,255,.035);
-            transition: .2s ease;
-        }
-
-        .close-modal:hover { color: white; }
-
-        .login-form-group { margin-bottom: 17px; }
-
-        .login-form-group label {
-            display: block;
-            margin-bottom: 7px;
-            color: #c5ced8;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .login-input-wrapper { position: relative; }
-
-        .login-input-wrapper i {
-            position: absolute;
-            right: 14px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #667382;
-            pointer-events: none;
-        }
-
-        .login-input {
-            width: 100%;
-            height: 48px;
-            padding: 0 43px 0 13px;
-            border: 1px solid rgba(255,255,255,.09);
-            border-radius: 9px;
-            outline: none;
-            color: white;
-            background: rgba(255,255,255,.035);
-            direction: rtl;
-            font-size: 13px;
-        }
-
-        .login-input:focus {
-            border-color: rgba(56,189,248,.45);
-            box-shadow: 0 0 0 3px rgba(56,189,248,.08);
-        }
-
-        .login-submit {
-            width: 100%;
-            height: 50px;
-            margin-top: 7px;
-            border: 0;
-            border-radius: 9px;
-            color: white;
-            background: linear-gradient(135deg, var(--ae-red), #a5000e);
-            font-weight: 800;
-            transition: opacity .2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .login-submit:disabled {
-            opacity: .65;
-            cursor: wait;
-        }
-
-        .login-links {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 15px;
-            font-size: 11px;
-        }
-
-        .login-links button {
-            border: 0;
-            background: none;
-            color: var(--ae-blue);
-            padding: 4px 0;
-        }
-
-        .login-links button:hover {
-            color: #7dd3fc;
-        }
-
-        .offline-notice {
-            display: none;
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 8px;
-            background: rgba(245,158,11,.08);
-            border: 1px solid rgba(245,158,11,.15);
-            color: #f6c56b;
-            font-size: 10px;
-            line-height: 1.7;
-        }
-
-        .offline-notice.show { display: block; }
-
-        /* TOAST — RTL fix */
-        #landingToast {
-            position: fixed;
-            right: 22px;
-            bottom: 22px;
-            z-index: 2000;
-            min-width: 260px;
-            max-width: 400px;
-            padding: 13px 16px;
-            border-radius: 10px;
-            background: #151b24;
-            border: 1px solid rgba(255,255,255,.1);
-            box-shadow: 0 20px 50px rgba(0,0,0,.35);
-            color: white;
-            font-size: 12px;
-            opacity: 0;
-            transform: translateY(15px);
-            pointer-events: none;
-            transition: .25s ease;
-        }
-
-        #landingToast.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* RESPONSIVE */
         @media (max-width: 1050px) {
-            .hero {
-                grid-template-columns: 1fr;
-                text-align: center;
-                padding-top: 55px;
-            }
-
+            .hero { grid-template-columns: 1fr; text-align: center; padding-top: 55px; }
             .hero-content { margin: auto; }
-
-            .hero-description {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
+            .hero-description { margin-left: auto; margin-right: auto; }
             .hero-actions { justify-content: center; }
-
             .hero-visual { min-height: 430px; }
-
-            .feature-strip {
-                grid-template-columns: repeat(2, 1fr);
-                margin-top: 20px;
-            }
+            .feature-strip { grid-template-columns: repeat(2, 1fr); margin-top: 20px; }
         }
-
         @media (max-width: 700px) {
-            .landing-header {
-                height: 70px;
-                padding: 0 18px;
-            }
-
+            .landing-header { height: 70px; padding: 0 18px; }
             .landing-nav .nav-link:first-child { display: none; }
-
-            .hero {
-                padding: 45px 18px 50px;
-                gap: 30px;
-            }
-
-            .hero h1 {
-                font-size: 42px;
-                letter-spacing: -1px;
-            }
-
-            .hero-description {
-                font-size: 14px;
-                line-height: 1.9;
-            }
-
+            .hero { padding: 45px 18px 50px; gap: 30px; }
+            .hero h1 { font-size: 42px; letter-spacing: -1px; }
+            .hero-description { font-size: 14px; line-height: 1.9; }
             .hero-actions { flex-direction: column; }
-
-            .primary-action,
-            .secondary-action { width: 100%; }
-
+            .primary-action, .secondary-action { width: 100%; }
             .hero-visual { min-height: 350px; }
-
             .engineering-window { height: 320px; }
-
-            .feature-strip {
-                grid-template-columns: 1fr 1fr;
-                padding: 0 18px;
-            }
-
+            .feature-strip { grid-template-columns: 1fr 1fr; padding: 0 18px; }
             .feature-item { font-size: 10px; }
-
-            .login-modal { padding: 23px; }
         }
-
         @media (max-width: 430px) {
             .landing-brand-text span { display: none; }
-
-            .landing-brand-icon {
-                width: 40px;
-                height: 40px;
-            }
-
+            .landing-brand-icon { width: 40px; height: 40px; }
             .hero h1 { font-size: 36px; }
-
             .feature-strip { grid-template-columns: 1fr; }
         }
     </style>
@@ -765,9 +252,7 @@
     <div class="glow glow-red"></div>
     <div class="glow glow-blue"></div>
 
-    <!-- HEADER -->
     <header class="landing-header">
-
         <div class="landing-brand">
             <div class="landing-brand-icon">
                 <i class="fa-solid fa-wave-square" aria-hidden="true"></i>
@@ -779,31 +264,17 @@
         </div>
 
         <nav class="landing-nav" aria-label="التنقل الرئيسي">
-            <button class="nav-link" id="aboutBtn" type="button">
-                عن النظام
-            </button>
-
-            <button class="nav-link" id="loginNavBtn" type="button">
-                تسجيل الدخول
-            </button>
-
-            <button
-                class="primary-action"
-                id="registerNavBtn"
-                type="button"
-                style="min-height:42px;padding:0 17px;"
-            >
+            <button class="nav-link" id="aboutBtn" type="button">عن النظام</button>
+            <button class="nav-link" id="loginNavBtn" type="button">تسجيل الدخول</button>
+            <button class="primary-action" id="registerNavBtn" type="button"
+                    style="min-height:42px;padding:0 17px;">
                 إنشاء حساب
             </button>
         </nav>
-
     </header>
 
-    <!-- HERO -->
     <main class="hero">
-
         <section class="hero-content">
-
             <div class="hero-badge">
                 <span></span>
                 منصة هندسية ذكية لتصميم أنظمة الصوت
@@ -823,227 +294,116 @@
             </p>
 
             <div class="hero-actions">
-
                 <button id="startDesignBtn" class="primary-action" type="button">
                     <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
                     ابدأ التصميم الآن
                 </button>
-
                 <button id="loginHeroBtn" class="secondary-action" type="button">
                     <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
                     تسجيل الدخول
                 </button>
-
             </div>
-
         </section>
 
-        <!-- ENGINEERING PREVIEW -->
         <section class="hero-visual" aria-hidden="true">
-
             <div class="engineering-card">
                 <div class="engineering-window">
-
                     <div class="window-top">
                         <span class="window-dot"></span>
                         <span class="window-dot"></span>
                         <span class="window-dot"></span>
-                        <span class="window-title">
-                            Acoustic Engineering / Project Design
-                        </span>
+                        <span class="window-title">Acoustic Engineering / Project Design</span>
                     </div>
-
                     <div class="floor-grid"></div>
                     <div class="room-outline"></div>
-
                     <div class="stage-shape">STAGE</div>
-
-                    <div class="speaker-cone cone1"></div>
-                    <div class="speaker-cone cone2"></div>
-                    <div class="speaker-cone cone3"></div>
-                    <div class="speaker-cone cone4"></div>
-
                     <div class="speaker-point sp1"></div>
                     <div class="speaker-point sp2"></div>
                     <div class="speaker-point sp3"></div>
                     <div class="speaker-point sp4"></div>
-
-                    <div class="measurement-line measure-width">
-                        <span>30.00 m</span>
-                    </div>
-                    <div class="measurement-line measure-height">
-                        <span>20.00 m</span>
-                    </div>
-
                 </div>
             </div>
-
         </section>
-
     </main>
 
-    <!-- FEATURES -->
     <section class="feature-strip" aria-label="المزايا">
-
         <div class="feature-item">
             <i class="fa-solid fa-ruler-combined" aria-hidden="true"></i>
             رسم هندسي للمكان
         </div>
-
         <div class="feature-item">
             <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
             نمذجة مواصفات السماعات
         </div>
-
         <div class="feature-item">
             <i class="fa-solid fa-chart-area" aria-hidden="true"></i>
             تحليل التغطية و SPL
         </div>
-
         <div class="feature-item">
             <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
             تقرير هندسي احترافي
         </div>
-
     </section>
-
-    <!-- LOGIN MODAL -->
-    <div id="loginModal" class="modal-overlay" aria-hidden="true">
-
-        <div class="login-modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-
-            <div class="modal-header">
-                <div>
-                    <h2 id="loginTitle">تسجيل الدخول</h2>
-                    <p>الدخول إلى منصة هندسة صوتية</p>
-                </div>
-
-                <button id="closeLoginBtn" class="close-modal" type="button" aria-label="إغلاق">
-                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-                </button>
-            </div>
-
-            <form id="loginForm" novalidate>
-
-                <div class="login-form-group">
-                    <label for="loginEmail">البريد الإلكتروني</label>
-                    <div class="login-input-wrapper">
-                        <i class="fa-solid fa-envelope" aria-hidden="true"></i>
-                        <input
-                            id="loginEmail"
-                            class="login-input"
-                            type="email"
-                            autocomplete="email"
-                            placeholder="example@email.com"
-                            dir="ltr"
-                            required
-                        >
-                    </div>
-                </div>
-
-                <div class="login-form-group">
-                    <label for="loginPassword">كلمة المرور</label>
-                    <div class="login-input-wrapper">
-                        <i class="fa-solid fa-lock" aria-hidden="true"></i>
-                        <input
-                            id="loginPassword"
-                            class="login-input"
-                            type="password"
-                            autocomplete="current-password"
-                            placeholder="••••••••"
-                            dir="ltr"
-                            required
-                        >
-                    </div>
-                </div>
-
-                <button id="loginSubmitBtn" type="submit" class="login-submit">
-                    <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
-                    <span>دخول</span>
-                </button>
-
-                <div class="login-links">
-                    <button id="forgotPasswordBtn" type="button">
-                        نسيت كلمة المرور؟
-                    </button>
-
-                    <button id="createAccountFromLoginBtn" type="button">
-                        إنشاء حساب جديد
-                    </button>
-                </div>
-
-                <div id="offlineNotice" class="offline-notice" role="status">
-                    <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
-                    Firebase غير مهيأ حالياً.
-                    يمكن للنظام العمل محلياً، لكن الحسابات والمزامنة
-                    السحابية تحتاج إلى إعداد Firebase.
-                </div>
-
-            </form>
-
-        </div>
-
-    </div>
-
-    <!-- TOAST -->
-    <div id="landingToast" role="status" aria-live="polite"></div>
 
 </div>
 
-<!-- SCRIPTS -->
+<!-- ============================================================
+     SCRIPTS — ⚠️ الترتيب مهم:
+     config → firebase → backend → auth → storage
+     ============================================================ -->
 <script src="js/config.js"></script>
 <script src="js/firebase.js"></script>
-<script src="js/storage.js"></script>
+<script src="js/backend.js"></script>
 <script src="js/auth.js"></script>
+<script src="js/storage.js"></script>
 
 <script>
-/* ============================================================
-   LANDING PAGE — v1.1.0
-   ============================================================ */
 (function () {
     "use strict";
 
     const $ = (id) => document.getElementById(id);
 
-    /* ------------------------------------------------------
-       Toast
-    ------------------------------------------------------ */
-    let toastTimer = null;
-
     function toast(message, duration = 3000) {
-        const el = $("landingToast");
-        if (!el) return;
+        // toast بسيط
+        let el = document.getElementById("__ae_toast");
+        if (!el) {
+            el = document.createElement("div");
+            el.id = "__ae_toast";
+            el.style.cssText = `
+                position: fixed; right: 20px; bottom: 20px; z-index: 9999;
+                padding: 13px 18px; border-radius: 10px; background: #111821;
+                color: #fff; font-size: 12px; font-family: Cairo, sans-serif;
+                border: 1px solid rgba(255,255,255,.1);
+                box-shadow: 0 15px 40px rgba(0,0,0,.4);
+                opacity: 0; transform: translateY(8px);
+                transition: .25s;
+                direction: rtl;
+            `;
+            document.body.appendChild(el);
+        }
+
         el.textContent = message;
-        el.classList.add("show");
-        if (toastTimer) clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => {
-            el.classList.remove("show");
+        requestAnimationFrame(() => {
+            el.style.opacity = "1";
+            el.style.transform = "translateY(0)";
+        });
+
+        clearTimeout(window.__ae_toast_timer);
+        window.__ae_toast_timer = setTimeout(() => {
+            el.style.opacity = "0";
+            el.style.transform = "translateY(8px)";
         }, duration);
     }
 
     /* ------------------------------------------------------
-       Auth API resolver — موحّد
+       Auth API resolver
     ------------------------------------------------------ */
     function resolveAuth() {
-        const candidates = [
-            window.AcousticEngineering?.auth,
-            window.AE?.auth,
-            window.AcousticAuth,
-            window.AuthManager,
-            window.Auth,
-            window.auth
-        ];
-        for (const api of candidates) {
-            if (api && typeof api === "object") {
-                if (typeof api.login === "function"
-                    || typeof api.register === "function"
-                    || typeof api.isAuthenticated === "function"
-                    || typeof api.getCurrentUser === "function") {
-                    return api;
-                }
-            }
-        }
-        return null;
+        return window.AcousticEngineering?.auth
+            || window.AE?.auth
+            || window.AcousticAuth
+            || window.AuthManager
+            || null;
     }
 
     async function isUserAuthenticated() {
@@ -1057,14 +417,8 @@
             if (typeof auth.getCurrentUser === "function") {
                 return !!(await Promise.resolve(auth.getCurrentUser()));
             }
-            if (typeof auth.currentUser === "function") {
-                return !!(await Promise.resolve(auth.currentUser()));
-            }
-            if (auth.state && typeof auth.state === "object") {
-                return !!(auth.state.user || auth.state.authenticated);
-            }
         } catch (err) {
-            console.warn("[auth] isUserAuthenticated error:", err);
+            console.warn("[index] auth check failed:", err);
         }
         return false;
     }
@@ -1076,220 +430,12 @@
         window.location.href = "register.html";
     }
 
+    function goToLogin() {
+        window.location.href = "register.html?mode=login";
+    }
+
     function goToApp() {
         window.location.href = "app.html";
-    }
-
-    /* ------------------------------------------------------
-       Login Modal
-    ------------------------------------------------------ */
-    let previouslyFocused = null;
-
-    function openLogin() {
-        const modal = $("loginModal");
-        if (!modal) return;
-
-        previouslyFocused = document.activeElement;
-
-        modal.classList.add("show");
-        modal.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-
-        setTimeout(() => {
-            $("loginEmail")?.focus();
-        }, 100);
-
-        checkOfflineMode();
-    }
-
-    function closeLogin() {
-        const modal = $("loginModal");
-        if (!modal || !modal.classList.contains("show")) return;
-
-        modal.classList.remove("show");
-        modal.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
-
-        if (previouslyFocused && typeof previouslyFocused.focus === "function") {
-            try { previouslyFocused.focus(); } catch { /* ignore */ }
-        }
-    }
-
-    /* --- Focus trap داخل الـ modal --- */
-    function trapFocus(event) {
-        const modal = $("loginModal");
-        if (!modal || !modal.classList.contains("show")) return;
-        if (event.key !== "Tab") return;
-
-        const focusables = modal.querySelectorAll(
-            'button:not([disabled]), [href], input:not([disabled]), select, textarea, [tabindex]:not([tabindex="-1"])'
-        );
-        if (!focusables.length) return;
-
-        const first = focusables[0];
-        const last = focusables[focusables.length - 1];
-
-        if (event.shiftKey && document.activeElement === first) {
-            event.preventDefault();
-            last.focus();
-        } else if (!event.shiftKey && document.activeElement === last) {
-            event.preventDefault();
-            first.focus();
-        }
-    }
-
-    /* ------------------------------------------------------
-       Offline check — افتراضي: أظهر التحذير عند الشك
-    ------------------------------------------------------ */
-    function checkOfflineMode() {
-        const notice = $("offlineNotice");
-        if (!notice) return;
-
-        try {
-            const fb = window.AcousticEngineering?.firebase
-                    || window.AcousticFirebase
-                    || window.AE?.firebase;
-
-            if (!fb) {
-                // لا يوجد Firebase — أظهر التحذير
-                notice.classList.add("show");
-                return;
-            }
-
-            const configured = fb?.state?.configured;
-
-            // إذا كانت configured === false → أظهر
-            // إذا كانت true → أخفِ
-            // إذا كانت undefined → أظهر (الأمان أولى)
-            if (configured === true) {
-                notice.classList.remove("show");
-            } else {
-                notice.classList.add("show");
-            }
-        } catch {
-            notice.classList.add("show");
-        }
-    }
-
-    /* ------------------------------------------------------
-       Login Submit
-    ------------------------------------------------------ */
-    async function handleLogin(event) {
-        event.preventDefault();
-
-        const email = $("loginEmail")?.value.trim();
-        const password = $("loginPassword")?.value || "";
-        const button = $("loginSubmitBtn");
-
-        if (!email || !password) {
-            toast("أدخل البريد الإلكتروني وكلمة المرور.");
-            return;
-        }
-
-        const originalHTML = button?.innerHTML;
-
-        if (button) {
-            button.disabled = true;
-            button.innerHTML =
-                '<i class="fa-solid fa-spinner fa-spin"></i> <span>جاري الدخول...</span>';
-        }
-
-        try {
-            const auth = resolveAuth();
-            if (!auth || typeof auth.login !== "function") {
-                throw new Error("نظام المصادقة غير متاح.");
-            }
-
-            const result = await auth.login(email, password);
-
-            if (result?.success === false) {
-                throw new Error(result.message || "تعذر تسجيل الدخول.");
-            }
-
-            toast("✓ تم تسجيل الدخول بنجاح.");
-            setTimeout(goToApp, 500);
-
-        } catch (error) {
-            console.error("Login error:", error);
-
-            const msg = (error?.message || "").toLowerCase();
-            let userMsg = error?.message || "تعذر تسجيل الدخول. تحقق من البيانات.";
-
-            if (msg.includes("user-not-found")) userMsg = "لا يوجد حساب بهذا البريد.";
-            else if (msg.includes("wrong-password") || msg.includes("invalid-credential"))
-                userMsg = "بيانات الدخول غير صحيحة.";
-            else if (msg.includes("too-many-requests"))
-                userMsg = "محاولات كثيرة. حاول بعد قليل.";
-            else if (msg.includes("network"))
-                userMsg = "تعذّر الاتصال. تحقق من الشبكة.";
-
-            toast(userMsg);
-
-        } finally {
-            if (button) {
-                button.disabled = false;
-                if (originalHTML) button.innerHTML = originalHTML;
-            }
-        }
-    }
-
-    /* ------------------------------------------------------
-       Forgot Password
-    ------------------------------------------------------ */
-    async function handleForgotPassword() {
-        const email = $("loginEmail")?.value.trim();
-
-        if (!email) {
-            toast("أدخل البريد الإلكتروني أولاً.");
-            $("loginEmail")?.focus();
-            return;
-        }
-
-        try {
-            const auth = resolveAuth();
-
-            if (!auth?.resetPassword) {
-                toast("خدمة استعادة كلمة المرور غير متاحة حالياً.");
-                return;
-            }
-
-            const result = await auth.resetPassword(email);
-
-            if (result?.success === false) {
-                throw new Error(result.message || "تعذر إرسال رابط الاستعادة.");
-            }
-
-            toast("✓ تم إرسال رابط استعادة كلمة المرور.");
-
-        } catch (error) {
-            toast(error?.message || "تعذر إرسال رابط الاستعادة.");
-        }
-    }
-
-    /* ------------------------------------------------------
-       Session check
-    ------------------------------------------------------ */
-    async function checkExistingSession() {
-        try {
-            const auth = resolveAuth();
-            if (!auth) return;
-
-            if (typeof auth.initialize === "function") {
-                await auth.initialize().catch(() => {});
-            }
-
-            const isAuth = await isUserAuthenticated();
-
-            if (isAuth) {
-                const btn = $("startDesignBtn");
-                if (btn) {
-                    btn.innerHTML =
-                        '<i class="fa-solid fa-arrow-right" aria-hidden="true"></i> متابعة التصميم';
-                }
-            }
-        } catch (error) {
-            console.warn("Session check:", error);
-        }
     }
 
     /* ------------------------------------------------------
@@ -1302,8 +448,7 @@
         try {
             if (btn) {
                 btn.disabled = true;
-                btn.innerHTML =
-                    '<i class="fa-solid fa-spinner fa-spin"></i> جارٍ التحقق...';
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> جارٍ التحقق...';
             }
 
             const isAuth = await isUserAuthenticated();
@@ -1317,7 +462,6 @@
         } catch {
             goToRegister();
         } finally {
-            // في حال بقينا في الصفحة
             if (btn && !document.hidden) {
                 btn.disabled = false;
                 if (originalHTML) btn.innerHTML = originalHTML;
@@ -1326,39 +470,43 @@
     }
 
     /* ------------------------------------------------------
+       Check existing session on load
+    ------------------------------------------------------ */
+    async function checkExistingSession() {
+        try {
+            const auth = resolveAuth();
+            if (!auth) return;
+
+            if (typeof auth.initialize === "function") {
+                await Promise.race([
+                    auth.initialize(),
+                    new Promise(r => setTimeout(r, 3000))
+                ]).catch(() => {});
+            }
+
+            const isAuth = await isUserAuthenticated();
+            if (isAuth) {
+                const btn = $("startDesignBtn");
+                if (btn) {
+                    btn.innerHTML = '<i class="fa-solid fa-arrow-right"></i> متابعة التصميم';
+                }
+            }
+        } catch (err) {
+            console.warn("[index] session check:", err);
+        }
+    }
+
+    /* ------------------------------------------------------
        Event bindings
     ------------------------------------------------------ */
     function bindEvents() {
         $("startDesignBtn")?.addEventListener("click", handleStartDesign);
-
         $("registerNavBtn")?.addEventListener("click", goToRegister);
-
-        $("createAccountFromLoginBtn")?.addEventListener("click", () => {
-            closeLogin();
-            goToRegister();
-        });
-
-        $("loginNavBtn")?.addEventListener("click", openLogin);
-        $("loginHeroBtn")?.addEventListener("click", openLogin);
-
-        $("closeLoginBtn")?.addEventListener("click", closeLogin);
-
-        $("loginModal")?.addEventListener("click", (event) => {
-            if (event.target === $("loginModal")) closeLogin();
-        });
-
-        $("loginForm")?.addEventListener("submit", handleLogin);
-
-        $("forgotPasswordBtn")?.addEventListener("click", handleForgotPassword);
+        $("loginNavBtn")?.addEventListener("click", goToLogin);
+        $("loginHeroBtn")?.addEventListener("click", goToLogin);
 
         $("aboutBtn")?.addEventListener("click", () => {
             toast("منصة هندسية لتصميم أنظمة الصوت وتحليل التغطية وإعداد التقارير.");
-        });
-
-        // ESC + Focus trap
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape") closeLogin();
-            trapFocus(event);
         });
     }
 
