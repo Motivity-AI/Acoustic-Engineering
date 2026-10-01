@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#080b12">
+    <meta name="description" content="إنشاء حساب أو تسجيل الدخول - منصة هندسة صوتية">
     <title>هندسة صوتية | إنشاء حساب</title>
     <link rel="manifest" href="manifest.json">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,7 +26,7 @@
         * { box-sizing: border-box; }
         html, body { margin: 0; padding: 0; min-height: 100%; }
         body {
-            font-family: "Cairo", sans-serif;
+            font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
             background:
                 radial-gradient(circle at 15% 15%, rgba(56,189,248,.08), transparent 30%),
                 radial-gradient(circle at 85% 80%, rgba(230,0,18,.08), transparent 32%),
@@ -44,6 +45,7 @@
                 linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
             background-size: 42px 42px;
+            -webkit-mask-image: linear-gradient(to bottom, black, transparent);
             mask-image: linear-gradient(to bottom, black, transparent);
         }
         .register-shell {
@@ -237,42 +239,47 @@
                     <p id="formSubtitle">أنشئ حسابك للبدء في مشاريع التصميم الهندسي.</p>
                 </div>
 
-                <div id="formStatus" class="form-status" role="alert">
-                    <i id="statusIcon" class="fa-solid fa-circle-info"></i>
+                <div id="formStatus" class="form-status" role="alert" aria-live="polite">
+                    <i id="statusIcon" class="fa-solid fa-circle-info" aria-hidden="true"></i>
                     <span id="statusText"></span>
                 </div>
 
-                <!-- Tabs: Signup / Login -->
                 <div class="form-grid">
+
                     <div class="form-group full" id="nameGroup">
                         <label class="form-label" for="registerName">
                             الاسم الكامل <span class="req">*</span>
                         </label>
                         <div class="input-wrapper">
-                            <input id="registerName" class="form-input" type="text" placeholder="أدخل اسمك الكامل" autocomplete="name">
-                            <i class="input-icon fa-solid fa-user"></i>
+                            <input id="registerName" class="form-input" type="text"
+                                   placeholder="أدخل اسمك الكامل" autocomplete="name"
+                                   aria-required="true">
+                            <i class="input-icon fa-solid fa-user" aria-hidden="true"></i>
                         </div>
                         <div class="field-error" id="nameError">يرجى إدخال الاسم الكامل.</div>
                     </div>
 
                     <div class="form-group" id="emailGroup">
                         <label class="form-label" for="registerEmail">
-                            البريد الإلكتروني <span class="req">*</span>
+                            البريد الإلكتروني <span class="req" id="emailReq">*</span>
                         </label>
                         <div class="input-wrapper">
-                            <input id="registerEmail" class="form-input" type="email" placeholder="name@example.com" autocomplete="email" dir="ltr">
-                            <i class="input-icon fa-solid fa-envelope"></i>
+                            <input id="registerEmail" class="form-input" type="email"
+                                   placeholder="name@example.com" autocomplete="email" dir="ltr">
+                            <i class="input-icon fa-solid fa-envelope" aria-hidden="true"></i>
                         </div>
                         <div class="field-error" id="emailError">أدخل بريداً صحيحاً.</div>
                     </div>
 
                     <div class="form-group" id="phoneGroup">
                         <label class="form-label" for="registerPhone">
-                            رقم الهاتف <span class="req">*</span>
+                            رقم الهاتف <span class="req" id="phoneReq">*</span>
                         </label>
                         <div class="input-wrapper">
-                            <input id="registerPhone" class="form-input" type="tel" placeholder="0912345678" autocomplete="tel" dir="ltr">
-                            <i class="input-icon fa-solid fa-phone"></i>
+                            <input id="registerPhone" class="form-input" type="tel"
+                                   placeholder="0912345678" autocomplete="tel"
+                                   inputmode="tel" dir="ltr">
+                            <i class="input-icon fa-solid fa-phone" aria-hidden="true"></i>
                         </div>
                         <div class="field-error" id="phoneError">أدخل رقم هاتف صحيحاً.</div>
                     </div>
@@ -280,8 +287,9 @@
                     <div class="form-group" id="companyGroup">
                         <label class="form-label" for="registerCompany">الشركة (اختياري)</label>
                         <div class="input-wrapper">
-                            <input id="registerCompany" class="form-input" type="text" placeholder="اسم الشركة">
-                            <i class="input-icon fa-solid fa-building"></i>
+                            <input id="registerCompany" class="form-input" type="text"
+                                   placeholder="اسم الشركة" autocomplete="organization">
+                            <i class="input-icon fa-solid fa-building" aria-hidden="true"></i>
                         </div>
                     </div>
 
@@ -290,9 +298,13 @@
                             كلمة المرور <span class="req">*</span>
                         </label>
                         <div class="input-wrapper">
-                            <input id="registerPassword" class="form-input" type="password" placeholder="••••••••" autocomplete="new-password" dir="ltr">
-                            <i class="input-icon fa-solid fa-lock"></i>
-                            <button type="button" class="password-toggle" data-toggle="registerPassword">
+                            <input id="registerPassword" class="form-input" type="password"
+                                   placeholder="••••••••" autocomplete="new-password"
+                                   dir="ltr" aria-required="true">
+                            <i class="input-icon fa-solid fa-lock" aria-hidden="true"></i>
+                            <button type="button" class="password-toggle"
+                                    data-toggle="registerPassword"
+                                    aria-label="إظهار كلمة المرور">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
                         </div>
@@ -304,18 +316,23 @@
                             تأكيد كلمة المرور <span class="req">*</span>
                         </label>
                         <div class="input-wrapper">
-                            <input id="registerConfirm" class="form-input" type="password" placeholder="••••••••" autocomplete="new-password" dir="ltr">
-                            <i class="input-icon fa-solid fa-shield-halved"></i>
-                            <button type="button" class="password-toggle" data-toggle="registerConfirm">
+                            <input id="registerConfirm" class="form-input" type="password"
+                                   placeholder="••••••••" autocomplete="new-password"
+                                   dir="ltr" aria-required="true">
+                            <i class="input-icon fa-solid fa-shield-halved" aria-hidden="true"></i>
+                            <button type="button" class="password-toggle"
+                                    data-toggle="registerConfirm"
+                                    aria-label="إظهار كلمة المرور">
                                 <i class="fa-solid fa-eye"></i>
                             </button>
                         </div>
                         <div class="field-error" id="confirmError">كلمتا المرور غير متطابقتين.</div>
                     </div>
+
                 </div>
 
                 <button id="submitBtn" class="register-btn" type="submit">
-                    <i class="fa-solid fa-user-plus"></i>
+                    <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
                     <span id="submitBtnText">إنشاء الحساب والبدء</span>
                 </button>
 
@@ -328,106 +345,188 @@
     </main>
 </div>
 
-<div id="loadingOverlay">
+<div id="loadingOverlay" aria-hidden="true">
     <div class="loading-card">
         <div class="spinner"></div>
         <div id="loadingText">جاري إنشاء الحساب...</div>
     </div>
 </div>
 
+<!-- ============================================================
+     SCRIPTS
+     ملاحظة: speaker.js أُزيلت لأنها لا علاقة لها بصفحة التسجيل.
+     ============================================================ -->
 <script src="js/config.js"></script>
-<script src="js/api.js"></script>
 <script src="js/firebase.js"></script>
-<script src="js/backend.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/storage.js"></script>
-<script src="js/speaker.js"></script>
 
 <script>
+/* ============================================================
+   REGISTER / LOGIN PAGE — v1.1.0
+   ============================================================ */
 (function () {
     "use strict";
 
-    const $ = (s) => document.querySelector(s);
     const byId = (id) => document.getElementById(id);
 
-    let mode = "signup"; // "signup" | "login"
+    let mode = "signup";   // "signup" | "login"
+    let submitting = false;
 
     const form = byId("registerForm");
     const statusBox = byId("formStatus");
     const statusText = byId("statusText");
     const statusIcon = byId("statusIcon");
 
-    /* ===== Status ===== */
+    /* ------------------------------------------------------
+       Auth API — كشف متعدد المسارات
+    ------------------------------------------------------ */
+    function resolveAuth() {
+        const candidates = [
+            window.AcousticEngineering?.auth,
+            window.AE?.auth,
+            window.AcousticAuth,
+            window.Auth,
+            window.auth
+        ];
+        for (const api of candidates) {
+            if (api && typeof api === "object") {
+                if (typeof api.register === "function"
+                    || typeof api.login === "function") {
+                    return api;
+                }
+            }
+        }
+        return null;
+    }
+
+    /* ------------------------------------------------------
+       Status
+    ------------------------------------------------------ */
     function showStatus(msg, type = "info") {
         statusBox.className = "form-status show " + type;
         statusText.textContent = msg;
-        statusIcon.className = "status-icon fa-solid " + (
-            type === "error" ? "fa-circle-exclamation" :
+
+        const iconClass =
+            type === "error"   ? "fa-circle-exclamation" :
             type === "success" ? "fa-circle-check" :
-            "fa-circle-info"
-        );
+                                 "fa-circle-info";
+
+        // BUG FIX: لا نضيف "status-icon" غير المعرّفة
+        statusIcon.className = "fa-solid " + iconClass;
     }
+
     function hideStatus() {
         statusBox.className = "form-status";
     }
 
-    /* ===== Loading ===== */
+    /* ------------------------------------------------------
+       Loading
+    ------------------------------------------------------ */
     function setLoading(on, text) {
-        const overlay = byId("loadingOverlay");
-        overlay.classList.toggle("show", on);
+        byId("loadingOverlay").classList.toggle("show", on);
         if (text) byId("loadingText").textContent = text;
     }
 
-    /* ===== Field Errors ===== */
+    /* ------------------------------------------------------
+       Field Errors
+    ------------------------------------------------------ */
     function clearErrors() {
-        document.querySelectorAll(".form-group.invalid").forEach(el => el.classList.remove("invalid"));
-    }
-    function fieldError(groupId, msg) {
-        const group = byId(groupId);
-        if (group) {
-            group.classList.add("invalid");
-            const err = group.querySelector(".field-error");
-            if (err && msg) err.textContent = msg;
-        }
+        document.querySelectorAll(".form-group.invalid")
+            .forEach(el => el.classList.remove("invalid"));
     }
 
-    /* ===== Mode Switching ===== */
-    function setMode(newMode) {
+    function fieldError(groupId, msg) {
+        const g = byId(groupId);
+        if (!g) return;
+        g.classList.add("invalid");
+        const err = g.querySelector(".field-error");
+        if (err && msg) err.textContent = msg;
+    }
+
+    /* ------------------------------------------------------
+       Mode Switch
+    ------------------------------------------------------ */
+    function setMode(newMode, opts = {}) {
         mode = newMode;
-        hideStatus();
-        clearErrors();
+        if (!opts.silent) {
+            hideStatus();
+            clearErrors();
+        }
+
+        const show = (id, v) => {
+            const el = byId(id);
+            if (el) el.style.display = v;
+        };
 
         if (mode === "login") {
             byId("formTitle").textContent = "تسجيل الدخول";
             byId("formSubtitle").textContent = "أدخل بياناتك للوصول إلى حسابك.";
-            byId("nameGroup").style.display = "none";
-            byId("companyGroup").style.display = "none";
-            byId("confirmGroup").style.display = "none";
+
+            show("nameGroup", "none");
+            show("companyGroup", "none");
+            show("confirmGroup", "none");
+            // نبقي email و phone ظاهرين لتمكين الدخول بأي منهما
+
             byId("submitBtnText").textContent = "دخول";
             byId("submitBtn").querySelector("i").className = "fa-solid fa-right-to-bracket";
             byId("switchText").textContent = "ليس لديك حساب؟";
             byId("switchMode").textContent = "إنشاء حساب جديد";
             byId("registerEmail").placeholder = "البريد الإلكتروني";
-            byId("registerPhone").placeholder = "رقم الهاتف";
+            byId("registerPhone").placeholder = "أو رقم الهاتف";
+
+            // في وضع الدخول: خيار بديل (إما بريد أو هاتف)
+            byId("emailReq").style.display = "none";
+            byId("phoneReq").style.display = "none";
+
+            // السماح بأي صيغة في الحقلين
+            byId("registerEmail").type = "text";
+
         } else {
             byId("formTitle").textContent = "إنشاء حساب";
             byId("formSubtitle").textContent = "أنشئ حسابك للبدء في مشاريع التصميم الهندسي.";
-            byId("nameGroup").style.display = "";
-            byId("companyGroup").style.display = "";
-            byId("confirmGroup").style.display = "";
+
+            show("nameGroup", "");
+            show("companyGroup", "");
+            show("confirmGroup", "");
+
             byId("submitBtnText").textContent = "إنشاء الحساب والبدء";
             byId("submitBtn").querySelector("i").className = "fa-solid fa-user-plus";
             byId("switchText").textContent = "لديك حساب بالفعل؟";
             byId("switchMode").textContent = "تسجيل الدخول";
             byId("registerEmail").placeholder = "name@example.com";
             byId("registerPhone").placeholder = "0912345678";
+
+            byId("emailReq").style.display = "";
+            byId("phoneReq").style.display = "";
+
+            byId("registerEmail").type = "email";
         }
+
+        // Focus على أول حقل مرئي
+        setTimeout(() => {
+            const first = mode === "signup"
+                ? byId("registerName")
+                : byId("registerEmail");
+            try { first?.focus({ preventScroll: true }); } catch { first?.focus(); }
+        }, 60);
+
+        // حدّث الـ URL بدون إعادة تحميل
+        try {
+            const url = new URL(location.href);
+            if (mode === "login") url.searchParams.set("mode", "login");
+            else url.searchParams.delete("mode");
+            history.replaceState(null, "", url);
+        } catch { /* ignore */ }
     }
 
-    /* ===== Validation ===== */
+    /* ------------------------------------------------------
+       Validation
+    ------------------------------------------------------ */
     function validEmail(v) {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
     }
+
     function validPhone(v) {
         return /^[+]?[0-9\s\-()]{7,30}$/.test(v);
     }
@@ -436,17 +535,17 @@
         clearErrors();
         let ok = true;
 
-        const name = byId("registerName").value.trim();
-        const email = byId("registerEmail").value.trim();
-        const phone = byId("registerPhone").value.trim();
-        const pass = byId("registerPassword").value;
+        const name    = byId("registerName").value.trim();
+        const email   = byId("registerEmail").value.trim();
+        const phone   = byId("registerPhone").value.trim();
+        const pass    = byId("registerPassword").value;
         const confirm = byId("registerConfirm").value;
 
-        if (name.length < 2) { fieldError("nameGroup"); ok = false; }
-        if (!validEmail(email)) { fieldError("emailGroup"); ok = false; }
-        if (!validPhone(phone)) { fieldError("phoneGroup"); ok = false; }
-        if (pass.length < 6) { fieldError("passwordGroup"); ok = false; }
-        if (pass !== confirm) { fieldError("confirmGroup"); ok = false; }
+        if (name.length < 2)         { fieldError("nameGroup");      ok = false; }
+        if (!validEmail(email))      { fieldError("emailGroup");     ok = false; }
+        if (!validPhone(phone))      { fieldError("phoneGroup");     ok = false; }
+        if (pass.length < 6)         { fieldError("passwordGroup");  ok = false; }
+        if (pass !== confirm)        { fieldError("confirmGroup");   ok = false; }
 
         return ok;
     }
@@ -457,27 +556,73 @@
 
         const email = byId("registerEmail").value.trim();
         const phone = byId("registerPhone").value.trim();
+        const pass  = byId("registerPassword").value;
 
-        // في وضع الدخول: نحتاج بريد أو هاتف صالح
+        // يجب أن يوجد واحد على الأقل
         if (!email && !phone) {
-            fieldError("emailGroup", "أدخل البريد الإلكتروني");
-            fieldError("phoneGroup", "أو رقم الهاتف");
+            fieldError("emailGroup", "أدخل البريد الإلكتروني أو رقم الهاتف");
+            fieldError("phoneGroup", "أدخل رقم الهاتف أو البريد الإلكتروني");
             ok = false;
+        } else {
+            if (email && !validEmail(email) && !validPhone(email)) {
+                // قد يكون المستخدم أدخل رقم هاتف في حقل البريد
+                fieldError("emailGroup", "أدخل بريداً أو رقم هاتف صحيحاً");
+                ok = false;
+            }
+            if (phone && !validPhone(phone)) {
+                fieldError("phoneGroup", "رقم هاتف غير صحيح");
+                ok = false;
+            }
         }
 
-        const pass = byId("registerPassword").value;
-        if (!pass) { fieldError("passwordGroup", "أدخل كلمة المرور"); ok = false; }
+        if (!pass) {
+            fieldError("passwordGroup", "أدخل كلمة المرور");
+            ok = false;
+        }
 
         return ok;
     }
 
-    /* ===== Submit ===== */
+    /* ------------------------------------------------------
+       Error mapping — رسائل أوضح
+    ------------------------------------------------------ */
+    function translateAuthError(err) {
+        const raw = (err && (err.code || err.message)) || "";
+        const s = String(raw).toLowerCase();
+
+        if (s.includes("email-already-in-use") || s.includes("already-exists") || s.includes("already registered")) {
+            return "هذا البريد الإلكتروني مسجّل بالفعل. سجّل الدخول بدلاً من ذلك.";
+        }
+        if (s.includes("invalid-email")) {
+            return "صيغة البريد الإلكتروني غير صحيحة.";
+        }
+        if (s.includes("weak-password")) {
+            return "كلمة المرور ضعيفة جداً. استخدم 6 أحرف على الأقل.";
+        }
+        if (s.includes("user-not-found")) {
+            return "لا يوجد حساب بهذا المعرّف. تحقق من البيانات.";
+        }
+        if (s.includes("wrong-password") || s.includes("invalid-credential") || s.includes("invalid-login")) {
+            return "بيانات الدخول غير صحيحة.";
+        }
+        if (s.includes("too-many-requests")) {
+            return "محاولات كثيرة. حاول بعد قليل.";
+        }
+        if (s.includes("network") || s.includes("offline")) {
+            return "تعذّر الاتصال. تحقق من الشبكة.";
+        }
+        return (err && err.message) || "حدث خطأ غير متوقّع.";
+    }
+
+    /* ------------------------------------------------------
+       Submit
+    ------------------------------------------------------ */
     form.addEventListener("submit", async function (e) {
         e.preventDefault();
+        if (submitting) return;
         hideStatus();
 
-        const auth = window.AcousticEngineering?.auth || window.AcousticAuth;
-
+        const auth = resolveAuth();
         if (!auth) {
             showStatus("نظام المصادقة غير جاهز. أعد تحميل الصفحة.", "error");
             return;
@@ -487,105 +632,161 @@
             if (mode === "signup") {
                 if (!validateSignup()) return;
 
+                submitting = true;
                 setLoading(true, "جارٍ إنشاء حسابك...");
-
-                const result = await auth.register({
-                    name: byId("registerName").value.trim(),
-                    email: byId("registerEmail").value.trim().toLowerCase(),
-                    phone: byId("registerPhone").value.trim(),
-                    company: byId("registerCompany").value.trim(),
-                    password: byId("registerPassword").value,
-                    confirmPassword: byId("registerConfirm").value
-                });
-
-                if (!result || result.success === false) {
-                    throw new Error(result?.error || result?.message || "تعذر إنشاء الحساب");
-                }
-
-                showStatus("✓ تم إنشاء الحساب بنجاح! جارٍ الدخول...", "success");
-
-                setTimeout(() => {
-                    window.location.href = "app.html";
-                }, 800);
-            } else {
-                if (!validateLogin()) return;
-
-                setLoading(true, "جارٍ تسجيل الدخول...");
 
                 const email = byId("registerEmail").value.trim().toLowerCase();
                 const phone = byId("registerPhone").value.trim();
                 const password = byId("registerPassword").value;
 
-                // نحاول بالبريد أولاً، ثم الهاتف
-                let result;
-                try {
-                    result = await auth.login(email || phone, password);
-                } catch (err) {
-                    if (phone && !email) {
-                        result = await auth.login(phone, password);
-                    } else if (email && phone) {
-                        result = await auth.login(phone, password);
-                    } else {
-                        throw err;
-                    }
-                }
+                const result = await auth.register({
+                    name: byId("registerName").value.trim(),
+                    email,
+                    phone,
+                    company: byId("registerCompany").value.trim(),
+                    password,
+                    confirmPassword: byId("registerConfirm").value
+                });
 
                 if (!result || result.success === false) {
-                    throw new Error(result?.error || result?.message || "تعذر تسجيل الدخول");
+                    throw result || new Error("تعذر إنشاء الحساب");
                 }
 
-                showStatus("✓ تم تسجيل الدخول بنجاح!", "success");
+                // Auto-login إذا التسجيل لا يسجّل الدخول تلقائياً
+                try {
+                    let signedIn = false;
+                    if (typeof auth.isAuthenticated === "function") {
+                        signedIn = await auth.isAuthenticated().catch(() => false);
+                    }
+                    if (!signedIn && typeof auth.login === "function") {
+                        await auth.login(email, password).catch(() => {});
+                    }
+                } catch { /* نتجاهل الخطأ، إعادة التوجيه كافية */ }
 
-                setTimeout(() => {
-                    window.location.href = "app.html";
-                }, 700);
+                showStatus("✓ تم إنشاء الحساب بنجاح! جارٍ الدخول...", "success");
+                setTimeout(() => { window.location.href = "app.html"; }, 800);
+                return;
             }
+
+            /* ---------------- LOGIN ---------------- */
+            if (!validateLogin()) return;
+
+            submitting = true;
+            setLoading(true, "جارٍ تسجيل الدخول...");
+
+            const email    = byId("registerEmail").value.trim().toLowerCase();
+            const phone    = byId("registerPhone").value.trim();
+            const password = byId("registerPassword").value;
+
+            // ابنِ قائمة المعرّفات: أحدهما على الأقل
+            const identifiers = [];
+            if (email) identifiers.push(email);
+            if (phone && phone !== email) identifiers.push(phone);
+
+            let result = null;
+            let lastError = null;
+
+            for (const id of identifiers) {
+                try {
+                    const r = await auth.login(id, password);
+                    if (r && r.success !== false) {
+                        result = r;
+                        break;
+                    }
+                    lastError = r || new Error("بيانات الدخول غير صحيحة");
+                } catch (err) {
+                    lastError = err;
+                }
+            }
+
+            if (!result) {
+                throw lastError || new Error("تعذر تسجيل الدخول");
+            }
+
+            showStatus("✓ تم تسجيل الدخول بنجاح!", "success");
+            setTimeout(() => { window.location.href = "app.html"; }, 700);
+
         } catch (error) {
-            console.error("Auth error:", error);
+            console.error("[auth] error:", error);
+            showStatus(translateAuthError(error), "error");
+        } finally {
+            submitting = false;
             setLoading(false);
-            showStatus(error.message || "حدث خطأ. تحقق من البيانات.", "error");
         }
     });
 
-    /* ===== Switch Mode ===== */
+    /* ------------------------------------------------------
+       Switch Mode
+    ------------------------------------------------------ */
     byId("switchMode").addEventListener("click", function (e) {
         e.preventDefault();
         setMode(mode === "signup" ? "login" : "signup");
     });
 
-    /* ===== Password Toggle ===== */
+    /* ------------------------------------------------------
+       Password Toggle
+    ------------------------------------------------------ */
     document.querySelectorAll("[data-toggle]").forEach(btn => {
         btn.addEventListener("click", function () {
             const input = byId(btn.dataset.toggle);
             const icon = btn.querySelector("i");
+            if (!input || !icon) return;
             if (input.type === "password") {
                 input.type = "text";
                 icon.className = "fa-solid fa-eye-slash";
+                btn.setAttribute("aria-label", "إخفاء كلمة المرور");
             } else {
                 input.type = "password";
                 icon.className = "fa-solid fa-eye";
+                btn.setAttribute("aria-label", "إظهار كلمة المرور");
             }
         });
     });
 
-    /* ===== Check existing session ===== */
-    window.addEventListener("auth:ready", function (e) {
-        if (e.detail?.authenticated) {
-            showStatus("أنت مسجل الدخول بالفعل. جارٍ التحويل...", "info");
-            setTimeout(() => {
-                window.location.href = "app.html";
-            }, 800);
+    /* ------------------------------------------------------
+       Check existing session
+    ------------------------------------------------------ */
+    async function checkExistingSession() {
+        const auth = resolveAuth();
+        if (!auth) return;
+
+        try {
+            let isAuth = false;
+
+            if (typeof auth.isAuthenticated === "function") {
+                isAuth = await auth.isAuthenticated();
+            } else if (typeof auth.getCurrentUser === "function") {
+                isAuth = !!(await auth.getCurrentUser());
+            } else if (typeof auth.currentUser === "function") {
+                isAuth = !!(await auth.currentUser());
+            }
+
+            if (isAuth) {
+                showStatus("أنت مسجل الدخول بالفعل. جارٍ التحويل...", "info");
+                setTimeout(() => { window.location.href = "app.html"; }, 800);
+            }
+        } catch (err) {
+            console.warn("[auth] session check failed:", err);
         }
-    });
+    }
 
-    /* ===== Init ===== */
-    document.addEventListener("DOMContentLoaded", () => {
-        setTimeout(() => byId("registerName")?.focus(), 200);
+    /* ------------------------------------------------------
+       Init
+    ------------------------------------------------------ */
+    document.addEventListener("DOMContentLoaded", async () => {
+        // اقرأ الوضع من الـ URL إن وُجد
+        const urlMode = new URL(location.href).searchParams.get("mode");
+        setMode(urlMode === "login" ? "login" : "signup", { silent: true });
 
+        // تحقق من جلسة حالية
+        await checkExistingSession();
+
+        // تسجيل Service Worker
         if ("serviceWorker" in navigator) {
             navigator.serviceWorker.register("./sw.js").catch(() => {});
         }
     });
+
 })();
 </script>
 
