@@ -13,31 +13,26 @@
 
     <title>Acoustic Engineering | هندسة صوتية</title>
 
-    <!-- PWA -->
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="هندسة صوتية">
     <link rel="apple-touch-icon" href="./assets/icon-192.png">
 
-    <!-- FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
           rel="stylesheet">
-
-    <!-- ICONS -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    <!-- CSS -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/app.css">
 
     <style>
-        /* =====================================================
+        /* ═══════════════════════════════════════════════════
            PAGE SAFETY
-           ===================================================== */
+           ═══════════════════════════════════════════════════ */
         html, body {
             margin: 0;
             padding: 0;
@@ -64,9 +59,9 @@
             outline-offset: 2px;
         }
 
-        /* =====================================================
+        /* ═══════════════════════════════════════════════════
            APP SHELL
-           ===================================================== */
+           ═══════════════════════════════════════════════════ */
         .app-shell {
             width: 100%;
             height: 100vh;
@@ -75,9 +70,9 @@
             overflow: hidden;
         }
 
-        /* =====================================================
+        /* ═══════════════════════════════════════════════════
            SIDEBAR
-           ===================================================== */
+           ═══════════════════════════════════════════════════ */
         .sidebar {
             width: 270px;
             min-width: 270px;
@@ -117,24 +112,18 @@
 
         .brand-symbol i { font-size: 19px; }
 
-        .brand-copy {
-            overflow: hidden;
-            white-space: nowrap;
-        }
-
+        .brand-copy { overflow: hidden; white-space: nowrap; }
         .brand-copy strong {
             display: block;
             font-size: 16px;
             font-weight: 800;
         }
-
         .brand-copy span {
             display: block;
             color: #7e8b9d;
             font-size: 10px;
             margin-top: 1px;
         }
-
         .sidebar.collapsed .brand-copy { display: none; }
 
         .sidebar-nav {
@@ -157,7 +146,6 @@
             text-align: center;
             font-size: 0;
         }
-
         .sidebar.collapsed .nav-section-title::after {
             content: "•••";
             font-size: 11px;
@@ -208,11 +196,8 @@
             justify-content: center;
             padding: 0;
         }
-
         .sidebar.collapsed .nav-item span,
-        .sidebar.collapsed .nav-item .nav-badge {
-            display: none;
-        }
+        .sidebar.collapsed .nav-item .nav-badge { display: none; }
 
         .nav-badge {
             margin-right: auto;
@@ -257,7 +242,6 @@
         }
 
         .user-info { min-width: 0; }
-
         .user-info strong {
             display: block;
             font-size: 11px;
@@ -265,7 +249,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .user-info span {
             display: block;
             color: #687588;
@@ -275,9 +258,9 @@
         .sidebar.collapsed .sidebar-user { justify-content: center; }
         .sidebar.collapsed .user-info { display: none; }
 
-        /* =====================================================
+        /* ═══════════════════════════════════════════════════
            MAIN AREA
-           ===================================================== */
+           ═══════════════════════════════════════════════════ */
         .main-area {
             min-width: 0;
             flex: 1;
@@ -287,7 +270,6 @@
             overflow: hidden;
         }
 
-        /* TOPBAR */
         .topbar {
             height: 66px;
             min-height: 66px;
@@ -320,23 +302,10 @@
             border-color: rgba(56,189,248,.25);
         }
 
-        .topbar-button:disabled {
-            opacity: .4;
-            cursor: not-allowed;
-        }
+        .topbar-button:disabled { opacity: .4; cursor: not-allowed; }
 
-        .project-header {
-            min-width: 180px;
-            max-width: 420px;
-            margin-right: 4px;
-        }
-
-        .project-header small {
-            display: block;
-            color: #647083;
-            font-size: 9px;
-        }
-
+        .project-header { min-width: 180px; max-width: 420px; margin-right: 4px; }
+        .project-header small { display: block; color: #647083; font-size: 9px; }
         .project-header strong {
             display: block;
             color: #e9eef5;
@@ -384,23 +353,10 @@
             font-size: 11px;
         }
 
-        .topbar-action:hover {
-            color: #fff;
-            border-color: rgba(255,255,255,.16);
-        }
+        .topbar-action:hover { color: #fff; border-color: rgba(255,255,255,.16); }
+        .topbar-action.primary { background: #e60012; border-color: #e60012; color: #fff; }
+        .topbar-action:disabled { opacity: .5; cursor: not-allowed; }
 
-        .topbar-action.primary {
-            background: #e60012;
-            border-color: #e60012;
-            color: #fff;
-        }
-
-        .topbar-action:disabled {
-            opacity: .5;
-            cursor: not-allowed;
-        }
-
-        /* WORKSPACE */
         .workspace {
             min-height: 0;
             flex: 1;
@@ -409,7 +365,9 @@
             overflow: hidden;
         }
 
-        /* TOOLBAR */
+        /* ═══════════════════════════════════════════════════
+           TOOLBAR
+           ═══════════════════════════════════════════════════ */
         .design-toolbar {
             min-height: 50px;
             padding: 6px 10px;
@@ -456,17 +414,12 @@
             transition: .16s ease;
         }
 
-        .tool-button:hover {
-            color: #fff;
-            background: rgba(255,255,255,.05);
-        }
-
+        .tool-button:hover { color: #fff; background: rgba(255,255,255,.05); }
         .tool-button.active {
             color: #fff;
             background: rgba(230,0,18,.12);
             border-color: rgba(230,0,18,.22);
         }
-
         .tool-button.active i { color: #e60012; }
 
         .tool-button[title]::after {
@@ -485,7 +438,6 @@
             pointer-events: none;
             z-index: 2000;
         }
-
         .tool-button:hover::after { opacity: 1; }
 
         .toolbar-input {
@@ -503,10 +455,11 @@
         }
 
         .toolbar-input:focus { border-color: rgba(56,189,248,.4); }
-
         .toolbar-label { color: #637084; font-size: 9px; }
 
-        /* DESIGN LAYOUT */
+        /* ═══════════════════════════════════════════════════
+           DESIGN LAYOUT
+           ═══════════════════════════════════════════════════ */
         .design-layout {
             min-height: 0;
             flex: 1;
@@ -527,13 +480,11 @@
             border-left: 0;
             border-right: 1px solid rgba(255,255,255,.07);
         }
-
         [dir="rtl"] .right-panel {
             border-right: 0;
             border-left: 1px solid rgba(255,255,255,.07);
         }
 
-        /* PANEL SECTIONS */
         .panel-section {
             padding: 14px;
             border-bottom: 1px solid rgba(255,255,255,.06);
@@ -553,10 +504,7 @@
             color: #dce4ed;
         }
 
-        .panel-heading span {
-            color: #596679;
-            font-size: 9px;
-        }
+        .panel-heading span { color: #596679; font-size: 9px; }
 
         .field { margin-bottom: 9px; }
         .field:last-child { margin-bottom: 0; }
@@ -585,10 +533,7 @@
             transition: .16s ease;
         }
 
-        .field textarea {
-            min-height: 70px;
-            resize: vertical;
-        }
+        .field textarea { min-height: 70px; resize: vertical; }
 
         .field input:focus,
         .field select:focus,
@@ -627,11 +572,7 @@
             flex: 0 0 auto;
         }
 
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
+        .switch input { opacity: 0; width: 0; height: 0; }
 
         .switch-slider {
             position: absolute;
@@ -660,7 +601,9 @@
             background: #fff;
         }
 
-        /* CANVAS */
+        /* ═══════════════════════════════════════════════════
+           CANVAS
+           ═══════════════════════════════════════════════════ */
         .canvas-panel {
             min-width: 0;
             min-height: 0;
@@ -692,7 +635,6 @@
             color: #8290a2;
             font-size: 10px;
         }
-
         .canvas-title i { color: #38bdf8; }
 
         .canvas-info {
@@ -702,7 +644,6 @@
             color: #59687a;
             font-size: 9px;
         }
-
         .canvas-coordinate { color: #8290a2; }
 
         .canvas-stage {
@@ -742,13 +683,11 @@
             color: #38bdf8;
             font-size: 34px;
         }
-
         .canvas-empty-state strong {
             display: block;
             color: #dfe7f0;
             font-size: 13px;
         }
-
         .canvas-empty-state span {
             display: block;
             margin-top: 6px;
@@ -780,7 +719,6 @@
             cursor: pointer;
             backdrop-filter: blur(8px);
         }
-
         .hud-button:hover { color: #fff; }
 
         .zoom-level {
@@ -795,25 +733,24 @@
             font-size: 9px;
         }
 
-        /* RIGHT PANEL */
+        /* ═══════════════════════════════════════════════════
+           RIGHT PANEL
+           ═══════════════════════════════════════════════════ */
         .selection-empty {
             padding: 25px 15px;
             text-align: center;
             color: #566375;
         }
-
         .selection-empty i {
             display: block;
             margin-bottom: 10px;
             font-size: 27px;
         }
-
         .selection-empty strong {
             display: block;
             color: #8996a8;
             font-size: 11px;
         }
-
         .selection-empty span {
             display: block;
             margin-top: 5px;
@@ -826,7 +763,6 @@
             align-items: center;
             gap: 9px;
         }
-
         .object-icon {
             width: 34px;
             height: 34px;
@@ -837,13 +773,11 @@
             color: #38bdf8;
             background: rgba(56,189,248,.08);
         }
-
         .object-name strong {
             display: block;
             color: #dfe7ef;
             font-size: 11px;
         }
-
         .object-name span {
             display: block;
             color: #617084;
@@ -871,18 +805,15 @@
             font-size: 9px;
             cursor: pointer;
         }
-
         .inspector-action:hover {
             color: #fff;
             background: rgba(255,255,255,.05);
         }
-
         .inspector-action.danger:hover {
             color: #ff7580;
             border-color: rgba(230,0,18,.25);
         }
 
-        /* SPEAKER LIBRARY */
         .speaker-library { display: grid; gap: 6px; }
 
         .speaker-card {
@@ -896,7 +827,6 @@
             cursor: pointer;
             transition: .16s ease;
         }
-
         .speaker-card:hover {
             border-color: rgba(56,189,248,.2);
             background: rgba(56,189,248,.035);
@@ -913,11 +843,7 @@
             background: #17202b;
         }
 
-        .speaker-card-copy {
-            min-width: 0;
-            flex: 1;
-        }
-
+        .speaker-card-copy { min-width: 0; flex: 1; }
         .speaker-card-copy strong {
             display: block;
             color: #ccd6e2;
@@ -926,7 +852,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .speaker-card-copy span {
             display: block;
             margin-top: 2px;
@@ -934,7 +859,9 @@
             font-size: 8px;
         }
 
-        /* BOTTOM PANELS */
+        /* ═══════════════════════════════════════════════════
+           BOTTOM PANELS
+           ═══════════════════════════════════════════════════ */
         .bottom-panels {
             height: 220px;
             min-height: 220px;
@@ -960,18 +887,9 @@
             justify-content: space-between;
             margin-bottom: 10px;
         }
+        .bottom-panel-header strong { color: #cbd5e1; font-size: 10px; }
+        .bottom-panel-header span { color: #5e6c7e; font-size: 8px; }
 
-        .bottom-panel-header strong {
-            color: #cbd5e1;
-            font-size: 10px;
-        }
-
-        .bottom-panel-header span {
-            color: #5e6c7e;
-            font-size: 8px;
-        }
-
-        /* METRICS */
         .mini-metrics {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -985,26 +903,16 @@
             background: rgba(255,255,255,.018);
         }
 
-        .mini-metric-label {
-            color: #617084;
-            font-size: 8px;
-        }
-
+        .mini-metric-label { color: #617084; font-size: 8px; }
         .mini-metric-value {
             margin-top: 3px;
             color: #dbe4ed;
             font-size: 15px;
             font-weight: 800;
         }
+        .mini-metric-unit { color: #687689; font-size: 7px; }
 
-        .mini-metric-unit {
-            color: #687689;
-            font-size: 7px;
-        }
-
-        /* ANALYSIS */
         .analysis-list { display: grid; gap: 6px; }
-
         .analysis-row {
             display: flex;
             align-items: center;
@@ -1013,24 +921,10 @@
             border-radius: 6px;
             background: rgba(255,255,255,.018);
         }
+        .analysis-row-label { color: #7b899b; font-size: 8px; }
+        .analysis-row-value { color: #cdd7e3; font-size: 9px; font-weight: 700; }
 
-        .analysis-row-label {
-            color: #7b899b;
-            font-size: 8px;
-        }
-
-        .analysis-row-value {
-            color: #cdd7e3;
-            font-size: 9px;
-            font-weight: 700;
-        }
-
-        /* BOM TABLE */
-        .compact-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
+        .compact-table { width: 100%; border-collapse: collapse; }
         .compact-table th,
         .compact-table td {
             padding: 6px 5px;
@@ -1040,15 +934,9 @@
             white-space: nowrap;
             text-align: right;
         }
-
-        .compact-table th {
-            color: #647184;
-            font-weight: 700;
-        }
-
+        .compact-table th { color: #647184; font-weight: 700; }
         .compact-table td strong { color: #cbd5e1; }
 
-        /* AUTO DESIGN CARD */
         .auto-design-card {
             margin-top: 9px;
             padding: 12px;
@@ -1056,13 +944,7 @@
             border-radius: 9px;
             background: linear-gradient(135deg, rgba(56,189,248,.055), rgba(56,189,248,.01));
         }
-
-        .auto-design-card h4 {
-            margin: 0;
-            color: #d8e8f4;
-            font-size: 11px;
-        }
-
+        .auto-design-card h4 { margin: 0; color: #d8e8f4; font-size: 11px; }
         .auto-design-card p {
             margin: 5px 0 10px;
             color: #718196;
@@ -1087,10 +969,11 @@
             font-weight: 700;
             box-shadow: 0 8px 20px rgba(230,0,18,.16);
         }
-
         .auto-design-button:hover { filter: brightness(1.1); }
 
-        /* MODALS */
+        /* ═══════════════════════════════════════════════════
+           MODALS
+           ═══════════════════════════════════════════════════ */
         .app-modal {
             position: fixed;
             inset: 0;
@@ -1150,7 +1033,6 @@
             background: transparent;
             cursor: pointer;
         }
-
         .modal-close:hover {
             color: #fff;
             background: rgba(255,255,255,.05);
@@ -1184,21 +1066,14 @@
             justify-content: center;
             gap: 6px;
         }
-
         .modal-button.primary {
             color: #fff;
             background: #e60012;
             border-color: #e60012;
         }
+        .modal-button:disabled { opacity: .5; cursor: not-allowed; }
 
-        .modal-button:disabled {
-            opacity: .5;
-            cursor: not-allowed;
-        }
-
-        /* AUTO DESIGN OPTIONS */
         .auto-design-options { display: grid; gap: 11px; }
-
         .design-mode-option {
             padding: 13px;
             display: flex;
@@ -1209,17 +1084,13 @@
             background: rgba(255,255,255,.018);
             cursor: pointer;
         }
-
         .design-mode-option:hover { border-color: rgba(56,189,248,.22); }
-
         .design-mode-option input { margin-top: 3px; }
-
         .design-mode-option strong {
             display: block;
             color: #d6e0ea;
             font-size: 11px;
         }
-
         .design-mode-option span {
             display: block;
             margin-top: 4px;
@@ -1228,7 +1099,6 @@
             line-height: 1.7;
         }
 
-        /* DATASHEET */
         .upload-zone {
             padding: 28px 15px;
             text-align: center;
@@ -1238,24 +1108,20 @@
             cursor: pointer;
             transition: .2s;
         }
-
         .upload-zone:hover {
             border-color: rgba(56,189,248,.3);
             background: rgba(56,189,248,.02);
         }
-
         .upload-zone i {
             margin-bottom: 9px;
             color: #38bdf8;
             font-size: 27px;
         }
-
         .upload-zone strong {
             display: block;
             color: #cdd7e3;
             font-size: 11px;
         }
-
         .upload-zone span {
             display: block;
             margin-top: 5px;
@@ -1263,7 +1129,9 @@
             font-size: 8px;
         }
 
-        /* TOAST — RTL fix */
+        /* ═══════════════════════════════════════════════════
+           TOAST — RTL
+           ═══════════════════════════════════════════════════ */
         #toastContainer {
             position: fixed;
             right: 18px;
@@ -1299,7 +1167,9 @@
             to   { opacity: 1; transform: translateY(0); }
         }
 
-        /* LOADING */
+        /* ═══════════════════════════════════════════════════
+           LOADING
+           ═══════════════════════════════════════════════════ */
         #loadingOverlay {
             position: fixed;
             inset: 0;
@@ -1341,7 +1211,6 @@
             color: #dce5ef;
             font-size: 11px;
         }
-
         .loading-box span {
             display: block;
             margin-top: 5px;
@@ -1349,11 +1218,11 @@
             font-size: 8px;
         }
 
-        /* RESPONSIVE */
+        /* ═══════════════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════════════ */
         @media (max-width: 1250px) {
-            .design-layout {
-                grid-template-columns: 245px minmax(300px, 1fr) 265px;
-            }
+            .design-layout { grid-template-columns: 245px minmax(300px, 1fr) 265px; }
             .bottom-panels { grid-template-columns: 1fr 1fr; }
             .bottom-panel:last-child { display: none; }
         }
@@ -1380,32 +1249,20 @@
             .topbar-action { width: 38px; padding: 0; }
             .design-layout { grid-template-columns: 1fr; }
             .left-panel { display: none; }
-            .bottom-panels {
-                height: 190px;
-                min-height: 190px;
-            }
+            .bottom-panels { height: 190px; min-height: 190px; }
             .canvas-info { display: none; }
             .toolbar-dimension,
             .toolbar-label { display: none; }
         }
 
         @media (max-width: 520px) {
-            .topbar {
-                height: 58px;
-                min-height: 58px;
-            }
-            .project-header {
-                min-width: 0;
-                flex: 1;
-            }
+            .topbar { height: 58px; min-height: 58px; }
+            .project-header { min-width: 0; flex: 1; }
             .project-header small { display: none; }
             .project-header strong { font-size: 11px; }
             .bottom-panels { display: none; }
             .design-toolbar { min-height: 46px; }
-            .tool-button {
-                width: 33px;
-                height: 33px;
-            }
+            .tool-button { width: 33px; height: 33px; }
         }
 
         @media print {
@@ -1424,9 +1281,9 @@
 
 <div id="appShell" class="app-shell">
 
-    <!-- =====================================================
+    <!-- ═══════════════════════════════════════════════════════
          SIDEBAR
-         ===================================================== -->
+         ═══════════════════════════════════════════════════════ -->
     <aside id="sidebar" class="sidebar" aria-label="القائمة الجانبية">
 
         <div class="sidebar-brand">
@@ -1521,9 +1378,9 @@
 
     </aside>
 
-    <!-- =====================================================
+    <!-- ═══════════════════════════════════════════════════════
          MAIN
-         ===================================================== -->
+         ═══════════════════════════════════════════════════════ -->
     <main class="main-area">
 
         <header class="topbar">
@@ -1566,7 +1423,9 @@
 
         <section class="workspace">
 
-            <!-- TOOLBAR -->
+            <!-- ═══════════════════════════════════════════════
+                 TOOLBAR
+                 ═══════════════════════════════════════════════ -->
             <div class="design-toolbar" role="toolbar" aria-label="أدوات التصميم">
 
                 <div class="toolbar-group">
@@ -1637,10 +1496,12 @@
 
             </div>
 
-            <!-- DESIGN LAYOUT -->
+            <!-- ═══════════════════════════════════════════════
+                 DESIGN LAYOUT
+                 ═══════════════════════════════════════════════ -->
             <div class="design-layout">
 
-                <!-- LEFT PANEL -->
+                <!-- ═══════════ LEFT PANEL ═══════════ -->
                 <aside class="left-panel">
 
                     <section class="panel-section">
@@ -1836,7 +1697,7 @@
 
                 </aside>
 
-                <!-- CANVAS -->
+                <!-- ═══════════ CANVAS ═══════════ -->
                 <section class="canvas-panel">
 
                     <div class="canvas-header">
@@ -1854,11 +1715,6 @@
 
                     <div id="canvasContainer" class="canvas-stage">
 
-                        <!--
-                            إصلاح: viewBox يجب أن يحتوي الفراغ بالكامل
-                            الفراغ ممتد من x=150 إلى x=1050 — لذا viewBox=1000 كان يقطع الجزء الأيمن
-                            الحل: توسيع viewBox ليصبح 1100×700 أو تقليص الفراغ
-                        -->
                         <svg id="designSvg"
                              class="acoustic-canvas"
                              style="touch-action:none;cursor:crosshair;"
@@ -1935,7 +1791,7 @@
 
                 </section>
 
-                <!-- RIGHT PANEL -->
+                <!-- ═══════════ RIGHT PANEL ═══════════ -->
                 <aside class="right-panel">
 
                     <section class="panel-section">
@@ -2181,7 +2037,9 @@
 
             </div>
 
-            <!-- BOTTOM PANELS -->
+            <!-- ═══════════════════════════════════════════════
+                 BOTTOM PANELS
+                 ═══════════════════════════════════════════════ -->
             <section class="bottom-panels">
 
                 <div class="bottom-panel">
@@ -2286,9 +2144,9 @@
 
 </div>
 
-<!-- =========================================================
+<!-- ═══════════════════════════════════════════════════════════
      PROJECT MODAL
-     ========================================================= -->
+     ═══════════════════════════════════════════════════════════ -->
 <div id="projectModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
     <div class="modal-card">
         <div class="modal-header">
@@ -2323,84 +2181,217 @@
     </div>
 </div>
 
-<!-- =========================================================
-     SPEAKER MODAL
-     ========================================================= -->
+<!-- ═══════════════════════════════════════════════════════════
+     SPEAKER MODAL — نموذج مواصفات كامل (لا رفع ملف إلزامي)
+     ═══════════════════════════════════════════════════════════ -->
 <div id="speakerModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="speakerModalTitle">
-    <div class="modal-card">
+    <div class="modal-card" style="max-width: 720px;">
         <div class="modal-header">
-            <h3 id="speakerModalTitle">إضافة سماعة</h3>
+            <h3 id="speakerModalTitle">مواصفات السماعة</h3>
             <button class="modal-close" data-close-modal="speakerModal" type="button" aria-label="إغلاق">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
 
         <div class="modal-body">
-            <div class="field">
-                <label for="modalSpeakerModel">اسم / موديل السماعة</label>
-                <input id="modalSpeakerModel" type="text" placeholder="Speaker Model">
+
+            <!-- ═══════════ الهوية ═══════════ -->
+            <div style="margin-bottom:16px;">
+                <div style="color:#38bdf8;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;">
+                    <i class="fa-solid fa-tag" aria-hidden="true"></i>
+                    الهوية
+                </div>
+
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="modalSpeakerManufacturer">الشركة المصنّعة <span style="color:#e60012;">*</span></label>
+                        <input id="modalSpeakerManufacturer" type="text" placeholder="مثال: JBL" maxlength="100" required>
+                    </div>
+                    <div class="field">
+                        <label for="modalSpeakerModel">الموديل <span style="color:#e60012;">*</span></label>
+                        <input id="modalSpeakerModel" type="text" placeholder="مثال: SRX812P" maxlength="100" required>
+                    </div>
+                </div>
+
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="modalSpeakerCategory">الفئة</label>
+                        <select id="modalSpeakerCategory">
+                            <option value="Point Source">Point Source</option>
+                            <option value="Column">Column</option>
+                            <option value="Ceiling">Ceiling</option>
+                            <option value="Line Array">Line Array</option>
+                            <option value="Subwoofer">Subwoofer</option>
+                            <option value="Monitor">Monitor</option>
+                            <option value="Horn">Horn</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label for="modalSpeakerMount">نوع التثبيت</label>
+                        <select id="modalSpeakerMount">
+                            <option value="Stand">Stand</option>
+                            <option value="Wall">Wall Mount</option>
+                            <option value="Ceiling">Ceiling</option>
+                            <option value="Fly">Fly</option>
+                            <option value="Ground">Ground</option>
+                            <option value="Tripod">Tripod</option>
+                            <option value="Pole">Pole</option>
+                            <option value="Truss">Truss</option>
+                        </select>
+                    </div>
+                </div>
             </div>
 
-            <div class="field-grid">
-                <div class="field">
-                    <label for="modalSpeakerPower">RMS Power</label>
-                    <input id="modalSpeakerPower" type="number" value="1000">
+            <!-- ═══════════ القدرة ═══════════ -->
+            <div style="margin-bottom:16px;">
+                <div style="color:#38bdf8;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;">
+                    <i class="fa-solid fa-bolt" aria-hidden="true"></i>
+                    القدرة الكهربائية
                 </div>
-                <div class="field">
-                    <label for="modalSpeakerSPL">Max SPL</label>
-                    <input id="modalSpeakerSPL" type="number" value="133">
+
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="modalSpeakerPower">RMS (W)</label>
+                        <input id="modalSpeakerPower" type="number" min="0" max="50000" step="1" placeholder="500">
+                    </div>
+                    <div class="field">
+                        <label for="modalSpeakerPeak">Peak (W)</label>
+                        <input id="modalSpeakerPeak" type="number" min="0" max="100000" step="1" placeholder="1000">
+                    </div>
                 </div>
             </div>
 
-            <div class="field-grid">
-                <div class="field">
-                    <label for="modalSpeakerH">Horizontal °</label>
-                    <input id="modalSpeakerH" type="number" value="90">
+            <!-- ═══════════ الصوتيات ═══════════ -->
+            <div style="margin-bottom:16px;">
+                <div style="color:#38bdf8;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;">
+                    <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+                    الصوتيات
                 </div>
-                <div class="field">
-                    <label for="modalSpeakerV">Vertical °</label>
-                    <input id="modalSpeakerV" type="number" value="60">
+
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="modalSpeakerSPL">Max SPL (dB)</label>
+                        <input id="modalSpeakerSPL" type="number" min="0" max="200" step="0.1" placeholder="125">
+                    </div>
+                    <div class="field">
+                        <label for="modalSpeakerSensitivity">الحساسية (dB/W/m)</label>
+                        <input id="modalSpeakerSensitivity" type="number" min="0" max="150" step="0.1" placeholder="96">
+                    </div>
+                </div>
+
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="modalSpeakerFreqLow">أدنى تردد (Hz)</label>
+                        <input id="modalSpeakerFreqLow" type="number" min="0" max="20000" step="1" placeholder="55">
+                    </div>
+                    <div class="field">
+                        <label for="modalSpeakerFreqHigh">أعلى تردد (Hz)</label>
+                        <input id="modalSpeakerFreqHigh" type="number" min="0" max="40000" step="1" placeholder="18000">
+                    </div>
                 </div>
             </div>
 
-            <div class="field-grid">
-                <div class="field">
-                    <label for="modalSpeakerFreqLow">Frequency Low</label>
-                    <input id="modalSpeakerFreqLow" type="number" value="50">
+            <!-- ═══════════ التغطية ═══════════ -->
+            <div style="margin-bottom:16px;">
+                <div style="color:#38bdf8;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;">
+                    <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
+                    التغطية
                 </div>
-                <div class="field">
-                    <label for="modalSpeakerFreqHigh">Frequency High</label>
-                    <input id="modalSpeakerFreqHigh" type="number" value="20000">
+
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="modalSpeakerH">Horizontal (°)</label>
+                        <input id="modalSpeakerH" type="number" min="1" max="360" step="1" placeholder="90">
+                    </div>
+                    <div class="field">
+                        <label for="modalSpeakerV">Vertical (°)</label>
+                        <input id="modalSpeakerV" type="number" min="1" max="360" step="1" placeholder="60">
+                    </div>
                 </div>
             </div>
 
-            <div class="field">
-                <label for="modalSpeakerMount">نوع التثبيت</label>
-                <select id="modalSpeakerMount">
-                    <option value="floor">Floor</option>
-                    <option value="tripod">Tripod</option>
-                    <option value="wall">Wall Mount</option>
-                    <option value="ceiling">Ceiling</option>
-                    <option value="pole">Pole</option>
-                    <option value="truss">Truss</option>
-                    <option value="flown">Flown</option>
-                </select>
+            <!-- ═══════════ الفيزيائي والكهربائي ═══════════ -->
+            <div style="margin-bottom:16px;">
+                <div style="color:#38bdf8;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;">
+                    <i class="fa-solid fa-weight-hanging" aria-hidden="true"></i>
+                    الفيزيائي والكهربائي
+                </div>
+
+                <div class="field-grid">
+                    <div class="field">
+                        <label for="modalSpeakerImpedance">المعاوقة (Ω)</label>
+                        <input id="modalSpeakerImpedance" type="number" min="0.1" max="100" step="0.1" placeholder="8">
+                    </div>
+                    <div class="field">
+                        <label for="modalSpeakerWeight">الوزن (kg)</label>
+                        <input id="modalSpeakerWeight" type="number" min="0" max="500" step="0.1" placeholder="15">
+                    </div>
+                </div>
             </div>
+
+            <!-- ═══════════ معاينة المواصفات الحية ═══════════ -->
+            <div style="
+                margin-top:16px;
+                padding:12px 14px;
+                border-radius:9px;
+                border:1px solid rgba(56,189,248,.2);
+                background:rgba(56,189,248,.04);
+            ">
+                <div style="color:#7dd3fc;font-size:10px;font-weight:700;margin-bottom:8px;">
+                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                    معاينة المواصفات
+                </div>
+                <div id="modalSpeakerPreview" style="color:#cbd5e1;font-size:11px;line-height:1.8;">
+                    املأ الحقول لرؤية المواصفات هنا...
+                </div>
+            </div>
+
+            <!-- ═══════════ رفع Datasheet (اختياري - ثانوي) ═══════════ -->
+            <details style="margin-top:14px;">
+                <summary style="cursor:pointer;color:#6b7280;font-size:10px;padding:6px 0;">
+                    <i class="fa-solid fa-paperclip" aria-hidden="true"></i>
+                    إرفاق Datasheet (اختياري)
+                </summary>
+                <div style="margin-top:10px;">
+                    <input id="modalSpeakerDatasheet" type="file"
+                           accept=".pdf,.xlsx,.xls,.csv,.json,.txt"
+                           style="font-size:10px;color:#9ca3af;">
+                    <div style="color:#6b7280;font-size:9px;margin-top:4px;">
+                        PDF / XLSX / CSV / JSON / TXT — بحد أقصى 10 MB
+                    </div>
+                </div>
+            </details>
+
+            <!-- ═══════════ رسائل الخطأ ═══════════ -->
+            <div id="modalSpeakerErrors" style="
+                display:none;
+                margin-top:12px;
+                padding:10px 12px;
+                border-radius:8px;
+                background:rgba(230,0,18,.08);
+                border:1px solid rgba(230,0,18,.25);
+                color:#fca5a5;
+                font-size:10px;
+                line-height:1.7;
+            "></div>
+
         </div>
 
         <div class="modal-footer">
-            <button class="modal-button" data-close-modal="speakerModal" type="button">إلغاء</button>
+            <button class="modal-button" data-close-modal="speakerModal" type="button">
+                إلغاء
+            </button>
             <button id="saveSpeakerBtn" class="modal-button primary" type="button">
                 <i class="fa-solid fa-check" aria-hidden="true"></i>
-                إضافة
+                <span id="saveSpeakerBtnText">حفظ المواصفات</span>
             </button>
         </div>
     </div>
 </div>
 
-<!-- =========================================================
+<!-- ═══════════════════════════════════════════════════════════
      DATASHEET MODAL
-     ========================================================= -->
+     ═══════════════════════════════════════════════════════════ -->
 <div id="datasheetModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="datasheetModalTitle">
     <div class="modal-card">
         <div class="modal-header">
@@ -2437,9 +2428,9 @@
     </div>
 </div>
 
-<!-- =========================================================
+<!-- ═══════════════════════════════════════════════════════════
      AUTO DESIGN MODAL
-     ========================================================= -->
+     ═══════════════════════════════════════════════════════════ -->
 <div id="autoDesignModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="autoDesignModalTitle">
     <div class="modal-card">
         <div class="modal-header">
@@ -2502,9 +2493,9 @@
     </div>
 </div>
 
-<!-- =========================================================
+<!-- ═══════════════════════════════════════════════════════════
      SETTINGS MODAL
-     ========================================================= -->
+     ═══════════════════════════════════════════════════════════ -->
 <div id="settingsModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
     <div class="modal-card">
         <div class="modal-header">
@@ -2563,9 +2554,9 @@
     </div>
 </div>
 
-<!-- =========================================================
+<!-- ═══════════════════════════════════════════════════════════
      CONFIRM MODAL
-     ========================================================= -->
+     ═══════════════════════════════════════════════════════════ -->
 <div id="confirmModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
     <div class="modal-card" style="max-width:400px;">
         <div class="modal-header">
@@ -2600,9 +2591,9 @@
     </div>
 </div>
 
-<!-- =========================================================
+<!-- ═══════════════════════════════════════════════════════════
      SCRIPTS (ORDER MATTERS)
-     ========================================================= -->
+     ═══════════════════════════════════════════════════════════ -->
 <script src="js/config.js"></script>
 <script src="js/firebase.js"></script>
 <script src="js/auth.js"></script>
@@ -2616,36 +2607,27 @@
 <script src="js/report.js"></script>
 <script src="js/app.js"></script>
 
-<!-- =========================================================
-     PAGE BRIDGE — v1.1.0
-     ========================================================= -->
+<!-- ═══════════════════════════════════════════════════════════
+     PAGE BRIDGE — v1.2.0 (نموذج مواصفات السماعة مدمج)
+     ═══════════════════════════════════════════════════════════ -->
 <script>
 (function () {
     "use strict";
 
-    /* =====================================================
-       HELPERS + NAMESPACE
-       ===================================================== */
+    /* ═══════════════ HELPERS + NAMESPACE ═══════════════ */
 
     const $ = (id) => document.getElementById(id);
 
-    // لا نحتفظ بمرجع ثابت — نبحث عند الحاجة (لأن app.js قد يُحمّل لاحقاً)
     function getAE() {
-        return window.AcousticEngineering
-            || window.AE
-            || {};
+        return window.AcousticEngineering || window.AE || {};
     }
 
     function getApp() {
-        return window.AcousticApp
-            || getAE().app
-            || null;
+        return window.AcousticApp || getAE().app || null;
     }
 
     function getCanvas() {
-        return window.AcousticCanvas
-            || getAE().canvas
-            || null;
+        return window.AcousticCanvas || getAE().canvas || null;
     }
 
     function getEngine() {
@@ -2660,7 +2642,11 @@
         return getAE().report || null;
     }
 
-    /* ---------- Toast ---------- */
+    function getSpeaker() {
+        return getAE().speaker || window.AcousticSpeaker || null;
+    }
+
+    /* ═══════════════ Toast ═══════════════ */
     function toast(message, type = "info", duration = 3000) {
         const container = $("toastContainer");
         if (!container) return;
@@ -2677,7 +2663,7 @@
         }, duration);
     }
 
-    /* ---------- Loading ---------- */
+    /* ═══════════════ Loading ═══════════════ */
     function showLoading(text, subtext) {
         const overlay = $("loadingOverlay");
         if (!overlay) return;
@@ -2694,7 +2680,15 @@
         overlay.setAttribute("aria-hidden", "true");
     }
 
-    /* ---------- Modal helpers ---------- */
+    /* ═══════════════ Escape HTML ═══════════════ */
+    function escapeHtml(s) {
+        return String(s ?? "").replace(/[&<>"']/g, c => ({
+            "&": "&amp;", "<": "&lt;", ">": "&gt;",
+            '"': "&quot;", "'": "&#39;"
+        }[c]));
+    }
+
+    /* ═══════════════ Modal helpers ═══════════════ */
     let previouslyFocused = null;
 
     function openModal(id) {
@@ -2706,10 +2700,9 @@
         modal.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
 
-        // focus أول عنصر تفاعلي
         setTimeout(() => {
             const focusable = modal.querySelector(
-                'input:not([type="hidden"]), select, textarea, button:not([disabled])'
+                'input:not([type="hidden"]):not([type="file"]), select, textarea, button:not([disabled])'
             );
             try { focusable?.focus({ preventScroll: true }); } catch { focusable?.focus(); }
         }, 80);
@@ -2722,7 +2715,6 @@
         modal.classList.remove("active");
         modal.setAttribute("aria-hidden", "true");
 
-        // استعد overflow فقط إذا لم تبقَ نوافذ مفتوحة
         if (!document.querySelector(".app-modal.active")) {
             document.body.style.overflow = "";
         }
@@ -2740,10 +2732,8 @@
         document.body.style.overflow = "";
     }
 
-    /* ---------- Focus trap ---------- */
     function trapFocus(event) {
         if (event.key !== "Tab") return;
-
         const activeModal = document.querySelector(".app-modal.active");
         if (!activeModal) return;
 
@@ -2766,7 +2756,45 @@
         }
     }
 
-    /* ---------- Safe user info update ---------- */
+    /* ═══════════════ Sidebar ═══════════════ */
+    const sidebar = $("sidebar");
+    const sidebarToggle = $("sidebarToggle");
+
+    function toggleSidebar() {
+        if (!sidebar) return;
+        if (window.innerWidth <= 1000) {
+            sidebar.classList.toggle("mobile-open");
+        } else {
+            sidebar.classList.toggle("collapsed");
+            try {
+                localStorage.setItem(
+                    "ae_sidebar_collapsed",
+                    sidebar.classList.contains("collapsed") ? "1" : "0"
+                );
+            } catch { /* ignore */ }
+        }
+    }
+
+    function restoreSidebarState() {
+        if (!sidebar || window.innerWidth <= 1000) return;
+        try {
+            if (localStorage.getItem("ae_sidebar_collapsed") === "1") {
+                sidebar.classList.add("collapsed");
+            }
+        } catch { /* ignore */ }
+    }
+
+    sidebarToggle?.addEventListener("click", toggleSidebar);
+
+    document.addEventListener("click", (event) => {
+        if (window.innerWidth > 1000) return;
+        if (!sidebar || !sidebar.classList.contains("mobile-open")) return;
+        if (sidebar.contains(event.target)) return;
+        if (sidebarToggle?.contains(event.target)) return;
+        sidebar.classList.remove("mobile-open");
+    });
+
+    /* ═══════════════ Sidebar User ═══════════════ */
     async function updateSidebarUser() {
         const auth = getAE().auth;
         if (!auth) return;
@@ -2790,53 +2818,7 @@
         }
     }
 
-    /* =====================================================
-       SIDEBAR
-       ===================================================== */
-
-    const sidebar = $("sidebar");
-    const sidebarToggle = $("sidebarToggle");
-
-    function toggleSidebar() {
-        if (!sidebar) return;
-        if (window.innerWidth <= 1000) {
-            sidebar.classList.toggle("mobile-open");
-        } else {
-            sidebar.classList.toggle("collapsed");
-            try {
-                localStorage.setItem(
-                    "ae_sidebar_collapsed",
-                    sidebar.classList.contains("collapsed") ? "1" : "0"
-                );
-            } catch { /* ignore */ }
-        }
-    }
-
-    function restoreSidebarState() {
-        if (!sidebar) return;
-        if (window.innerWidth <= 1000) return;
-        try {
-            if (localStorage.getItem("ae_sidebar_collapsed") === "1") {
-                sidebar.classList.add("collapsed");
-            }
-        } catch { /* ignore */ }
-    }
-
-    sidebarToggle?.addEventListener("click", toggleSidebar);
-
-    /* إغلاق السايدبار على الشاشات الصغيرة بالنقر خارجه */
-    document.addEventListener("click", (event) => {
-        if (window.innerWidth > 1000) return;
-        if (!sidebar || !sidebar.classList.contains("mobile-open")) return;
-        if (sidebar.contains(event.target)) return;
-        if (sidebarToggle?.contains(event.target)) return;
-        sidebar.classList.remove("mobile-open");
-    });
-
-    /* =====================================================
-       NAVIGATION
-       ===================================================== */
-
+    /* ═══════════════ Navigation ═══════════════ */
     function setActiveNav(section) {
         document.querySelectorAll(".nav-item[data-section]").forEach(nav => {
             nav.classList.toggle("active", nav.dataset.section === section);
@@ -2865,7 +2847,6 @@
             return;
         }
 
-        // إغلاق السايدبار على الجوال بعد الاختيار
         if (window.innerWidth <= 1000 && sidebar) {
             sidebar.classList.remove("mobile-open");
         }
@@ -2875,10 +2856,7 @@
         item.addEventListener("click", () => handleNavClick(item));
     });
 
-    /* =====================================================
-       MODAL BINDINGS
-       ===================================================== */
-
+    /* ═══════════════ Modal bindings ═══════════════ */
     document.querySelectorAll("[data-close-modal]").forEach(button => {
         button.addEventListener("click", () => {
             closeModal(button.dataset.closeModal);
@@ -2891,14 +2869,7 @@
         });
     });
 
-    /* =====================================================
-       NEW PROJECT
-       ===================================================== */
-
-    function openProjectModal() {
-        openModal("projectModal");
-    }
-
+    /* ═══════════════ NEW PROJECT ═══════════════ */
     $("createProjectBtn")?.addEventListener("click", async () => {
         const name = ($("newProjectName")?.value || "").trim() || "مشروع صوتي جديد";
         const client = ($("newClientName")?.value || "").trim();
@@ -2921,7 +2892,6 @@
                 await appApi.loadProject(project);
             }
 
-            // Mirror into left panel + title
             if ($("projectName")) $("projectName").value = name;
             if ($("clientName")) $("clientName").value = client;
             if ($("projectLocation")) $("projectLocation").value = location;
@@ -2938,90 +2908,287 @@
 
     $("cancelProjectBtn")?.addEventListener("click", () => closeModal("projectModal"));
 
-    /* =====================================================
-       SPEAKER MODAL + LIBRARY
-       ===================================================== */
+    /* ═══════════════════════════════════════════════════════
+       SPEAKER — نموذج المواصفات الكامل (لا رفع ملف إلزامي)
+       ═══════════════════════════════════════════════════════ */
 
-    $("addSpeakerBtn")?.addEventListener("click", () => {
-        openModal("speakerModal");
-    });
-
-    $("saveSpeakerBtn")?.addEventListener("click", async () => {
-        const speaker = {
-            model: $("modalSpeakerModel")?.value.trim() || "Speaker",
-            power: Number($("modalSpeakerPower")?.value) || 0,
-            maxSPL: Number($("modalSpeakerSPL")?.value) || 0,
-            horizontal: Number($("modalSpeakerH")?.value) || 90,
-            vertical: Number($("modalSpeakerV")?.value) || 60,
-            freqLow: Number($("modalSpeakerFreqLow")?.value) || 50,
-            freqHigh: Number($("modalSpeakerFreqHigh")?.value) || 20000,
-            mount: $("modalSpeakerMount")?.value || "floor"
+    /* --- قراءة النموذج إلى كائن مواصفات --- */
+    function readSpeakerForm() {
+        return {
+            manufacturer:         $("modalSpeakerManufacturer")?.value || "",
+            model:                $("modalSpeakerModel")?.value || "",
+            category:             $("modalSpeakerCategory")?.value || "Point Source",
+            rms_power:            parseFloat($("modalSpeakerPower")?.value) || 0,
+            peak_power:           parseFloat($("modalSpeakerPeak")?.value) || 0,
+            max_spl:              parseFloat($("modalSpeakerSPL")?.value) || 0,
+            sensitivity:          parseFloat($("modalSpeakerSensitivity")?.value) || 0,
+            frequency_min:        parseFloat($("modalSpeakerFreqLow")?.value) || 0,
+            frequency_max:        parseFloat($("modalSpeakerFreqHigh")?.value) || 0,
+            horizontal_coverage:  parseFloat($("modalSpeakerH")?.value) || 90,
+            vertical_coverage:    parseFloat($("modalSpeakerV")?.value) || 60,
+            impedance:            parseFloat($("modalSpeakerImpedance")?.value) || 8,
+            weight:               parseFloat($("modalSpeakerWeight")?.value) || 0,
+            mounting_type:        $("modalSpeakerMount")?.value || "Stand"
         };
+    }
 
-        try {
-            const appApi = getApp();
-            const speakerApi = getAE().speaker;
+    /* --- معاينة حية أثناء الكتابة --- */
+    function updateSpeakerPreview() {
+        const preview = $("modalSpeakerPreview");
+        if (!preview) return;
 
-            if (appApi && typeof appApi.addSpeaker === "function") {
-                await appApi.addSpeaker(speaker);
-            } else if (speakerApi && typeof speakerApi.add === "function") {
-                await speakerApi.add(speaker);
-            } else {
-                throw new Error("لا توجد دالة لإضافة السماعات.");
-            }
+        const spec = readSpeakerForm();
+        const speakerApi = getSpeaker();
 
-            closeModal("speakerModal");
-            toast("✓ تمت إضافة السماعة", "success");
+        if (!speakerApi) {
+            preview.textContent = "وحدة السماعات غير جاهزة";
+            return;
+        }
 
-        } catch (error) {
-            console.error("[bridge] add speaker:", error);
-            toast(error?.message || "تعذّر إضافة السماعة", "error", 4500);
+        const errors = speakerApi.validate(spec);
+        if (errors.length) {
+            preview.innerHTML = `
+                <div style="color:#fbbf24;">
+                    <strong>⚠ ملاحظات:</strong>
+                    <ul style="margin:5px 0;padding-right:16px;">
+                        ${errors.map(e => `<li>${escapeHtml(e)}</li>`).join("")}
+                    </ul>
+                </div>
+                <div style="color:#94a3b8;font-size:10px;margin-top:5px;">
+                    يمكن الحفظ بعد تصحيح الملاحظات
+                </div>
+            `;
+            return;
+        }
+
+        if (typeof speakerApi.renderSpecsHTML === "function") {
+            preview.innerHTML = speakerApi.renderSpecsHTML(spec);
+        } else {
+            preview.textContent = "المواصفات جاهزة للحفظ";
+        }
+    }
+
+    /* --- ربط الحقول بالمعاينة الحية --- */
+    [
+        "modalSpeakerManufacturer", "modalSpeakerModel", "modalSpeakerCategory",
+        "modalSpeakerPower", "modalSpeakerPeak", "modalSpeakerSPL",
+        "modalSpeakerSensitivity", "modalSpeakerFreqLow", "modalSpeakerFreqHigh",
+        "modalSpeakerH", "modalSpeakerV", "modalSpeakerImpedance",
+        "modalSpeakerWeight", "modalSpeakerMount"
+    ].forEach(id => {
+        const el = $(id);
+        if (el) {
+            el.addEventListener("input", updateSpeakerPreview);
+            el.addEventListener("change", updateSpeakerPreview);
         }
     });
 
-    /* مكتبة السماعات — Event delegation (يعمل حتى لو أضاف app.js عناصر جديدة) */
-    function bindSpeakerLibrary() {
-        const library = $("speakerLibrary");
-        if (!library) return;
-
-        const handler = (event) => {
-            const card = event.target.closest("[data-speaker-preset]");
-            if (!card) return;
-
-            const preset = card.dataset.speakerPreset;
-            const appApi = getApp();
-            const speakerApi = getAE().speaker;
-
-            try {
-                if (appApi && typeof appApi.addSpeakerPreset === "function") {
-                    appApi.addSpeakerPreset(preset);
-                } else if (speakerApi && typeof speakerApi.addPreset === "function") {
-                    speakerApi.addPreset(preset);
-                } else {
-                    toast("سيتم دعم هذه الميزة قريباً", "info");
-                }
-            } catch (err) {
-                console.error("[bridge] preset error:", err);
-                toast("تعذّر تحميل الإعداد", "error");
-            }
-        };
-
-        library.addEventListener("click", handler);
-
-        // دعم لوحة المفاتيح
-        library.addEventListener("keydown", (event) => {
-            if (event.key !== "Enter" && event.key !== " ") return;
-            const card = event.target.closest("[data-speaker-preset]");
-            if (!card) return;
-            event.preventDefault();
-            card.click();
-        });
+    /* --- عرض رسائل الخطأ --- */
+    function showSpeakerErrors(errors) {
+        const box = $("modalSpeakerErrors");
+        if (!box) return;
+        if (!errors || !errors.length) {
+            box.style.display = "none";
+            box.innerHTML = "";
+            return;
+        }
+        box.style.display = "block";
+        box.innerHTML = `
+            <div style="font-weight:700;margin-bottom:4px;">⚠ بيانات غير صحيحة:</div>
+            <ul style="margin:0;padding-right:16px;">
+                ${errors.map(e => `<li>${escapeHtml(e)}</li>`).join("")}
+            </ul>
+        `;
     }
 
-    /* =====================================================
-       DATASHEET
-       ===================================================== */
+    /* --- فتح النموذج (مع preset اختياري) --- */
+    function openSpeakerModal(preset) {
+        const speakerApi = getSpeaker();
+        const defaults = speakerApi?.DEFAULTS || {};
 
+        $("modalSpeakerManufacturer").value = preset?.manufacturer || "";
+        $("modalSpeakerModel").value = preset?.model || "";
+        $("modalSpeakerCategory").value = preset?.category || defaults.category || "Point Source";
+        $("modalSpeakerPower").value = preset?.rms_power || "";
+        $("modalSpeakerPeak").value = preset?.peak_power || "";
+        $("modalSpeakerSPL").value = preset?.max_spl || "";
+        $("modalSpeakerSensitivity").value = preset?.sensitivity || "";
+        $("modalSpeakerFreqLow").value = preset?.frequency_min || "";
+        $("modalSpeakerFreqHigh").value = preset?.frequency_max || "";
+        $("modalSpeakerH").value = preset?.horizontal_coverage || "";
+        $("modalSpeakerV").value = preset?.vertical_coverage || "";
+        $("modalSpeakerImpedance").value = preset?.impedance || "";
+        $("modalSpeakerWeight").value = preset?.weight || "";
+        $("modalSpeakerMount").value = preset?.mounting_type || defaults.mounting_type || "Stand";
+
+        // امسح ملف datasheet
+        const fileInput = $("modalSpeakerDatasheet");
+        if (fileInput) fileInput.value = "";
+
+        showSpeakerErrors([]);
+        updateSpeakerPreview();
+        openModal("speakerModal");
+    }
+
+    /* --- حفظ المواصفات --- */
+    $("saveSpeakerBtn")?.addEventListener("click", async () => {
+        const spec = readSpeakerForm();
+        const speakerApi = getSpeaker();
+
+        if (!speakerApi) {
+            toast("وحدة السماعات غير جاهزة", "error");
+            return;
+        }
+
+        const errors = speakerApi.validate(spec);
+        if (errors.length) {
+            showSpeakerErrors(errors);
+            toast("صحّح البيانات أولاً", "warning");
+            return;
+        }
+
+        const btn = $("saveSpeakerBtn");
+        const textEl = $("saveSpeakerBtnText");
+        const originalText = textEl?.textContent || "حفظ المواصفات";
+
+        btn.disabled = true;
+        if (textEl) textEl.textContent = "جارٍ الحفظ...";
+
+        try {
+            // 1. أضف محلياً في js/speaker.js
+            const record = speakerApi.add(spec);
+
+            // 2. أرسل للسيرفر إن كان متصلاً (مع رفع Datasheet إن وُجد)
+            const appApi = getApp();
+            const fileInput = $("modalSpeakerDatasheet");
+            const file = fileInput?.files?.[0];
+
+            if (appApi && typeof appApi.addSpeaker === "function") {
+                try {
+                    if (file) {
+                        // إن كانت هناك دالة لدعم FormData
+                        if (typeof appApi.addSpeakerWithFile === "function") {
+                            await appApi.addSpeakerWithFile(spec, file);
+                        } else {
+                            // fallback: أرسل البيانات فقط
+                            await appApi.addSpeaker(spec);
+                        }
+                    } else {
+                        await appApi.addSpeaker(spec);
+                    }
+                } catch (err) {
+                    console.warn("[speaker] فشل الإرسال للسيرفر:", err);
+                    // لا نفشل العملية — أضفنا محلياً على الأقل
+                }
+            }
+
+            // 3. حدّث الواجهة
+            refreshSpeakerUI(record);
+
+            // 4. أغلق النموذج
+            closeModal("speakerModal");
+            toast(`✓ تم حفظ مواصفات: ${spec.manufacturer} ${spec.model}`, "success");
+
+            // 5. أعلم باقي الوحدات
+            try {
+                window.dispatchEvent(new CustomEvent("speaker:added", { detail: record }));
+            } catch { /* ignore */ }
+
+        } catch (err) {
+            console.error("[speaker] add error:", err);
+            showSpeakerErrors([err.message || "تعذّر الحفظ"]);
+            toast("تعذّر حفظ المواصفات", "error");
+        } finally {
+            btn.disabled = false;
+            if (textEl) textEl.textContent = originalText;
+        }
+    });
+
+    /* --- تحديث البطاقات والجدول والعداد --- */
+    function refreshSpeakerUI(record) {
+        const speakerApi = getSpeaker();
+        if (!speakerApi) return;
+
+        const speakers = speakerApi.list();
+
+        // 1. عداد السماعات
+        const badge = $("speakerCountBadge");
+        if (badge) badge.textContent = speakers.length;
+
+        const metric = $("metricSpeakerCount");
+        if (metric) metric.textContent = speakers.length;
+
+        // 2. بطاقات المكتبة — أضف بطاقة جديدة
+        if (record) {
+            const lib = $("speakerLibrary");
+            if (lib && typeof speakerApi.renderCardHTML === "function") {
+                const wrapper = document.createElement("div");
+                wrapper.innerHTML = speakerApi.renderCardHTML(record);
+                const newNode = wrapper.firstElementChild;
+                if (newNode) {
+                    newNode.dataset.speakerId = record.id;
+                    lib.appendChild(newNode);
+                }
+            }
+        }
+
+        // 3. جدول BOM
+        const bom = $("bomTableBody");
+        if (bom) {
+            if (!speakers.length) {
+                bom.innerHTML = `<tr><td colspan="3" style="text-align:center;">لا توجد سماعات</td></tr>`;
+            } else if (typeof speakerApi.renderTableRow === "function") {
+                bom.innerHTML = speakers
+                    .map((s, i) => speakerApi.renderTableRow(s, i + 1))
+                    .join("");
+            }
+        }
+    }
+
+    /* --- ربط زر "إضافة سماعة" --- */
+    $("addSpeakerBtn")?.addEventListener("click", () => {
+        openSpeakerModal(null);
+    });
+
+    /* --- ربط بطاقات المكتبة (Presets) — Event delegation --- */
+    (function bindPresets() {
+        const lib = $("speakerLibrary");
+        if (!lib) return;
+
+        lib.addEventListener("click", (e) => {
+            const card = e.target.closest("[data-speaker-preset]");
+            if (!card) return;
+
+            // إن كانت بطاقة مخصصة (مضافة سابقاً)، لا تفعل شيئاً
+            if (card.dataset.speakerId) return;
+
+            const presetName = card.dataset.speakerPreset;
+            const speakerApi = getSpeaker();
+            if (!speakerApi) return;
+
+            const preset = typeof speakerApi.getPreset === "function"
+                ? speakerApi.getPreset(presetName)
+                : null;
+
+            if (!preset) {
+                openSpeakerModal(null);
+                return;
+            }
+
+            openSpeakerModal(preset);
+        });
+
+        // دعم لوحة المفاتيح
+        lib.addEventListener("keydown", (e) => {
+            if (e.key !== "Enter" && e.key !== " ") return;
+            const card = e.target.closest("[data-speaker-preset]");
+            if (!card) return;
+            e.preventDefault();
+            card.click();
+        });
+    })();
+
+    /* ═══════════════ DATASHEET (اختياري - رفع مستقل) ═══════════════ */
     $("uploadDatasheetBtn")?.addEventListener("click", () => {
         openModal("datasheetModal");
     });
@@ -3039,7 +3206,6 @@
             }
         });
 
-        // Drag & drop
         zone.addEventListener("dragover", (e) => {
             e.preventDefault();
             zone.style.borderColor = "rgba(56,189,248,.55)";
@@ -3101,10 +3267,7 @@
         }
     });
 
-    /* =====================================================
-       AUTO DESIGN
-       ===================================================== */
-
+    /* ═══════════════ AUTO DESIGN ═══════════════ */
     $("autoDesignBtn")?.addEventListener("click", () => {
         openModal("autoDesignModal");
     });
@@ -3138,10 +3301,7 @@
         }
     });
 
-    /* =====================================================
-       SETTINGS
-       ===================================================== */
-
+    /* ═══════════════ SETTINGS ═══════════════ */
     $("settingsBtn")?.addEventListener("click", () => {
         openModal("settingsModal");
     });
@@ -3160,7 +3320,6 @@
                 localStorage.setItem("ae_settings", JSON.stringify(settings));
             } catch { /* ignore */ }
 
-            // مرّر للـ app إذا كان يدعمها
             const appApi = getApp();
             if (appApi && typeof appApi.applySettings === "function") {
                 appApi.applySettings(settings);
@@ -3175,10 +3334,7 @@
         }
     });
 
-    /* =====================================================
-       CANVAS HUD
-       ===================================================== */
-
+    /* ═══════════════ CANVAS HUD ═══════════════ */
     function callCanvas(method, ...args) {
         const canvasApi = getCanvas();
         if (canvasApi && typeof canvasApi[method] === "function") {
@@ -3194,7 +3350,6 @@
     $("canvasZoomOut")?.addEventListener("click", () => callCanvas("zoomOut"));
     $("canvasFitBtn")?.addEventListener("click", () => callCanvas("fitView"));
 
-    /* Toolbar buttons delegate إلى canvas */
     ["zoomInBtn", "zoomOutBtn", "zoomResetBtn", "fitViewBtn"].forEach(id => {
         const method = {
             zoomInBtn: "zoomIn",
@@ -3205,12 +3360,8 @@
         $(id)?.addEventListener("click", () => callCanvas(method));
     });
 
-    /* =====================================================
-       KEYBOARD
-       ===================================================== */
-
+    /* ═══════════════ KEYBOARD ═══════════════ */
     document.addEventListener("keydown", (event) => {
-        // Escape: يُغلق النوافذ + السايدبار على الجوال
         if (event.key === "Escape") {
             if (document.querySelector(".app-modal.active")) {
                 closeAllModals();
@@ -3222,14 +3373,12 @@
             return;
         }
 
-        // Ctrl+S / Cmd+S: حفظ
         if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "s") {
             event.preventDefault();
             $("saveProjectBtn")?.click();
             return;
         }
 
-        // Delete: حذف المحدد (فقط إذا لم يكن focus في حقل إدخال)
         if (event.key === "Delete") {
             const tag = (document.activeElement?.tagName || "").toLowerCase();
             if (tag === "input" || tag === "textarea" || tag === "select") return;
@@ -3238,14 +3387,10 @@
             return;
         }
 
-        // Tab trap داخل الـ modals
         trapFocus(event);
     });
 
-    /* =====================================================
-       ROOM DIMENSION MIRRORING (toolbar ↔ panel)
-       ===================================================== */
-
+    /* ═══════════════ ROOM DIMENSION MIRRORING ═══════════════ */
     function mirrorValue(sourceId, targetId) {
         const source = $(sourceId);
         const target = $(targetId);
@@ -3261,27 +3406,29 @@
         });
     }
 
-    // toolbar → panel
     mirrorValue("roomWidth", "roomWidthPanel");
     mirrorValue("roomDepth", "roomDepthPanel");
     mirrorValue("roomHeight", "roomHeightPanel");
 
-    // panel → toolbar
     mirrorValue("roomWidthPanel", "roomWidth");
     mirrorValue("roomDepthPanel", "roomDepth");
     mirrorValue("roomHeightPanel", "roomHeight");
 
-    /* =====================================================
-       INITIALIZATION
-       ===================================================== */
-
+    /* ═══════════════ INITIALIZATION ═══════════════ */
     async function init() {
         try {
             showLoading("جارٍ تجهيز النظام...", "يتم تهيئة الوحدات");
 
             restoreSidebarState();
-            bindSpeakerLibrary();
             bindUploadZone();
+
+            // عرض السماعات المحفوظة مسبقاً
+            refreshSpeakerUI();
+
+            // استمع لأحداث السماعات من js/speaker.js
+            window.addEventListener("speakers:changed", () => {
+                refreshSpeakerUI();
+            });
 
             // انتظر تهيئة Firebase / Auth إن وُجد
             const auth = getAE().auth;
@@ -3298,12 +3445,10 @@
 
             await updateSidebarUser();
 
-            // تزامن عنوان المشروع
             if ($("projectName")?.value && $("projectTitle")) {
                 $("projectTitle").textContent = $("projectName").value;
             }
 
-            // اسمح لـ app.js بإكمال التهيئة
             const appApi = getApp();
             if (appApi && typeof appApi.initialize === "function") {
                 try {
@@ -3321,14 +3466,13 @@
         }
     }
 
-    /* Start */
     if (document.readyState === "loading") {
         document.addEventListener("DOMContentLoaded", init, { once: true });
     } else {
         init();
     }
 
-    /* Expose minimal bridge */
+    /* ═══════════════ Expose bridge ═══════════════ */
     window.AcousticBridge = {
         toast,
         openModal,
@@ -3336,7 +3480,9 @@
         closeAllModals,
         showLoading,
         hideLoading,
-        getAE, getApp, getCanvas, getEngine, getStorage, getReport
+        getAE, getApp, getCanvas, getEngine, getStorage, getReport, getSpeaker,
+        openSpeakerModal,
+        refreshSpeakerUI
     };
 
 })();
