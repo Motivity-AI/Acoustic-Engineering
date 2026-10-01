@@ -1,22 +1,51 @@
 {
   "name": "acoustic-engineering",
   "version": "1.0.0",
-  "description": "Acoustic Engineering - Unified Platform",
+  "description": "Acoustic Engineering - Unified Platform (Firebase + SQLite)",
   "main": "server.js",
+  "type": "commonjs",
+  "private": true,
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "serve": "node server.js --serve-only"
+    "serve": "node server.js --serve-only",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "audit": "npm audit --production",
+    "test": "echo \"No tests yet\" && exit 0"
   },
-  "engines": { "node": ">=18.0.0" },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "better-sqlite3": "^11.7.0",
+    "compression": "^1.7.5",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
     "express-session": "^1.18.1",
-    "multer": "^1.4.5-lts.1",
+    "helmet": "^8.0.0",
+    "multer": "^2.0.1",
     "pdfkit": "^0.15.1"
   },
+  "devDependencies": {
+    "eslint": "^9.17.0",
+    "nodemon": "^3.1.9",
+    "prettier": "^3.4.2"
+  },
+  "optionalDependencies": {
+    "connect-sqlite3": "^0.9.15"
+  },
+  "keywords": [
+    "acoustic",
+    "engineering",
+    "audio",
+    "speaker",
+    "spl",
+    "pwa"
+  ],
   "license": "MIT"
 }
