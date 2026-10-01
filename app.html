@@ -406,7 +406,6 @@
             overflow-y: auto;
             overflow-x: hidden;
             scrollbar-width: thin;
-            transition: display .2s ease;
         }
         [dir="rtl"] .left-panel {
             border-left: 0;
@@ -1074,7 +1073,7 @@
             .sidebar, .topbar, .design-toolbar, .bottom-panels, .app-modal { display: none !important; }
         }
 
-        /* ✨ إبراز العنصر عند التنقل */
+        /* إبراز العنصر عند التنقل */
         .nav-highlight {
             animation: navHighlight 1.4s ease;
         }
@@ -1096,11 +1095,8 @@
 
 <div id="appShell" class="app-shell">
 
-    <!-- ═══════════════════════════════════════════════════════
-         SIDEBAR
-         ═══════════════════════════════════════════════════════ -->
+    <!-- SIDEBAR -->
     <aside id="sidebar" class="sidebar" aria-label="القائمة الجانبية">
-
         <div class="sidebar-brand">
             <div class="brand-symbol">
                 <i class="fa-solid fa-wave-square" aria-hidden="true"></i>
@@ -1112,71 +1108,58 @@
         </div>
 
         <nav class="sidebar-nav" id="sidebarNav">
-
             <div class="nav-section-title">المشروع</div>
-
             <button class="nav-item active" data-section="overview" type="button">
                 <i class="fa-solid fa-house" aria-hidden="true"></i>
                 <span>نظرة عامة</span>
             </button>
-
             <button class="nav-item" data-section="project" type="button">
                 <i class="fa-solid fa-folder-open" aria-hidden="true"></i>
                 <span>بيانات المشروع</span>
             </button>
-
             <button class="nav-item" data-section="room" type="button">
                 <i class="fa-solid fa-vector-square" aria-hidden="true"></i>
                 <span>الفراغ الهندسي</span>
             </button>
 
             <div class="nav-section-title">التصميم</div>
-
             <button class="nav-item" data-section="speakers" type="button">
                 <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
                 <span>السماعات</span>
                 <span id="speakerCountBadge" class="nav-badge">0</span>
             </button>
-
             <button class="nav-item" data-section="design" type="button">
                 <i class="fa-solid fa-compass-drafting" aria-hidden="true"></i>
                 <span>الرسم الهندسي</span>
             </button>
-
             <button class="nav-item" data-section="auto-design" type="button">
                 <i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
                 <span>التوزيع الذكي</span>
             </button>
 
             <div class="nav-section-title">التحليل</div>
-
             <button class="nav-item" data-section="analysis" type="button">
                 <i class="fa-solid fa-chart-line" aria-hidden="true"></i>
                 <span>التحليل الصوتي</span>
             </button>
-
             <button class="nav-item" data-section="bom" type="button">
                 <i class="fa-solid fa-list-check" aria-hidden="true"></i>
                 <span>جدول الكميات</span>
             </button>
-
             <button class="nav-item" data-section="report" type="button">
                 <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
                 <span>التقرير الهندسي</span>
             </button>
 
             <div class="nav-section-title">النظام</div>
-
             <button id="uploadDatasheetBtn" class="nav-item" type="button">
                 <i class="fa-solid fa-file-arrow-up" aria-hidden="true"></i>
                 <span>رفع Datasheet</span>
             </button>
-
             <button id="settingsBtn" class="nav-item" type="button">
                 <i class="fa-solid fa-gear" aria-hidden="true"></i>
                 <span>الإعدادات</span>
             </button>
-
         </nav>
 
         <div class="sidebar-footer">
@@ -1190,14 +1173,10 @@
                 </div>
             </div>
         </div>
-
     </aside>
 
-    <!-- ═══════════════════════════════════════════════════════
-         MAIN
-         ═══════════════════════════════════════════════════════ -->
+    <!-- MAIN -->
     <main class="main-area">
-
         <header class="topbar">
             <button id="sidebarToggle" class="topbar-button" type="button" aria-label="القائمة">
                 <i class="fa-solid fa-bars" aria-hidden="true"></i>
@@ -1218,16 +1197,13 @@
             <button id="undoBtn" class="topbar-button" type="button" title="تراجع" aria-label="تراجع">
                 <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
             </button>
-
             <button id="redoBtn" class="topbar-button" type="button" title="إعادة" aria-label="إعادة">
                 <i class="fa-solid fa-rotate-right" aria-hidden="true"></i>
             </button>
-
             <button id="saveProjectBtn" class="topbar-action" type="button">
                 <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
                 <span>حفظ</span>
             </button>
-
             <button id="generateReportBtn" class="topbar-action primary" type="button">
                 <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
                 <span>التقرير</span>
@@ -1235,66 +1211,65 @@
         </header>
 
         <section class="workspace">
-
             <!-- TOOLBAR -->
             <div class="design-toolbar" role="toolbar" aria-label="أدوات التصميم">
                 <div class="toolbar-group">
-                    <button id="toolSelect" class="tool-button active" data-tool="select" type="button" title="تحديد" aria-label="تحديد">
+                    <button id="toolSelect" class="tool-button active" data-tool="select" type="button" title="تحديد">
                         <i class="fa-solid fa-arrow-pointer" aria-hidden="true"></i>
                     </button>
-                    <button id="toolPan" class="tool-button" data-tool="pan" type="button" title="تحريك" aria-label="تحريك">
+                    <button id="toolPan" class="tool-button" data-tool="pan" type="button" title="تحريك">
                         <i class="fa-solid fa-hand" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="toolbar-group">
-                    <button id="toolRoom" class="tool-button" data-tool="room" type="button" title="رسم الفراغ" aria-label="رسم الفراغ">
+                    <button id="toolRoom" class="tool-button" data-tool="room" type="button" title="رسم الفراغ">
                         <i class="fa-solid fa-vector-square" aria-hidden="true"></i>
                     </button>
-                    <button id="toolWall" class="tool-button" data-tool="wall" type="button" title="جدار" aria-label="جدار">
+                    <button id="toolWall" class="tool-button" data-tool="wall" type="button" title="جدار">
                         <i class="fa-solid fa-minus" aria-hidden="true"></i>
                     </button>
-                    <button id="toolSpeaker" class="tool-button" data-tool="speaker" type="button" title="إضافة سماعة" aria-label="إضافة سماعة">
+                    <button id="toolSpeaker" class="tool-button" data-tool="speaker" type="button" title="إضافة سماعة">
                         <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
                     </button>
-                    <button id="toolDelay" class="tool-button" data-tool="delay" type="button" title="Delay Speaker" aria-label="Delay Speaker">
+                    <button id="toolDelay" class="tool-button" data-tool="delay" type="button" title="Delay Speaker">
                         <i class="fa-solid fa-tower-broadcast" aria-hidden="true"></i>
                     </button>
-                    <button id="toolMeasure" class="tool-button" data-tool="measure" type="button" title="قياس" aria-label="قياس">
+                    <button id="toolMeasure" class="tool-button" data-tool="measure" type="button" title="قياس">
                         <i class="fa-solid fa-ruler" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="toolbar-group">
-                    <button id="gridToggle" class="tool-button active" type="button" title="الشبكة" aria-label="الشبكة">
+                    <button id="gridToggle" class="tool-button active" type="button" title="الشبكة">
                         <i class="fa-solid fa-border-all" aria-hidden="true"></i>
                     </button>
-                    <button id="snapToggle" class="tool-button active" type="button" title="Snap" aria-label="Snap to Grid">
+                    <button id="snapToggle" class="tool-button active" type="button" title="Snap">
                         <i class="fa-solid fa-magnet" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="toolbar-group">
-                    <button id="zoomOutBtn" class="tool-button" type="button" title="تصغير" aria-label="تصغير">
+                    <button id="zoomOutBtn" class="tool-button" type="button" title="تصغير">
                         <i class="fa-solid fa-minus" aria-hidden="true"></i>
                     </button>
-                    <button id="zoomResetBtn" class="tool-button" type="button" title="100%" aria-label="إعادة التكبير">
+                    <button id="zoomResetBtn" class="tool-button" type="button" title="100%">
                         <i class="fa-solid fa-expand" aria-hidden="true"></i>
                     </button>
-                    <button id="zoomInBtn" class="tool-button" type="button" title="تكبير" aria-label="تكبير">
+                    <button id="zoomInBtn" class="tool-button" type="button" title="تكبير">
                         <i class="fa-solid fa-plus" aria-hidden="true"></i>
                     </button>
-                    <button id="fitViewBtn" class="tool-button" type="button" title="ملاءمة" aria-label="ملاءمة الشاشة">
+                    <button id="fitViewBtn" class="tool-button" type="button" title="ملاءمة">
                         <i class="fa-solid fa-maximize" aria-hidden="true"></i>
                     </button>
                 </div>
                 <div class="toolbar-group">
                     <span class="toolbar-label">W</span>
-                    <input id="roomWidth" class="toolbar-input" type="number" min="1" step="0.1" value="20" aria-label="عرض الفراغ">
+                    <input id="roomWidth" class="toolbar-input" type="number" min="1" step="0.1" value="20">
                     <span class="toolbar-label">D</span>
-                    <input id="roomDepth" class="toolbar-input" type="number" min="1" step="0.1" value="15" aria-label="عمق الفراغ">
+                    <input id="roomDepth" class="toolbar-input" type="number" min="1" step="0.1" value="15">
                     <span class="toolbar-label">H</span>
-                    <input id="roomHeight" class="toolbar-input" type="number" min="1" step="0.1" value="4" aria-label="ارتفاع الفراغ">
+                    <input id="roomHeight" class="toolbar-input" type="number" min="1" step="0.1" value="4">
                 </div>
                 <div class="toolbar-group">
-                    <button id="deleteSelectedBtn" class="tool-button" type="button" title="حذف المحدد" aria-label="حذف المحدد">
+                    <button id="deleteSelectedBtn" class="tool-button" type="button" title="حذف المحدد">
                         <i class="fa-solid fa-trash" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -2132,7 +2107,9 @@
 <script src="js/app.js"></script>
 
 <!-- ═══════════════════════════════════════════════════════════
-     PAGE BRIDGE — v2.2.0 (مع إصلاح التنقل الكامل)
+     PAGE BRIDGE — v2.3.0
+     ✅ التنقل الكامل
+     ✅ حفظ بيانات التقرير قبل الانتقال
      ═══════════════════════════════════════════════════════════ -->
 <script>
 (function () {
@@ -2308,9 +2285,7 @@
         }
     }
 
-    /* ═══════════════════════════════════════════════════════
-       🎯 NAVIGATION — إصلاح كامل
-       ═══════════════════════════════════════════════════════ */
+    /* ═══════════════ NAVIGATION ═══════════════ */
 
     function setActiveNav(section) {
         document.querySelectorAll(".nav-item[data-section]").forEach(nav => {
@@ -2318,20 +2293,14 @@
         });
     }
 
-    /**
-     * إبراز عنصر مرئياً (يُستخدم للتنقل)
-     */
     function highlightNavTarget(el) {
         if (!el) return;
         el.classList.remove("nav-highlight");
-        void el.offsetWidth; // trigger reflow
+        void el.offsetWidth;
         el.classList.add("nav-highlight");
         setTimeout(() => el.classList.remove("nav-highlight"), 1500);
     }
 
-    /**
-     * Scroll سلس إلى عنصر + إبراز
-     */
     function scrollToElement(id) {
         const el = typeof id === "string" ? document.getElementById(id) : id;
         if (!el) return false;
@@ -2350,9 +2319,6 @@
         return true;
     }
 
-    /**
-     * Focus على عنصر (بعد scroll)
-     */
     function focusElement(id, delay = 400) {
         setTimeout(() => {
             const el = typeof id === "string" ? document.getElementById(id) : id;
@@ -2364,39 +2330,26 @@
         }, delay);
     }
 
-    /**
-     * تأكد أن اللوحة اليسرى ظاهرة على الجوال
-     */
     function ensureLeftPanelVisible() {
         if (window.innerWidth > 760) return;
         const leftPanel = $("leftPanel") || document.querySelector(".left-panel");
         if (leftPanel) {
             leftPanel.style.display = "block";
             leftPanel.style.width = "100%";
-            setTimeout(() => {
-                leftPanel.scrollTop = 0;
-            }, 50);
+            setTimeout(() => { leftPanel.scrollTop = 0; }, 50);
         }
     }
 
-    /**
-     * تأكد أن اللوحة اليمنى ظاهرة على الجوال
-     */
     function ensureRightPanelVisible() {
         if (window.innerWidth > 1000) return;
         const rightPanel = $("rightPanel") || document.querySelector(".right-panel");
         if (rightPanel) {
             rightPanel.style.display = "block";
             rightPanel.style.width = "100%";
-            setTimeout(() => {
-                rightPanel.scrollTop = 0;
-            }, 50);
+            setTimeout(() => { rightPanel.scrollTop = 0; }, 50);
         }
     }
 
-    /**
-     * Focus على المخطط
-     */
     function focusCanvas() {
         const canvas = $("canvasContainer") || document.querySelector(".canvas-stage");
         if (canvas) {
@@ -2405,9 +2358,6 @@
         }
     }
 
-    /**
-     * إعادة حساب التحليل وتحديث الواجهة
-     */
     function refreshAnalysis() {
         try {
             const engine = getEngine();
@@ -2419,7 +2369,6 @@
 
             if (speakers.length === 0) return;
 
-            // استخدم analyzeDesign إن وُجد
             let analysis = null;
             if (typeof engine.analyzeDesign === "function") {
                 analysis = engine.analyzeDesign(speakers, {});
@@ -2443,7 +2392,6 @@
             if (el) el.textContent = v;
         };
 
-        // استخرج القيم من البنية المحتملة
         const cov = analysis.coveragePercent ?? analysis.coverage?.coveragePercent ?? 0;
         const avgSPL = analysis.averageSPL ?? analysis.coverage?.averageSPL ?? 0;
         const minSPL = analysis.minimumSPL ?? analysis.coverage?.minimumSPL ?? 0;
@@ -2465,9 +2413,6 @@
         setText("analysisStatus", "مكتمل");
     }
 
-    /**
-     * إعادة بناء BOM
-     */
     function refreshBOM() {
         try {
             const engine = getEngine();
@@ -2502,16 +2447,87 @@
         }
     }
 
-    /**
-     * 🎯 المعالج الرئيسي للتنقل — يعمل مع كل قسم
-     */
+    /* ═══════════════════════════════════════════════════════
+       🎯 حفظ بيانات التقرير قبل الانتقال
+       ═══════════════════════════════════════════════════════ */
+    function saveReportData() {
+        try {
+            const canvas = getCanvas();
+            const engine = getEngine();
+            const speakerLib = getSpeaker();
+
+            // 1. بيانات Canvas
+            let designData = { speakers: [], room: {} };
+            if (canvas && typeof canvas.getDesignData === "function") {
+                designData = canvas.getDesignData() || designData;
+            }
+            localStorage.setItem("acoustic_report_data", JSON.stringify(designData));
+            console.log("[report] designData:", designData.speakers?.length || 0, "سماعة");
+
+            // 2. معلومات المشروع
+            const projectInfo = {
+                projectName: $("projectName")?.value || "",
+                clientName: $("clientName")?.value || "",
+                projectLocation: $("projectLocation")?.value || "",
+                venueType: $("venueType")?.value || "general",
+                description: $("projectDescription")?.value || "",
+                designMode: $("designMode")?.value || "auto",
+                profile: $("engineeringProfile")?.value || "general",
+                room: {
+                    width:  parseFloat($("roomWidth")?.value)  || 20,
+                    depth:  parseFloat($("roomDepth")?.value)  || 15,
+                    height: parseFloat($("roomHeight")?.value) || 4,
+                    material:   $("roomMaterial")?.value   || "medium",
+                    reflection: $("reflectionLevel")?.value || "medium"
+                },
+                target: {
+                    spl:            parseFloat($("targetSPL")?.value)       || 95,
+                    coverage:       parseFloat($("coverageTarget")?.value)  || 90,
+                    headroom:       parseFloat($("headroom")?.value)        || 6,
+                    listenerHeight: parseFloat($("audienceHeight")?.value)  || 1.2,
+                    mountingHeight: parseFloat($("mountingHeight")?.value)  || 3.2
+                }
+            };
+            localStorage.setItem("acoustic_report_project", JSON.stringify(projectInfo));
+            console.log("[report] projectInfo:", projectInfo.projectName);
+
+            // 3. التحليل
+            if (engine && typeof engine.analyzeDesign === "function") {
+                try {
+                    const analysis = engine.analyzeDesign(designData.speakers || [], {});
+                    if (analysis) {
+                        localStorage.setItem("acoustic_report_analysis", JSON.stringify(analysis));
+                        console.log("[report] analysis saved, coverage:", analysis.coveragePercent);
+                    }
+                } catch (err) {
+                    console.warn("[report] analysis failed:", err);
+                }
+            }
+
+            // 4. مكتبة السماعات
+            if (speakerLib && typeof speakerLib.list === "function") {
+                try {
+                    const list = speakerLib.list();
+                    localStorage.setItem("acoustic_report_speakers", JSON.stringify(list));
+                } catch (err) {
+                    console.warn("[report] speakers list failed:", err);
+                }
+            }
+
+            return true;
+        } catch (err) {
+            console.error("[report] saveReportData failed:", err);
+            return false;
+        }
+    }
+
+    /* ═══════════════ MAIN NAV HANDLER ═══════════════ */
     function handleNavClick(item) {
         const section = item.dataset.section;
         if (!section) return;
 
         setActiveNav(section);
 
-        // إغلاق السايدبار على الجوال
         if (window.innerWidth <= 1000 && sidebar) {
             sidebar.classList.remove("mobile-open");
         }
@@ -2571,15 +2587,12 @@
                 return;
 
             case "report": {
-                const reportApi = getReport();
-                if (reportApi && typeof reportApi.open === "function") {
-                    Promise.resolve(reportApi.open()).catch(err => {
-                        console.error("[report] open failed:", err);
-                        window.location.href = "report.html";
-                    });
-                } else {
-                    window.location.href = "report.html";
+                // ✅ احفظ البيانات ثم انتقل
+                const saved = saveReportData();
+                if (!saved) {
+                    toast("تعذّر حفظ بيانات التقرير", "warning");
                 }
+                window.location.href = "report.html";
                 return;
             }
 
@@ -2588,7 +2601,7 @@
         }
     }
 
-    /* ربط الأحداث عبر Event Delegation — أكثر موثوقية */
+    /* ربط التنقل عبر Event Delegation */
     const sidebarNav = $("sidebarNav") || document.querySelector(".sidebar-nav");
     if (sidebarNav) {
         sidebarNav.addEventListener("click", (event) => {
@@ -2599,20 +2612,12 @@
         });
     }
 
-    /* أزرار لا تحتوي على data-section */
-    $("settingsBtn")?.addEventListener("click", () => {
-        openModal("settingsModal");
-    });
-
-    $("uploadDatasheetBtn")?.addEventListener("click", () => {
-        openModal("datasheetModal");
-    });
+    $("settingsBtn")?.addEventListener("click", () => openModal("settingsModal"));
+    $("uploadDatasheetBtn")?.addEventListener("click", () => openModal("datasheetModal"));
 
     /* ═══════════════ Modal bindings ═══════════════ */
     document.querySelectorAll("[data-close-modal]").forEach(button => {
-        button.addEventListener("click", () => {
-            closeModal(button.dataset.closeModal);
-        });
+        button.addEventListener("click", () => closeModal(button.dataset.closeModal));
     });
 
     document.querySelectorAll(".app-modal").forEach(modal => {
@@ -2621,7 +2626,7 @@
         });
     });
 
-    /* ═══════════════ SPEAKER — حفظ المواصفات ═══════════════ */
+    /* ═══════════════ SPEAKER ═══════════════ */
     function readSpeakerForm() {
         const getVal = (id) => document.getElementById(id)?.value || "";
         const getNum = (id) => parseFloat(document.getElementById(id)?.value) || 0;
@@ -2694,9 +2699,6 @@
     }
 
     function openSpeakerModal(preset) {
-        const speakerApi = getSpeaker();
-        const defaults = speakerApi?.DEFAULTS || {};
-
         const set = (id, val) => {
             const el = document.getElementById(id);
             if (el) el.value = val ?? "";
@@ -2722,7 +2724,6 @@
         openModal("speakerModal");
     }
 
-    /* ربط معاينة حية */
     [
         "modalSpeakerManufacturer", "modalSpeakerModel", "modalSpeakerCategory",
         "modalSpeakerPower", "modalSpeakerPeak", "modalSpeakerSPL",
@@ -2737,12 +2738,10 @@
         }
     });
 
-    /* حفظ المواصفات */
     $("saveSpeakerBtn")?.addEventListener("click", async () => {
         const spec = readSpeakerForm();
         const speakerApi = getSpeaker();
 
-        // التحقق
         if (speakerApi && typeof speakerApi.validate === "function") {
             const errors = speakerApi.validate(spec);
             if (errors.length) {
@@ -2765,44 +2764,31 @@
         if (textEl) textEl.textContent = "جارٍ الحفظ...";
 
         try {
-            // 1. أضف إلى speaker.js المحلي
             let record = spec;
             if (speakerApi && typeof speakerApi.add === "function") {
                 record = speakerApi.add(spec);
             }
 
-            // 2. أضف إلى Canvas
             const canvas = getCanvas();
             const app = getApp();
             const backend = getAE().backend;
 
             if (canvas && typeof canvas.addSpeakerAt === "function") {
                 try {
-                    canvas.addSpeakerAt(
-                        { x: 10, y: 7.5 },  // في المنتصف
-                        record.id || null
-                    );
+                    canvas.addSpeakerAt({ x: 10, y: 7.5 }, record.id || null);
                 } catch (err) {
                     console.warn("[bridge] canvas.addSpeakerAt failed:", err);
                 }
             } else if (app && typeof app.addSpeaker === "function") {
-                try {
-                    await app.addSpeaker(spec);
-                } catch (err) {
-                    console.warn("[bridge] app.addSpeaker failed:", err);
-                }
+                try { await app.addSpeaker(spec); }
+                catch (err) { console.warn("[bridge] app.addSpeaker failed:", err); }
             }
 
-            // 3. احفظ في backend
             if (backend?.speakers?.create) {
-                try {
-                    await backend.speakers.create(spec);
-                } catch (err) {
-                    console.warn("[bridge] backend.speakers.create failed:", err);
-                }
+                try { await backend.speakers.create(spec); }
+                catch (err) { console.warn("[bridge] backend.speakers.create failed:", err); }
             }
 
-            // 4. حدّث الواجهة
             refreshSpeakerUI(record);
             refreshAnalysis();
             refreshBOM();
@@ -2825,14 +2811,12 @@
         const data = canvas?.getDesignData?.() || {};
         const speakers = data.speakers || [];
 
-        // عدّاد السماعات
         const badge = $("speakerCountBadge");
         if (badge) badge.textContent = speakers.length;
 
         const metric = $("metricSpeakerCount");
         if (metric) metric.textContent = speakers.length;
 
-        // بطاقات المكتبة — أضف بطاقة جديدة
         if (record) {
             const lib = $("speakerLibrary");
             const speakerApi = getSpeaker();
@@ -2848,18 +2832,17 @@
         }
     }
 
-    /* إضافة سماعة جديدة */
     $("addSpeakerBtn")?.addEventListener("click", () => {
         openSpeakerModal(null);
     });
 
-    /* Presets — Event delegation */
+    /* Presets */
     const lib = $("speakerLibrary");
     if (lib) {
         lib.addEventListener("click", (e) => {
             const card = e.target.closest("[data-speaker-preset]");
             if (!card) return;
-            if (card.dataset.speakerId) return; // بطاقة مضافة سابقاً
+            if (card.dataset.speakerId) return;
 
             const presetName = card.dataset.speakerPreset;
             const speakerApi = getSpeaker();
@@ -2869,7 +2852,6 @@
                 preset = speakerApi.getPreset(presetName);
             }
 
-            // إن لم يوجد preset، استخدم قيماً افتراضية
             if (!preset) {
                 const presets = {
                     "generic-fullrange": { manufacturer: "Generic", model: "Full Range 12", category: "Point Source", rms_power: 500, peak_power: 1000, max_spl: 128, sensitivity: 96, frequency_min: 50, frequency_max: 18000, horizontal_coverage: 90, vertical_coverage: 60, impedance: 8, weight: 20, mounting_type: "Stand" },
@@ -2883,7 +2865,6 @@
             if (preset) openSpeakerModal(preset);
         });
 
-        // دعم لوحة المفاتيح
         lib.addEventListener("keydown", (e) => {
             if (e.key !== "Enter" && e.key !== " ") return;
             const card = e.target.closest("[data-speaker-preset]");
@@ -2894,9 +2875,7 @@
     }
 
     /* ═══════════════ AUTO DESIGN ═══════════════ */
-    $("autoDesignBtn")?.addEventListener("click", () => {
-        openModal("autoDesignModal");
-    });
+    $("autoDesignBtn")?.addEventListener("click", () => openModal("autoDesignModal"));
 
     $("runAutoDesignBtn")?.addEventListener("click", async () => {
         const mode = document.querySelector('input[name="autoDesignMode"]:checked')?.value || "front-fill";
@@ -2933,7 +2912,6 @@
             refreshBOM();
 
             toast("✓ تم إنشاء التوزيع الذكي", "success");
-
         } catch (error) {
             console.error("[bridge] auto design:", error);
             toast(error?.message || "تعذّر تنفيذ التصميم", "error", 4500);
@@ -2995,16 +2973,11 @@
                 coverage: $("coverageToggle")?.checked ?? true,
                 language: $("languageSelect")?.value || "ar"
             };
-
-            try {
-                localStorage.setItem("ae_settings", JSON.stringify(settings));
-            } catch {}
-
+            try { localStorage.setItem("ae_settings", JSON.stringify(settings)); } catch {}
             const app = getApp();
             if (app && typeof app.applySettings === "function") {
                 app.applySettings(settings);
             }
-
             closeModal("settingsModal");
             toast("✓ تم حفظ الإعدادات", "success");
         } catch (error) {
@@ -3106,12 +3079,11 @@
         trapFocus(event);
     });
 
-    /* ═══════════════ MIRRORING room dimensions ═══════════════ */
+    /* ═══════════════ MIRRORING ═══════════════ */
     function mirrorValue(sourceId, targetId) {
         const source = $(sourceId);
         const target = $(targetId);
         if (!source || !target) return;
-
         source.addEventListener("input", () => {
             target.value = source.value;
         });
@@ -3124,10 +3096,9 @@
     mirrorValue("roomDepthPanel", "roomDepth");
     mirrorValue("roomHeightPanel", "roomHeight");
 
-    /* ═══════════════ LISTEN to speakers changes ═══════════════ */
+    /* ═══════════════ LISTENERS ═══════════════ */
     window.addEventListener("speakers:changed", () => {
         refreshSpeakerUI();
-        // أعِد التحليل بعد delay بسيط
         setTimeout(refreshAnalysis, 300);
         setTimeout(refreshBOM, 300);
     });
@@ -3143,13 +3114,10 @@
             showLoading("جارٍ تجهيز النظام...", "يتم تهيئة الوحدات");
 
             restoreSidebarState();
-
-            // عرض السماعات المحفوظة
             refreshSpeakerUI();
             refreshAnalysis();
             refreshBOM();
 
-            // انتظر auth
             const auth = getAE().auth;
             if (auth && typeof auth.initialize === "function") {
                 try {
@@ -3169,7 +3137,6 @@
             }
 
             console.log("[bridge] init complete");
-
         } catch (error) {
             console.error("[bridge] init error:", error);
             toast("تعذّر تجهيز النظام", "error", 5000);
@@ -3189,11 +3156,12 @@
         toast, openModal, closeModal, closeAllModals,
         showLoading, hideLoading,
         handleNavClick, scrollToElement, refreshAnalysis, refreshBOM,
+        saveReportData,
         getAE, getApp, getCanvas, getEngine, getStorage, getReport, getSpeaker,
         openSpeakerModal, refreshSpeakerUI
     };
 
-    console.log("[app.html bridge] v2.2.0 جاهز");
+    console.log("[app.html bridge] v2.3.0 جاهز");
 
 })();
 </script>
