@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#080b12">
+    <meta name="theme-color" content="#0b0f14">
     <meta name="description" content="إنشاء حساب أو تسجيل الدخول - منصة هندسة صوتية">
     <title>هندسة صوتية | إنشاء حساب</title>
     <link rel="manifest" href="manifest.json">
@@ -354,24 +354,25 @@
 </div>
 
 <!-- ============================================================
-     SCRIPTS
-     ملاحظة: speaker.js أُزيلت — لا علاقة لها بصفحة التسجيل.
+     SCRIPTS — ⚠️ الترتيب مهم جداً:
+     config → firebase → backend → auth → storage
      ============================================================ -->
 <script src="js/config.js"></script>
 <script src="js/firebase.js"></script>
+<script src="js/backend.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/storage.js"></script>
 
 <script>
 /* ============================================================
-   REGISTER / LOGIN PAGE — v1.1.0
+   REGISTER / LOGIN PAGE — v2.1.0
    ============================================================ */
 (function () {
     "use strict";
 
     const byId = (id) => document.getElementById(id);
 
-    let mode = "signup";   // "signup" | "login"
+    let mode = "signup";
     let submitting = false;
 
     const form = byId("registerForm");
@@ -387,6 +388,7 @@
             window.AcousticEngineering?.auth,
             window.AE?.auth,
             window.AcousticAuth,
+            window.AuthManager,
             window.Auth,
             window.auth
         ];
@@ -539,7 +541,7 @@
         if (name.length < 2)    { fieldError("nameGroup");     ok = false; }
         if (!validEmail(email)) { fieldError("emailGroup");    ok = false; }
         if (!validPhone(phone)) { fieldError("phoneGroup");    ok = false; }
-        if (pass.length < 6)    { fieldError("passwordGroup"); ok = false; }
+        if (pass.length < 8)    { fieldError("passwordGroup", "8 أحرف على الأقل"); ok = false; }
         if (pass !== confirm)   { fieldError("confirmGroup");  ok = false; }
 
         return ok;
@@ -580,7 +582,7 @@
        Error translation
     ------------------------------------------------------ */
     function translateAuthError(err) {
-        const raw = (err && (err.code || err.message)) || "";
+        const raw = (err && (err.code || err.message || err.error)) || "";
         const s = String(raw).toLowerCase();
 
         if (s.includes("email-already-in-use")
@@ -592,7 +594,7 @@
             return "صيغة البريد الإلكتروني غير صحيحة.";
         }
         if (s.includes("weak-password")) {
-            return "كلمة المرور ضعيفة جداً. استخدم 6 أحرف على الأقل.";
+            return "كلمة المرور ضعيفة جداً. استخدم 8 أحرف على الأقل.";
         }
         if (s.includes("user-not-found")) {
             return "لا يوجد حساب بهذا المعرّف. تحقق من البيانات.";
@@ -605,10 +607,17 @@
         if (s.includes("too-many-requests")) {
             return "محاولات كثيرة. حاول بعد قليل.";
         }
-        if (s.includes("network") || s.includes("offline")) {
+        if (s.includes("network")) {
             return "تعذّر الاتصال. تحقق من الشبكة.";
         }
-        return (err && err.message) || "حدث خطأ غير متوقّع.";
+        if (s.includes("unauthorized-domain")) {
+            return "النطاق غير مصرّح به. أضف motivity-ai.github.io إلى Firebase Console.";
+        }
+        if (s.includes("operation-not-allowed")) {
+            return "تسجيل البريد الإلكتروني غير مُفعّل في Firebase Console.";
+        }
+
+        return (err && err.message) || raw || "حدث خطأ غير متوقّع.";
     }
 
     /* ------------------------------------------------------
@@ -621,7 +630,11 @@
 
         const auth = resolveAuth();
         if (!auth) {
-            showStatus("نظام المصادقة غير جاهز. أعد تحميل الصفحة.", "error");
+            showStatus(
+                "نظام المصادقة غير محمّل. تحقّق من اتصال الإنترنت وأعد تحميل الصفحة.",
+                "error"
+            );
+            console.error("[register] auth module not found. Check script order.");
             return;
         }
 
@@ -653,12 +666,12 @@
                 try {
                     let signedIn = false;
                     if (typeof auth.isAuthenticated === "function") {
-                        signedIn = await auth.isAuthenticated().catch(() => false);
+                        signedIn = await Promise.resolve(auth.isAuthenticated());
                     }
                     if (!signedIn && typeof auth.login === "function") {
-                        await auth.login(email, password).catch(() => {});
+                        await auth.login(email || phone, password).catch(() => {});
                     }
-                } catch { /* تجاهل، سنُعيد التوجيه على أي حال */ }
+                } catch { /* نتجاهل — التوجيه كافٍ */ }
 
                 showStatus("✓ تم إنشاء الحساب بنجاح! جارٍ الدخول...", "success");
                 setTimeout(() => { window.location.href = "app.html"; }, 800);
@@ -750,11 +763,9 @@
             let isAuth = false;
 
             if (typeof auth.isAuthenticated === "function") {
-                isAuth = await auth.isAuthenticated();
+                isAuth = await Promise.resolve(auth.isAuthenticated());
             } else if (typeof auth.getCurrentUser === "function") {
-                isAuth = !!(await auth.getCurrentUser());
-            } else if (typeof auth.currentUser === "function") {
-                isAuth = !!(await auth.currentUser());
+                isAuth = !!(await Promise.resolve(auth.getCurrentUser()));
             }
 
             if (isAuth) {
@@ -772,6 +783,16 @@
     document.addEventListener("DOMContentLoaded", async () => {
         const urlMode = new URL(location.href).searchParams.get("mode");
         setMode(urlMode === "login" ? "login" : "signup", { silent: true });
+
+        // انتظر تهيئة auth
+        try {
+            if (window.AcousticEngineering?.auth?.initialize) {
+                await Promise.race([
+                    window.AcousticEngineering.auth.initialize(),
+                    new Promise(r => setTimeout(r, 3000))
+                ]);
+            }
+        } catch { /* ignore */ }
 
         await checkExistingSession();
 
