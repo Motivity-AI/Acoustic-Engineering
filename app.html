@@ -3,13 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#0b0f14">
     <meta name="application-name" content="Acoustic Engineering">
-    <meta name="description"
-          content="نظام هندسي متكامل لتصميم وتحليل وتوزيع الأنظمة الصوتية">
+    <meta name="description" content="نظام هندسي متكامل لتصميم وتحليل وتوزيع الأنظمة الصوتية">
 
     <title>Acoustic Engineering | هندسة صوتية</title>
 
@@ -17,14 +14,12 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="هندسة صوتية">
-    <link rel="apple-touch-icon" href="./assets/icon-192.png">
+    <link rel="apple-touch-icon" href="./assets/icon-192.PNG">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet">
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/app.css">
@@ -40,7 +35,6 @@
             height: 100%;
             overflow: hidden;
         }
-
         body {
             font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
             padding:
@@ -49,7 +43,6 @@
                 env(safe-area-inset-bottom)
                 env(safe-area-inset-left);
         }
-
         button:focus-visible,
         input:focus-visible,
         select:focus-visible,
@@ -82,11 +75,7 @@
             z-index: 1000;
             transition: width .25s ease, min-width .25s ease, transform .25s ease;
         }
-
-        .sidebar.collapsed {
-            width: 78px;
-            min-width: 78px;
-        }
+        .sidebar.collapsed { width: 78px; min-width: 78px; }
 
         .sidebar-brand {
             height: 76px;
@@ -96,7 +85,6 @@
             gap: 12px;
             border-bottom: 1px solid rgba(255,255,255,.07);
         }
-
         .brand-symbol {
             width: 44px;
             height: 44px;
@@ -109,21 +97,10 @@
             background: linear-gradient(135deg, #e60012, #a4000c);
             box-shadow: 0 8px 25px rgba(230,0,18,.22);
         }
-
         .brand-symbol i { font-size: 19px; }
-
         .brand-copy { overflow: hidden; white-space: nowrap; }
-        .brand-copy strong {
-            display: block;
-            font-size: 16px;
-            font-weight: 800;
-        }
-        .brand-copy span {
-            display: block;
-            color: #7e8b9d;
-            font-size: 10px;
-            margin-top: 1px;
-        }
+        .brand-copy strong { display: block; font-size: 16px; font-weight: 800; }
+        .brand-copy span { display: block; color: #7e8b9d; font-size: 10px; margin-top: 1px; }
         .sidebar.collapsed .brand-copy { display: none; }
 
         .sidebar-nav {
@@ -131,8 +108,8 @@
             padding: 14px 10px;
             overflow-y: auto;
             overflow-x: hidden;
+            scrollbar-width: thin;
         }
-
         .nav-section-title {
             padding: 9px 11px 7px;
             color: #647083;
@@ -141,15 +118,8 @@
             letter-spacing: .5px;
             white-space: nowrap;
         }
-
-        .sidebar.collapsed .nav-section-title {
-            text-align: center;
-            font-size: 0;
-        }
-        .sidebar.collapsed .nav-section-title::after {
-            content: "•••";
-            font-size: 11px;
-        }
+        .sidebar.collapsed .nav-section-title { text-align: center; font-size: 0; }
+        .sidebar.collapsed .nav-section-title::after { content: "•••"; font-size: 11px; }
 
         .nav-item {
             width: 100%;
@@ -170,32 +140,16 @@
             font-size: 12px;
             text-align: right;
         }
-
-        .nav-item i {
-            width: 18px;
-            min-width: 18px;
-            text-align: center;
-            font-size: 14px;
-        }
-
-        .nav-item:hover {
-            color: #fff;
-            background: rgba(255,255,255,.045);
-        }
-
+        .nav-item i { width: 18px; min-width: 18px; text-align: center; font-size: 14px; }
+        .nav-item:hover { color: #fff; background: rgba(255,255,255,.045); }
         .nav-item.active {
             color: #fff;
             background: linear-gradient(90deg, rgba(230,0,18,.14), rgba(230,0,18,.04));
             border-color: rgba(230,0,18,.16);
             box-shadow: inset -3px 0 0 #e60012;
         }
-
         .nav-item.active i { color: #e60012; }
-
-        .sidebar.collapsed .nav-item {
-            justify-content: center;
-            padding: 0;
-        }
+        .sidebar.collapsed .nav-item { justify-content: center; padding: 0; }
         .sidebar.collapsed .nav-item span,
         .sidebar.collapsed .nav-item .nav-badge { display: none; }
 
@@ -217,7 +171,6 @@
             padding: 10px;
             border-top: 1px solid rgba(255,255,255,.07);
         }
-
         .sidebar-user {
             min-height: 50px;
             display: flex;
@@ -228,7 +181,6 @@
             background: rgba(255,255,255,.025);
             overflow: hidden;
         }
-
         .user-avatar {
             width: 34px;
             height: 34px;
@@ -240,7 +192,6 @@
             background: #1b2430;
             color: #8fdcff;
         }
-
         .user-info { min-width: 0; }
         .user-info strong {
             display: block;
@@ -249,12 +200,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .user-info span {
-            display: block;
-            color: #687588;
-            font-size: 9px;
-        }
-
+        .user-info span { display: block; color: #687588; font-size: 9px; }
         .sidebar.collapsed .sidebar-user { justify-content: center; }
         .sidebar.collapsed .user-info { display: none; }
 
@@ -282,7 +228,6 @@
             backdrop-filter: blur(14px);
             z-index: 500;
         }
-
         .topbar-button {
             width: 38px;
             height: 38px;
@@ -296,12 +241,10 @@
             cursor: pointer;
             transition: .18s ease;
         }
-
         .topbar-button:hover {
             color: #fff;
             border-color: rgba(56,189,248,.25);
         }
-
         .topbar-button:disabled { opacity: .4; cursor: not-allowed; }
 
         .project-header { min-width: 180px; max-width: 420px; margin-right: 4px; }
@@ -314,7 +257,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .topbar-spacer { flex: 1; }
 
         .save-status {
@@ -326,10 +268,8 @@
             color: #718095;
             font-size: 9px;
         }
-
         .save-status.saved { color: #5ee59a; }
         .save-status.dirty { color: #f7bd54; }
-
         .save-status-dot {
             width: 6px;
             height: 6px;
@@ -352,7 +292,6 @@
             font-family: inherit;
             font-size: 11px;
         }
-
         .topbar-action:hover { color: #fff; border-color: rgba(255,255,255,.16); }
         .topbar-action.primary { background: #e60012; border-color: #e60012; color: #fff; }
         .topbar-action:disabled { opacity: .5; cursor: not-allowed; }
@@ -380,7 +319,6 @@
             overflow-y: hidden;
             scrollbar-width: thin;
         }
-
         .toolbar-group {
             display: flex;
             align-items: center;
@@ -389,7 +327,6 @@
             margin-left: 4px;
             border-left: 1px solid rgba(255,255,255,.07);
         }
-
         [dir="rtl"] .toolbar-group {
             padding-left: 0;
             padding-right: 8px;
@@ -398,7 +335,6 @@
             border-left: 0;
             border-right: 1px solid rgba(255,255,255,.07);
         }
-
         .tool-button {
             width: 35px;
             height: 35px;
@@ -413,7 +349,6 @@
             position: relative;
             transition: .16s ease;
         }
-
         .tool-button:hover { color: #fff; background: rgba(255,255,255,.05); }
         .tool-button.active {
             color: #fff;
@@ -421,7 +356,6 @@
             border-color: rgba(230,0,18,.22);
         }
         .tool-button.active i { color: #e60012; }
-
         .tool-button[title]::after {
             content: attr(title);
             position: absolute;
@@ -453,7 +387,6 @@
             text-align: center;
             outline: none;
         }
-
         .toolbar-input:focus { border-color: rgba(56,189,248,.4); }
         .toolbar-label { color: #637084; font-size: 9px; }
 
@@ -467,15 +400,14 @@
             grid-template-columns: 275px minmax(350px, 1fr) 295px;
             overflow: hidden;
         }
-
         .left-panel, .right-panel {
             min-width: 0;
             background: #0c1118;
             overflow-y: auto;
             overflow-x: hidden;
             scrollbar-width: thin;
+            transition: display .2s ease;
         }
-
         [dir="rtl"] .left-panel {
             border-left: 0;
             border-right: 1px solid rgba(255,255,255,.07);
@@ -489,26 +421,22 @@
             padding: 14px;
             border-bottom: 1px solid rgba(255,255,255,.06);
         }
-
         .panel-heading {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 11px;
         }
-
         .panel-heading h3 {
             margin: 0;
             font-size: 11px;
             font-weight: 800;
             color: #dce4ed;
         }
-
         .panel-heading span { color: #596679; font-size: 9px; }
 
         .field { margin-bottom: 9px; }
         .field:last-child { margin-bottom: 0; }
-
         .field label {
             display: block;
             margin-bottom: 4px;
@@ -516,7 +444,6 @@
             font-size: 9px;
             font-weight: 600;
         }
-
         .field input,
         .field select,
         .field textarea {
@@ -532,9 +459,7 @@
             outline: none;
             transition: .16s ease;
         }
-
         .field textarea { min-height: 70px; resize: vertical; }
-
         .field input:focus,
         .field select:focus,
         .field textarea:focus {
@@ -547,14 +472,12 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 7px;
         }
-
         .field-grid-3 {
             display: grid;
             grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 6px;
         }
 
-        /* TOGGLE */
         .toggle-row {
             min-height: 36px;
             display: flex;
@@ -562,18 +485,14 @@
             justify-content: space-between;
             gap: 10px;
         }
-
         .toggle-label { color: #a8b3c2; font-size: 10px; }
-
         .switch {
             position: relative;
             width: 38px;
             height: 20px;
             flex: 0 0 auto;
         }
-
         .switch input { opacity: 0; width: 0; height: 0; }
-
         .switch-slider {
             position: absolute;
             inset: 0;
@@ -582,7 +501,6 @@
             cursor: pointer;
             transition: .2s;
         }
-
         .switch-slider::before {
             content: "";
             position: absolute;
@@ -594,7 +512,6 @@
             background: #8995a4;
             transition: .2s;
         }
-
         .switch input:checked + .switch-slider { background: rgba(230,0,18,.65); }
         .switch input:checked + .switch-slider::before {
             transform: translateX(-18px);
@@ -615,7 +532,6 @@
                 #080c12;
             overflow: hidden;
         }
-
         .canvas-header {
             height: 38px;
             min-height: 38px;
@@ -627,7 +543,6 @@
             background: rgba(10,14,20,.88);
             z-index: 20;
         }
-
         .canvas-title {
             display: flex;
             align-items: center;
@@ -636,7 +551,6 @@
             font-size: 10px;
         }
         .canvas-title i { color: #38bdf8; }
-
         .canvas-info {
             display: flex;
             align-items: center;
@@ -652,7 +566,6 @@
             position: relative;
             overflow: hidden;
         }
-
         .acoustic-canvas {
             position: absolute;
             inset: 0;
@@ -661,7 +574,6 @@
             touch-action: none;
             user-select: none;
         }
-
         .canvas-empty-state {
             position: absolute;
             left: 50%;
@@ -676,18 +588,13 @@
             background: rgba(8,11,16,.75);
             backdrop-filter: blur(8px);
         }
-
         .canvas-empty-state i {
             display: block;
             margin-bottom: 12px;
             color: #38bdf8;
             font-size: 34px;
         }
-        .canvas-empty-state strong {
-            display: block;
-            color: #dfe7f0;
-            font-size: 13px;
-        }
+        .canvas-empty-state strong { display: block; color: #dfe7f0; font-size: 13px; }
         .canvas-empty-state span {
             display: block;
             margin-top: 6px;
@@ -695,7 +602,6 @@
             font-size: 10px;
             line-height: 1.7;
         }
-
         .canvas-hud {
             position: absolute;
             left: 10px;
@@ -705,7 +611,6 @@
             align-items: center;
             gap: 5px;
         }
-
         .hud-button {
             width: 32px;
             height: 32px;
@@ -720,7 +625,6 @@
             backdrop-filter: blur(8px);
         }
         .hud-button:hover { color: #fff; }
-
         .zoom-level {
             height: 32px;
             display: flex;
@@ -741,28 +645,11 @@
             text-align: center;
             color: #566375;
         }
-        .selection-empty i {
-            display: block;
-            margin-bottom: 10px;
-            font-size: 27px;
-        }
-        .selection-empty strong {
-            display: block;
-            color: #8996a8;
-            font-size: 11px;
-        }
-        .selection-empty span {
-            display: block;
-            margin-top: 5px;
-            font-size: 9px;
-            line-height: 1.7;
-        }
+        .selection-empty i { display: block; margin-bottom: 10px; font-size: 27px; }
+        .selection-empty strong { display: block; color: #8996a8; font-size: 11px; }
+        .selection-empty span { display: block; margin-top: 5px; font-size: 9px; line-height: 1.7; }
 
-        .object-title {
-            display: flex;
-            align-items: center;
-            gap: 9px;
-        }
+        .object-title { display: flex; align-items: center; gap: 9px; }
         .object-icon {
             width: 34px;
             height: 34px;
@@ -773,16 +660,8 @@
             color: #38bdf8;
             background: rgba(56,189,248,.08);
         }
-        .object-name strong {
-            display: block;
-            color: #dfe7ef;
-            font-size: 11px;
-        }
-        .object-name span {
-            display: block;
-            color: #617084;
-            font-size: 8px;
-        }
+        .object-name strong { display: block; color: #dfe7ef; font-size: 11px; }
+        .object-name span { display: block; color: #617084; font-size: 8px; }
 
         .inspector-actions {
             display: grid;
@@ -790,7 +669,6 @@
             gap: 5px;
             margin-top: 11px;
         }
-
         .inspector-action {
             height: 32px;
             display: flex;
@@ -805,17 +683,13 @@
             font-size: 9px;
             cursor: pointer;
         }
-        .inspector-action:hover {
-            color: #fff;
-            background: rgba(255,255,255,.05);
-        }
+        .inspector-action:hover { color: #fff; background: rgba(255,255,255,.05); }
         .inspector-action.danger:hover {
             color: #ff7580;
             border-color: rgba(230,0,18,.25);
         }
 
         .speaker-library { display: grid; gap: 6px; }
-
         .speaker-card {
             padding: 9px;
             display: flex;
@@ -831,7 +705,6 @@
             border-color: rgba(56,189,248,.2);
             background: rgba(56,189,248,.035);
         }
-
         .speaker-card-icon {
             width: 30px;
             height: 30px;
@@ -842,7 +715,6 @@
             color: #cbd7e4;
             background: #17202b;
         }
-
         .speaker-card-copy { min-width: 0; flex: 1; }
         .speaker-card-copy strong {
             display: block;
@@ -872,7 +744,6 @@
             background: rgba(255,255,255,.05);
             overflow: hidden;
         }
-
         .bottom-panel {
             min-width: 0;
             padding: 12px;
@@ -880,7 +751,6 @@
             overflow-y: auto;
             overflow-x: hidden;
         }
-
         .bottom-panel-header {
             display: flex;
             align-items: center;
@@ -895,14 +765,12 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 6px;
         }
-
         .mini-metric {
             padding: 9px;
             border: 1px solid rgba(255,255,255,.055);
             border-radius: 7px;
             background: rgba(255,255,255,.018);
         }
-
         .mini-metric-label { color: #617084; font-size: 8px; }
         .mini-metric-value {
             margin-top: 3px;
@@ -951,7 +819,6 @@
             font-size: 8px;
             line-height: 1.7;
         }
-
         .auto-design-button {
             width: 100%;
             height: 34px;
@@ -985,9 +852,7 @@
             background: rgba(0,0,0,.72);
             backdrop-filter: blur(7px);
         }
-
         .app-modal.active { display: flex; }
-
         .modal-card {
             width: min(650px, 100%);
             max-height: min(760px, calc(100vh - 40px));
@@ -1000,12 +865,10 @@
             box-shadow: 0 30px 100px rgba(0,0,0,.45);
             animation: modalIn .2s ease;
         }
-
         @keyframes modalIn {
             from { opacity: 0; transform: translateY(8px) scale(.98); }
             to   { opacity: 1; transform: translateY(0) scale(1); }
         }
-
         .modal-header {
             min-height: 56px;
             padding: 0 17px;
@@ -1014,13 +877,7 @@
             justify-content: space-between;
             border-bottom: 1px solid rgba(255,255,255,.07);
         }
-
-        .modal-header h3 {
-            margin: 0;
-            color: #e6edf5;
-            font-size: 14px;
-        }
-
+        .modal-header h3 { margin: 0; color: #e6edf5; font-size: 14px; }
         .modal-close {
             width: 32px;
             height: 32px;
@@ -1033,16 +890,8 @@
             background: transparent;
             cursor: pointer;
         }
-        .modal-close:hover {
-            color: #fff;
-            background: rgba(255,255,255,.05);
-        }
-
-        .modal-body {
-            padding: 17px;
-            overflow-y: auto;
-        }
-
+        .modal-close:hover { color: #fff; background: rgba(255,255,255,.05); }
+        .modal-body { padding: 17px; overflow-y: auto; }
         .modal-footer {
             padding: 12px 17px;
             display: flex;
@@ -1050,7 +899,6 @@
             gap: 7px;
             border-top: 1px solid rgba(255,255,255,.07);
         }
-
         .modal-button {
             height: 36px;
             padding: 0 14px;
@@ -1066,11 +914,7 @@
             justify-content: center;
             gap: 6px;
         }
-        .modal-button.primary {
-            color: #fff;
-            background: #e60012;
-            border-color: #e60012;
-        }
+        .modal-button.primary { color: #fff; background: #e60012; border-color: #e60012; }
         .modal-button:disabled { opacity: .5; cursor: not-allowed; }
 
         .auto-design-options { display: grid; gap: 11px; }
@@ -1086,11 +930,7 @@
         }
         .design-mode-option:hover { border-color: rgba(56,189,248,.22); }
         .design-mode-option input { margin-top: 3px; }
-        .design-mode-option strong {
-            display: block;
-            color: #d6e0ea;
-            font-size: 11px;
-        }
+        .design-mode-option strong { display: block; color: #d6e0ea; font-size: 11px; }
         .design-mode-option span {
             display: block;
             margin-top: 4px;
@@ -1112,25 +952,12 @@
             border-color: rgba(56,189,248,.3);
             background: rgba(56,189,248,.02);
         }
-        .upload-zone i {
-            margin-bottom: 9px;
-            color: #38bdf8;
-            font-size: 27px;
-        }
-        .upload-zone strong {
-            display: block;
-            color: #cdd7e3;
-            font-size: 11px;
-        }
-        .upload-zone span {
-            display: block;
-            margin-top: 5px;
-            color: #617084;
-            font-size: 8px;
-        }
+        .upload-zone i { margin-bottom: 9px; color: #38bdf8; font-size: 27px; }
+        .upload-zone strong { display: block; color: #cdd7e3; font-size: 11px; }
+        .upload-zone span { display: block; margin-top: 5px; color: #617084; font-size: 8px; }
 
         /* ═══════════════════════════════════════════════════
-           TOAST — RTL
+           TOAST
            ═══════════════════════════════════════════════════ */
         #toastContainer {
             position: fixed;
@@ -1143,7 +970,6 @@
             pointer-events: none;
             max-width: 380px;
         }
-
         .toast {
             min-width: 250px;
             max-width: 380px;
@@ -1157,11 +983,10 @@
             pointer-events: auto;
             animation: toastIn .2s ease;
         }
-
         .toast.success { border-color: rgba(34,197,94,.2); }
         .toast.error   { border-color: rgba(230,0,18,.25); }
         .toast.warning { border-color: rgba(245,158,11,.2); }
-
+        .toast.info    { border-color: rgba(56,189,248,.2); }
         @keyframes toastIn {
             from { opacity: 0; transform: translateY(8px); }
             to   { opacity: 1; transform: translateY(0); }
@@ -1180,9 +1005,7 @@
             background: rgba(5,7,10,.78);
             backdrop-filter: blur(7px);
         }
-
         #loadingOverlay.active { display: flex; }
-
         .loading-box {
             min-width: 250px;
             padding: 25px;
@@ -1191,7 +1014,6 @@
             border-radius: 13px;
             background: #111821;
         }
-
         .loading-spinner {
             width: 38px;
             height: 38px;
@@ -1201,22 +1023,9 @@
             border-radius: 50%;
             animation: acousticSpin .75s linear infinite;
         }
-
-        @keyframes acousticSpin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-box strong {
-            display: block;
-            color: #dce5ef;
-            font-size: 11px;
-        }
-        .loading-box span {
-            display: block;
-            margin-top: 5px;
-            color: #627084;
-            font-size: 8px;
-        }
+        @keyframes acousticSpin { to { transform: rotate(360deg); } }
+        .loading-box strong { display: block; color: #dce5ef; font-size: 11px; }
+        .loading-box span { display: block; margin-top: 5px; color: #627084; font-size: 8px; }
 
         /* ═══════════════════════════════════════════════════
            RESPONSIVE
@@ -1226,7 +1035,6 @@
             .bottom-panels { grid-template-columns: 1fr 1fr; }
             .bottom-panel:last-child { display: none; }
         }
-
         @media (max-width: 1000px) {
             .sidebar {
                 position: fixed;
@@ -1242,7 +1050,6 @@
             .right-panel { display: none; }
             .project-header { max-width: 220px; }
         }
-
         @media (max-width: 760px) {
             .topbar-action span,
             .save-status span { display: none; }
@@ -1254,7 +1061,6 @@
             .toolbar-dimension,
             .toolbar-label { display: none; }
         }
-
         @media (max-width: 520px) {
             .topbar { height: 58px; min-height: 58px; }
             .project-header { min-width: 0; flex: 1; }
@@ -1264,9 +1070,18 @@
             .design-toolbar { min-height: 46px; }
             .tool-button { width: 33px; height: 33px; }
         }
-
         @media print {
             .sidebar, .topbar, .design-toolbar, .bottom-panels, .app-modal { display: none !important; }
+        }
+
+        /* ✨ إبراز العنصر عند التنقل */
+        .nav-highlight {
+            animation: navHighlight 1.4s ease;
+        }
+        @keyframes navHighlight {
+            0%   { box-shadow: 0 0 0 0 rgba(56,189,248,.6); }
+            50%  { box-shadow: 0 0 0 8px rgba(56,189,248,.15); }
+            100% { box-shadow: 0 0 0 0 rgba(56,189,248,0); }
         }
     </style>
 </head>
@@ -1296,7 +1111,7 @@
             </div>
         </div>
 
-        <nav class="sidebar-nav">
+        <nav class="sidebar-nav" id="sidebarNav">
 
             <div class="nav-section-title">المشروع</div>
 
@@ -1384,7 +1199,6 @@
     <main class="main-area">
 
         <header class="topbar">
-
             <button id="sidebarToggle" class="topbar-button" type="button" aria-label="القائمة">
                 <i class="fa-solid fa-bars" aria-hidden="true"></i>
             </button>
@@ -1418,16 +1232,12 @@
                 <i class="fa-solid fa-file-pdf" aria-hidden="true"></i>
                 <span>التقرير</span>
             </button>
-
         </header>
 
         <section class="workspace">
 
-            <!-- ═══════════════════════════════════════════════
-                 TOOLBAR
-                 ═══════════════════════════════════════════════ -->
+            <!-- TOOLBAR -->
             <div class="design-toolbar" role="toolbar" aria-label="أدوات التصميم">
-
                 <div class="toolbar-group">
                     <button id="toolSelect" class="tool-button active" data-tool="select" type="button" title="تحديد" aria-label="تحديد">
                         <i class="fa-solid fa-arrow-pointer" aria-hidden="true"></i>
@@ -1436,7 +1246,6 @@
                         <i class="fa-solid fa-hand" aria-hidden="true"></i>
                     </button>
                 </div>
-
                 <div class="toolbar-group">
                     <button id="toolRoom" class="tool-button" data-tool="room" type="button" title="رسم الفراغ" aria-label="رسم الفراغ">
                         <i class="fa-solid fa-vector-square" aria-hidden="true"></i>
@@ -1454,7 +1263,6 @@
                         <i class="fa-solid fa-ruler" aria-hidden="true"></i>
                     </button>
                 </div>
-
                 <div class="toolbar-group">
                     <button id="gridToggle" class="tool-button active" type="button" title="الشبكة" aria-label="الشبكة">
                         <i class="fa-solid fa-border-all" aria-hidden="true"></i>
@@ -1463,7 +1271,6 @@
                         <i class="fa-solid fa-magnet" aria-hidden="true"></i>
                     </button>
                 </div>
-
                 <div class="toolbar-group">
                     <button id="zoomOutBtn" class="tool-button" type="button" title="تصغير" aria-label="تصغير">
                         <i class="fa-solid fa-minus" aria-hidden="true"></i>
@@ -1478,7 +1285,6 @@
                         <i class="fa-solid fa-maximize" aria-hidden="true"></i>
                     </button>
                 </div>
-
                 <div class="toolbar-group">
                     <span class="toolbar-label">W</span>
                     <input id="roomWidth" class="toolbar-input" type="number" min="1" step="0.1" value="20" aria-label="عرض الفراغ">
@@ -1487,44 +1293,35 @@
                     <span class="toolbar-label">H</span>
                     <input id="roomHeight" class="toolbar-input" type="number" min="1" step="0.1" value="4" aria-label="ارتفاع الفراغ">
                 </div>
-
                 <div class="toolbar-group">
                     <button id="deleteSelectedBtn" class="tool-button" type="button" title="حذف المحدد" aria-label="حذف المحدد">
                         <i class="fa-solid fa-trash" aria-hidden="true"></i>
                     </button>
                 </div>
-
             </div>
 
-            <!-- ═══════════════════════════════════════════════
-                 DESIGN LAYOUT
-                 ═══════════════════════════════════════════════ -->
+            <!-- DESIGN LAYOUT -->
             <div class="design-layout">
 
-                <!-- ═══════════ LEFT PANEL ═══════════ -->
-                <aside class="left-panel">
-
-                    <section class="panel-section">
+                <!-- LEFT PANEL -->
+                <aside class="left-panel" id="leftPanel">
+                    <section class="panel-section" id="sectionProject">
                         <div class="panel-heading">
                             <h3>بيانات المشروع</h3>
                             <span>PROJECT</span>
                         </div>
-
                         <div class="field">
                             <label for="projectName">اسم المشروع</label>
                             <input id="projectName" type="text" placeholder="مثال: نظام صوت قاعة مناسبات">
                         </div>
-
                         <div class="field">
                             <label for="clientName">العميل</label>
                             <input id="clientName" type="text" placeholder="اسم العميل">
                         </div>
-
                         <div class="field">
                             <label for="projectLocation">الموقع</label>
                             <input id="projectLocation" type="text" placeholder="المدينة / الموقع">
                         </div>
-
                         <div class="field">
                             <label for="venueType">نوع المنشأة</label>
                             <select id="venueType">
@@ -1540,19 +1337,17 @@
                                 <option value="mosque">مسجد</option>
                             </select>
                         </div>
-
                         <div class="field">
                             <label for="projectDescription">وصف المشروع</label>
                             <textarea id="projectDescription" placeholder="ملاحظات المشروع..."></textarea>
                         </div>
                     </section>
 
-                    <section class="panel-section">
+                    <section class="panel-section" id="sectionRoom">
                         <div class="panel-heading">
                             <h3>أبعاد الفراغ</h3>
                             <span>ROOM</span>
                         </div>
-
                         <div class="field-grid-3">
                             <div class="field">
                                 <label for="roomWidthPanel">العرض W</label>
@@ -1567,7 +1362,6 @@
                                 <input id="roomHeightPanel" type="number" value="4" min="1" step=".1">
                             </div>
                         </div>
-
                         <div class="field">
                             <label for="roomMaterial">مادة الفراغ</label>
                             <select id="roomMaterial">
@@ -1579,7 +1373,6 @@
                                 <option value="outdoor">Outdoor</option>
                             </select>
                         </div>
-
                         <div class="field">
                             <label for="reflectionLevel">مستوى الانعكاس</label>
                             <select id="reflectionLevel">
@@ -1596,7 +1389,6 @@
                             <h3>المسرح / المنصة</h3>
                             <span>STAGE</span>
                         </div>
-
                         <div class="field-grid">
                             <div class="field">
                                 <label for="stageWidth">العرض</label>
@@ -1607,7 +1399,6 @@
                                 <input id="stageDepth" type="number" min="0" step=".1" value="4">
                             </div>
                         </div>
-
                         <div class="field-grid">
                             <div class="field">
                                 <label for="stageX">X</label>
@@ -1625,17 +1416,14 @@
                             <h3>الجمهور</h3>
                             <span>AUDIENCE</span>
                         </div>
-
                         <div class="field">
                             <label for="crowdSize">عدد الأشخاص</label>
                             <input id="crowdSize" type="number" min="0" step="1" value="300">
                         </div>
-
                         <div class="field">
                             <label for="audienceHeight">ارتفاع أذن المستمع</label>
                             <input id="audienceHeight" type="number" min="0" step=".05" value="1.2">
                         </div>
-
                         <div class="field">
                             <label for="mountingHeight">ارتفاع تركيب السماعة</label>
                             <input id="mountingHeight" type="number" min="0" step=".1" value="3.2">
@@ -1647,7 +1435,6 @@
                             <h3>الإعدادات الهندسية</h3>
                             <span>ENGINEERING</span>
                         </div>
-
                         <div class="field">
                             <label for="designMode">وضع التصميم</label>
                             <select id="designMode">
@@ -1656,7 +1443,6 @@
                                 <option value="auto">AI / Auto Design</option>
                             </select>
                         </div>
-
                         <div class="field">
                             <label for="engineeringProfile">الملف الهندسي</label>
                             <select id="engineeringProfile">
@@ -1668,7 +1454,6 @@
                                 <option value="outdoor">Outdoor</option>
                             </select>
                         </div>
-
                         <div class="field-grid">
                             <div class="field">
                                 <label for="targetSPL">Target SPL</label>
@@ -1679,12 +1464,10 @@
                                 <input id="headroom" type="number" value="6" min="0" max="20" step="1">
                             </div>
                         </div>
-
                         <div class="field">
                             <label for="coverageTarget">نسبة التغطية المطلوبة</label>
                             <input id="coverageTarget" type="number" value="90" min="1" max="100" step="1">
                         </div>
-
                         <div class="auto-design-card">
                             <h4>التوزيع الذكي</h4>
                             <p>تحليل أبعاد الفراغ ومواصفات السماعات واقتراح توزيع هندسي تلقائي.</p>
@@ -1694,12 +1477,10 @@
                             </button>
                         </div>
                     </section>
-
                 </aside>
 
-                <!-- ═══════════ CANVAS ═══════════ -->
-                <section class="canvas-panel">
-
+                <!-- CANVAS -->
+                <section class="canvas-panel" id="canvasPanel">
                     <div class="canvas-header">
                         <div class="canvas-title">
                             <i class="fa-solid fa-compass-drafting" aria-hidden="true"></i>
@@ -1714,7 +1495,6 @@
                     </div>
 
                     <div id="canvasContainer" class="canvas-stage">
-
                         <svg id="designSvg"
                              class="acoustic-canvas"
                              style="touch-action:none;cursor:crosshair;"
@@ -1722,7 +1502,6 @@
                              viewBox="0 0 1100 700"
                              preserveAspectRatio="xMidYMid meet"
                              aria-label="المخطط الهندسي للنظام الصوتي">
-
                             <defs>
                                 <filter id="speakerGlow">
                                     <feGaussianBlur stdDeviation="3"></feGaussianBlur>
@@ -1761,7 +1540,6 @@
                             <g id="speakersLayer"></g>
                             <g id="selectionLayer"></g>
                             <g id="cursorPoint"></g>
-
                         </svg>
 
                         <div id="canvasEmptyState" class="canvas-empty-state">
@@ -1786,26 +1564,21 @@
                                 <i class="fa-solid fa-maximize" aria-hidden="true"></i>
                             </button>
                         </div>
-
                     </div>
-
                 </section>
 
-                <!-- ═══════════ RIGHT PANEL ═══════════ -->
-                <aside class="right-panel">
-
+                <!-- RIGHT PANEL -->
+                <aside class="right-panel" id="rightPanel">
                     <section class="panel-section">
                         <div class="panel-heading">
                             <h3>العنصر المحدد</h3>
                             <span>INSPECTOR</span>
                         </div>
-
                         <div id="selectionEmpty" class="selection-empty">
                             <i class="fa-solid fa-arrow-pointer" aria-hidden="true"></i>
                             <strong>لا يوجد عنصر محدد</strong>
                             <span>حدد سماعة أو عنصراً من المخطط لعرض خصائصه.</span>
                         </div>
-
                         <div id="selectionInfo" style="display:none;">
                             <div class="object-title">
                                 <div class="object-icon">
@@ -1816,7 +1589,6 @@
                                     <span id="selectedObjectType">Loudspeaker</span>
                                 </div>
                             </div>
-
                             <div class="inspector-actions">
                                 <button id="rotateSelectedBtn" class="inspector-action" type="button">
                                     <i class="fa-solid fa-rotate" aria-hidden="true"></i>
@@ -1836,82 +1608,9 @@
 
                     <section class="panel-section">
                         <div class="panel-heading">
-                            <h3>مواصفات السماعة</h3>
-                            <span>SPEAKER</span>
-                        </div>
-
-                        <div class="field">
-                            <label for="speakerModel">الموديل</label>
-                            <input id="speakerModel" type="text" placeholder="Speaker Model">
-                        </div>
-
-                        <div class="field-grid">
-                            <div class="field">
-                                <label for="speakerPower">RMS / Power</label>
-                                <input id="speakerPower" type="number" min="0" step="1" placeholder="1000">
-                            </div>
-                            <div class="field">
-                                <label for="speakerSPL">Max SPL</label>
-                                <input id="speakerSPL" type="number" min="0" step=".1" placeholder="133">
-                            </div>
-                        </div>
-
-                        <div class="field-grid">
-                            <div class="field">
-                                <label for="speakerH">Horizontal</label>
-                                <input id="speakerH" type="number" min="1" max="360" step="1" placeholder="90">
-                            </div>
-                            <div class="field">
-                                <label for="speakerV">Vertical</label>
-                                <input id="speakerV" type="number" min="1" max="180" step="1" placeholder="60">
-                            </div>
-                        </div>
-
-                        <div class="field-grid">
-                            <div class="field">
-                                <label for="speakerFreqLow">Low Hz</label>
-                                <input id="speakerFreqLow" type="number" min="0" step="1" placeholder="50">
-                            </div>
-                            <div class="field">
-                                <label for="speakerFreqHigh">High Hz</label>
-                                <input id="speakerFreqHigh" type="number" min="0" step="1" placeholder="20000">
-                            </div>
-                        </div>
-
-                        <div class="field-grid">
-                            <div class="field">
-                                <label for="speakerWeight">الوزن kg</label>
-                                <input id="speakerWeight" type="number" min="0" step=".1">
-                            </div>
-                            <div class="field">
-                                <label for="speakerMount">التثبيت</label>
-                                <select id="speakerMount">
-                                    <option value="floor">Floor</option>
-                                    <option value="tripod">Tripod</option>
-                                    <option value="wall">Wall Mount</option>
-                                    <option value="ceiling">Ceiling</option>
-                                    <option value="pole">Pole</option>
-                                    <option value="truss">Truss</option>
-                                    <option value="flown">Flown</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <button id="applySpeakerPropertiesBtn"
-                                class="modal-button primary"
-                                style="width:100%;margin-top:4px;"
-                                type="button">
-                            <i class="fa-solid fa-check" aria-hidden="true"></i>
-                            تطبيق المواصفات
-                        </button>
-                    </section>
-
-                    <section class="panel-section">
-                        <div class="panel-heading">
                             <h3>الموقع والاتجاه</h3>
                             <span>POSITION</span>
                         </div>
-
                         <div class="field-grid-3">
                             <div class="field">
                                 <label for="selectedX">X</label>
@@ -1926,7 +1625,6 @@
                                 <input id="selectedZ" type="number" step=".01" value="3">
                             </div>
                         </div>
-
                         <div class="field-grid">
                             <div class="field">
                                 <label for="selectedRotation">Rotation °</label>
@@ -1937,7 +1635,6 @@
                                 <input id="selectedDelay" type="number" min="0" step=".01" value="0">
                             </div>
                         </div>
-
                         <button id="applyPositionBtn" class="modal-button primary"
                                 style="width:100%;" type="button">
                             <i class="fa-solid fa-location-arrow" aria-hidden="true"></i>
@@ -1945,44 +1642,12 @@
                         </button>
                     </section>
 
-                    <section class="panel-section">
-                        <div class="panel-heading">
-                            <h3>التغطية</h3>
-                            <span>COVERAGE</span>
-                        </div>
-
-                        <div class="mini-metrics">
-                            <div class="mini-metric">
-                                <div class="mini-metric-label">Horizontal</div>
-                                <div id="selectedCoverageH" class="mini-metric-value">—</div>
-                                <span class="mini-metric-unit">deg</span>
-                            </div>
-                            <div class="mini-metric">
-                                <div class="mini-metric-label">Vertical</div>
-                                <div id="selectedCoverageV" class="mini-metric-value">—</div>
-                                <span class="mini-metric-unit">deg</span>
-                            </div>
-                            <div class="mini-metric">
-                                <div class="mini-metric-label">Throw</div>
-                                <div id="selectedThrow" class="mini-metric-value">—</div>
-                                <span class="mini-metric-unit">m</span>
-                            </div>
-                            <div class="mini-metric">
-                                <div class="mini-metric-label">SPL</div>
-                                <div id="selectedSPL" class="mini-metric-value">—</div>
-                                <span class="mini-metric-unit">dB</span>
-                            </div>
-                        </div>
-                    </section>
-
-                    <section class="panel-section">
+                    <section class="panel-section" id="sectionSpeakers">
                         <div class="panel-heading">
                             <h3>مكتبة السماعات</h3>
                             <span>LIBRARY</span>
                         </div>
-
                         <div id="speakerLibrary" class="speaker-library">
-
                             <div class="speaker-card" data-speaker-preset="generic-fullrange" role="button" tabindex="0">
                                 <div class="speaker-card-icon">
                                     <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
@@ -1992,7 +1657,6 @@
                                     <span>1000W · 133dB · 90°×60°</span>
                                 </div>
                             </div>
-
                             <div class="speaker-card" data-speaker-preset="ceiling" role="button" tabindex="0">
                                 <div class="speaker-card-icon">
                                     <i class="fa-solid fa-circle-dot" aria-hidden="true"></i>
@@ -2002,7 +1666,6 @@
                                     <span>30W · Wide Coverage</span>
                                 </div>
                             </div>
-
                             <div class="speaker-card" data-speaker-preset="column" role="button" tabindex="0">
                                 <div class="speaker-card-icon">
                                     <i class="fa-solid fa-bars-staggered" aria-hidden="true"></i>
@@ -2012,7 +1675,6 @@
                                     <span>Vertical Array</span>
                                 </div>
                             </div>
-
                             <div class="speaker-card" data-speaker-preset="subwoofer" role="button" tabindex="0">
                                 <div class="speaker-card-icon">
                                     <i class="fa-solid fa-box" aria-hidden="true"></i>
@@ -2022,32 +1684,23 @@
                                     <span>Low Frequency</span>
                                 </div>
                             </div>
-
                         </div>
-
                         <button id="addSpeakerBtn" class="modal-button primary"
                                 style="width:100%;margin-top:9px;" type="button">
                             <i class="fa-solid fa-plus" aria-hidden="true"></i>
                             إضافة سماعة جديدة
                         </button>
-
                     </section>
-
                 </aside>
-
             </div>
 
-            <!-- ═══════════════════════════════════════════════
-                 BOTTOM PANELS
-                 ═══════════════════════════════════════════════ -->
-            <section class="bottom-panels">
-
-                <div class="bottom-panel">
+            <!-- BOTTOM PANELS -->
+            <section class="bottom-panels" id="bottomPanels">
+                <div class="bottom-panel" id="metricsPanel">
                     <div class="bottom-panel-header">
                         <strong>مؤشرات التصميم</strong>
                         <span>LIVE</span>
                     </div>
-
                     <div class="mini-metrics">
                         <div class="mini-metric">
                             <div class="mini-metric-label">Coverage</div>
@@ -2082,12 +1735,11 @@
                     </div>
                 </div>
 
-                <div class="bottom-panel">
+                <div class="bottom-panel" id="analysisPanel">
                     <div class="bottom-panel-header">
                         <strong>التحليل الهندسي</strong>
                         <span>ANALYSIS</span>
                     </div>
-
                     <div id="analysisContainer" class="analysis-list">
                         <div class="analysis-row">
                             <span class="analysis-row-label">حالة التحليل</span>
@@ -2112,12 +1764,11 @@
                     </div>
                 </div>
 
-                <div class="bottom-panel">
+                <div class="bottom-panel" id="bomPanel">
                     <div class="bottom-panel-header">
                         <strong>جدول الكميات</strong>
                         <span>BOM</span>
                     </div>
-
                     <div style="overflow:auto;max-height:165px;">
                         <table class="compact-table">
                             <thead>
@@ -2135,27 +1786,20 @@
                         </table>
                     </div>
                 </div>
-
             </section>
-
         </section>
-
     </main>
-
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     PROJECT MODAL
-     ═══════════════════════════════════════════════════════════ -->
-<div id="projectModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+<!-- PROJECT MODAL -->
+<div id="projectModal" class="app-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
         <div class="modal-header">
-            <h3 id="projectModalTitle">مشروع جديد</h3>
+            <h3>مشروع جديد</h3>
             <button class="modal-close" data-close-modal="projectModal" type="button" aria-label="إغلاق">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
-
         <div class="modal-body">
             <div class="field">
                 <label for="newProjectName">اسم المشروع</label>
@@ -2170,9 +1814,8 @@
                 <input id="newProjectLocation" type="text" placeholder="الموقع">
             </div>
         </div>
-
         <div class="modal-footer">
-            <button id="cancelProjectBtn" class="modal-button" type="button">إلغاء</button>
+            <button class="modal-button" data-close-modal="projectModal" type="button">إلغاء</button>
             <button id="createProjectBtn" class="modal-button primary" type="button">
                 <i class="fa-solid fa-plus" aria-hidden="true"></i>
                 إنشاء المشروع
@@ -2181,38 +1824,28 @@
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     SPEAKER MODAL — نموذج مواصفات كامل (لا رفع ملف إلزامي)
-     ═══════════════════════════════════════════════════════════ -->
-<div id="speakerModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="speakerModalTitle">
-    <div class="modal-card" style="max-width: 720px;">
+<!-- SPEAKER MODAL -->
+<div id="speakerModal" class="app-modal" role="dialog" aria-modal="true">
+    <div class="modal-card" style="max-width:720px;">
         <div class="modal-header">
-            <h3 id="speakerModalTitle">مواصفات السماعة</h3>
+            <h3>مواصفات السماعة</h3>
             <button class="modal-close" data-close-modal="speakerModal" type="button" aria-label="إغلاق">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
-
         <div class="modal-body">
-
-            <!-- ═══════════ الهوية ═══════════ -->
             <div style="margin-bottom:16px;">
-                <div style="color:#38bdf8;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;">
-                    <i class="fa-solid fa-tag" aria-hidden="true"></i>
-                    الهوية
-                </div>
-
+                <div style="color:#38bdf8;font-size:10px;font-weight:700;margin-bottom:8px;">الهوية</div>
                 <div class="field-grid">
                     <div class="field">
-                        <label for="modalSpeakerManufacturer">الشركة المصنّعة <span style="color:#e60012;">*</span></label>
-                        <input id="modalSpeakerManufacturer" type="text" placeholder="مثال: JBL" maxlength="100" required>
+                        <label for="modalSpeakerManufacturer">الشركة <span style="color:#e60012;">*</span></label>
+                        <input id="modalSpeakerManufacturer" type="text" placeholder="JBL" maxlength="100">
                     </div>
                     <div class="field">
                         <label for="modalSpeakerModel">الموديل <span style="color:#e60012;">*</span></label>
-                        <input id="modalSpeakerModel" type="text" placeholder="مثال: SRX812P" maxlength="100" required>
+                        <input id="modalSpeakerModel" type="text" placeholder="SRX812P" maxlength="100">
                     </div>
                 </div>
-
                 <div class="field-grid">
                     <div class="field">
                         <label for="modalSpeakerCategory">الفئة</label>
@@ -2227,7 +1860,7 @@
                         </select>
                     </div>
                     <div class="field">
-                        <label for="modalSpeakerMount">نوع التثبيت</label>
+                        <label for="modalSpeakerMount">التثبيت</label>
                         <select id="modalSpeakerMount">
                             <option value="Stand">Stand</option>
                             <option value="Wall">Wall Mount</option>
@@ -2242,13 +1875,8 @@
                 </div>
             </div>
 
-            <!-- ═══════════ القدرة ═══════════ -->
             <div style="margin-bottom:16px;">
-                <div style="color:#38bdf8;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;">
-                    <i class="fa-solid fa-bolt" aria-hidden="true"></i>
-                    القدرة الكهربائية
-                </div>
-
+                <div style="color:#38bdf8;font-size:10px;font-weight:700;margin-bottom:8px;">القدرة</div>
                 <div class="field-grid">
                     <div class="field">
                         <label for="modalSpeakerPower">RMS (W)</label>
@@ -2261,24 +1889,18 @@
                 </div>
             </div>
 
-            <!-- ═══════════ الصوتيات ═══════════ -->
             <div style="margin-bottom:16px;">
-                <div style="color:#38bdf8;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;">
-                    <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
-                    الصوتيات
-                </div>
-
+                <div style="color:#38bdf8;font-size:10px;font-weight:700;margin-bottom:8px;">الصوتيات</div>
                 <div class="field-grid">
                     <div class="field">
                         <label for="modalSpeakerSPL">Max SPL (dB)</label>
                         <input id="modalSpeakerSPL" type="number" min="0" max="200" step="0.1" placeholder="125">
                     </div>
                     <div class="field">
-                        <label for="modalSpeakerSensitivity">الحساسية (dB/W/m)</label>
+                        <label for="modalSpeakerSensitivity">الحساسية (dB)</label>
                         <input id="modalSpeakerSensitivity" type="number" min="0" max="150" step="0.1" placeholder="96">
                     </div>
                 </div>
-
                 <div class="field-grid">
                     <div class="field">
                         <label for="modalSpeakerFreqLow">أدنى تردد (Hz)</label>
@@ -2291,13 +1913,8 @@
                 </div>
             </div>
 
-            <!-- ═══════════ التغطية ═══════════ -->
             <div style="margin-bottom:16px;">
-                <div style="color:#38bdf8;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;">
-                    <i class="fa-solid fa-bullseye" aria-hidden="true"></i>
-                    التغطية
-                </div>
-
+                <div style="color:#38bdf8;font-size:10px;font-weight:700;margin-bottom:8px;">التغطية</div>
                 <div class="field-grid">
                     <div class="field">
                         <label for="modalSpeakerH">Horizontal (°)</label>
@@ -2310,13 +1927,8 @@
                 </div>
             </div>
 
-            <!-- ═══════════ الفيزيائي والكهربائي ═══════════ -->
             <div style="margin-bottom:16px;">
-                <div style="color:#38bdf8;font-size:10px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;">
-                    <i class="fa-solid fa-weight-hanging" aria-hidden="true"></i>
-                    الفيزيائي والكهربائي
-                </div>
-
+                <div style="color:#38bdf8;font-size:10px;font-weight:700;margin-bottom:8px;">الفيزيائي</div>
                 <div class="field-grid">
                     <div class="field">
                         <label for="modalSpeakerImpedance">المعاوقة (Ω)</label>
@@ -2329,58 +1941,17 @@
                 </div>
             </div>
 
-            <!-- ═══════════ معاينة المواصفات الحية ═══════════ -->
-            <div style="
-                margin-top:16px;
-                padding:12px 14px;
-                border-radius:9px;
-                border:1px solid rgba(56,189,248,.2);
-                background:rgba(56,189,248,.04);
-            ">
-                <div style="color:#7dd3fc;font-size:10px;font-weight:700;margin-bottom:8px;">
-                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
-                    معاينة المواصفات
-                </div>
+            <div style="margin-top:16px;padding:12px 14px;border-radius:9px;border:1px solid rgba(56,189,248,.2);background:rgba(56,189,248,.04);">
+                <div style="color:#7dd3fc;font-size:10px;font-weight:700;margin-bottom:8px;">معاينة المواصفات</div>
                 <div id="modalSpeakerPreview" style="color:#cbd5e1;font-size:11px;line-height:1.8;">
                     املأ الحقول لرؤية المواصفات هنا...
                 </div>
             </div>
 
-            <!-- ═══════════ رفع Datasheet (اختياري - ثانوي) ═══════════ -->
-            <details style="margin-top:14px;">
-                <summary style="cursor:pointer;color:#6b7280;font-size:10px;padding:6px 0;">
-                    <i class="fa-solid fa-paperclip" aria-hidden="true"></i>
-                    إرفاق Datasheet (اختياري)
-                </summary>
-                <div style="margin-top:10px;">
-                    <input id="modalSpeakerDatasheet" type="file"
-                           accept=".pdf,.xlsx,.xls,.csv,.json,.txt"
-                           style="font-size:10px;color:#9ca3af;">
-                    <div style="color:#6b7280;font-size:9px;margin-top:4px;">
-                        PDF / XLSX / CSV / JSON / TXT — بحد أقصى 10 MB
-                    </div>
-                </div>
-            </details>
-
-            <!-- ═══════════ رسائل الخطأ ═══════════ -->
-            <div id="modalSpeakerErrors" style="
-                display:none;
-                margin-top:12px;
-                padding:10px 12px;
-                border-radius:8px;
-                background:rgba(230,0,18,.08);
-                border:1px solid rgba(230,0,18,.25);
-                color:#fca5a5;
-                font-size:10px;
-                line-height:1.7;
-            "></div>
-
+            <div id="modalSpeakerErrors" style="display:none;margin-top:12px;padding:10px 12px;border-radius:8px;background:rgba(230,0,18,.08);border:1px solid rgba(230,0,18,.25);color:#fca5a5;font-size:10px;line-height:1.7;"></div>
         </div>
-
         <div class="modal-footer">
-            <button class="modal-button" data-close-modal="speakerModal" type="button">
-                إلغاء
-            </button>
+            <button class="modal-button" data-close-modal="speakerModal" type="button">إلغاء</button>
             <button id="saveSpeakerBtn" class="modal-button primary" type="button">
                 <i class="fa-solid fa-check" aria-hidden="true"></i>
                 <span id="saveSpeakerBtnText">حفظ المواصفات</span>
@@ -2389,90 +1960,42 @@
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     DATASHEET MODAL
-     ═══════════════════════════════════════════════════════════ -->
-<div id="datasheetModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="datasheetModalTitle">
+<!-- AUTO DESIGN MODAL -->
+<div id="autoDesignModal" class="app-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
         <div class="modal-header">
-            <h3 id="datasheetModalTitle">رفع Datasheet</h3>
-            <button class="modal-close" data-close-modal="datasheetModal" type="button" aria-label="إغلاق">
-                <i class="fa-solid fa-xmark" aria-hidden="true"></i>
-            </button>
-        </div>
-
-        <div class="modal-body">
-            <div id="datasheetUploadZone" class="upload-zone" role="button" tabindex="0">
-                <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
-                <strong>اسحب ملف المواصفات هنا</strong>
-                <span>PDF / XLSX / CSV / JSON / TXT</span>
-                <input id="datasheetFile" type="file"
-                       accept=".pdf,.xlsx,.xls,.csv,.json,.txt"
-                       style="display:none;">
-            </div>
-
-            <div id="datasheetUploadStatus"
-                 style="margin-top:10px;color:#68778a;font-size:9px;text-align:center;"
-                 role="status" aria-live="polite">
-                لم يتم اختيار ملف
-            </div>
-        </div>
-
-        <div class="modal-footer">
-            <button class="modal-button" data-close-modal="datasheetModal" type="button">إغلاق</button>
-            <button id="processDatasheetBtn" class="modal-button primary" type="button">
-                <i class="fa-solid fa-microchip" aria-hidden="true"></i>
-                تحليل المواصفات
-            </button>
-        </div>
-    </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════
-     AUTO DESIGN MODAL
-     ═══════════════════════════════════════════════════════════ -->
-<div id="autoDesignModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="autoDesignModalTitle">
-    <div class="modal-card">
-        <div class="modal-header">
-            <h3 id="autoDesignModalTitle">التوزيع الذكي</h3>
+            <h3>التوزيع الذكي</h3>
             <button class="modal-close" data-close-modal="autoDesignModal" type="button" aria-label="إغلاق">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
-
         <div class="modal-body">
             <p style="margin-top:0;color:#7c8a9d;font-size:10px;line-height:1.8;">
-                اختر طريقة التوزيع التي تريد استخدامها.
-                سيقوم محرك الهندسة بتحليل أبعاد الفراغ،
-                ارتفاع التركيب، اتجاه السماعات، زاوية التغطية
-                وهدف SPL.
+                اختر طريقة التوزيع. سيقوم محرك الهندسة بتحليل أبعاد الفراغ
+                وارتفاع التركيب وزوايا التغطية وهدف SPL.
             </p>
-
             <div class="auto-design-options">
                 <label class="design-mode-option">
                     <input type="radio" name="autoDesignMode" value="front-fill" checked>
                     <div>
                         <strong>Main / Front System</strong>
-                        <span>توزيع رئيسي أمامي مناسب للقاعات والمسارح والفعاليات.</span>
+                        <span>توزيع رئيسي أمامي مناسب للقاعات والمسارح.</span>
                     </div>
                 </label>
-
                 <label class="design-mode-option">
                     <input type="radio" name="autoDesignMode" value="distributed">
                     <div>
                         <strong>Distributed System</strong>
-                        <span>توزيع متقارب ومتجانس للتغطية، مناسب للمساجد والاجتماعات والمباني.</span>
+                        <span>توزيع متجانس — مناسب للمساجد والاجتماعات.</span>
                     </div>
                 </label>
-
                 <label class="design-mode-option">
                     <input type="radio" name="autoDesignMode" value="delay-fill">
                     <div>
                         <strong>Main + Delay Fills</strong>
-                        <span>نظام رئيسي مع مناطق Delay عند الحاجة للمسافات الطويلة.</span>
+                        <span>نظام رئيسي مع مناطق Delay للمسافات الطويلة.</span>
                     </div>
                 </label>
-
                 <label class="design-mode-option">
                     <input type="radio" name="autoDesignMode" value="ceiling-grid">
                     <div>
@@ -2482,7 +2005,6 @@
                 </label>
             </div>
         </div>
-
         <div class="modal-footer">
             <button class="modal-button" data-close-modal="autoDesignModal" type="button">إلغاء</button>
             <button id="runAutoDesignBtn" class="modal-button primary" type="button">
@@ -2493,18 +2015,15 @@
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     SETTINGS MODAL
-     ═══════════════════════════════════════════════════════════ -->
-<div id="settingsModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
+<!-- SETTINGS MODAL -->
+<div id="settingsModal" class="app-modal" role="dialog" aria-modal="true">
     <div class="modal-card">
         <div class="modal-header">
-            <h3 id="settingsModalTitle">إعدادات النظام</h3>
+            <h3>إعدادات النظام</h3>
             <button class="modal-close" data-close-modal="settingsModal" type="button" aria-label="إغلاق">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
-
         <div class="modal-body">
             <div class="toggle-row">
                 <span class="toggle-label">الحفظ التلقائي</span>
@@ -2513,7 +2032,6 @@
                     <span class="switch-slider"></span>
                 </label>
             </div>
-
             <div class="toggle-row">
                 <span class="toggle-label">إظهار الشبكة</span>
                 <label class="switch">
@@ -2521,7 +2039,6 @@
                     <span class="switch-slider"></span>
                 </label>
             </div>
-
             <div class="toggle-row">
                 <span class="toggle-label">Snap to Grid</span>
                 <label class="switch">
@@ -2529,7 +2046,6 @@
                     <span class="switch-slider"></span>
                 </label>
             </div>
-
             <div class="toggle-row">
                 <span class="toggle-label">إظهار مخاريط التغطية</span>
                 <label class="switch">
@@ -2537,7 +2053,6 @@
                     <span class="switch-slider"></span>
                 </label>
             </div>
-
             <div class="field" style="margin-top:15px;">
                 <label for="languageSelect">لغة الواجهة</label>
                 <select id="languageSelect">
@@ -2546,7 +2061,6 @@
                 </select>
             </div>
         </div>
-
         <div class="modal-footer">
             <button class="modal-button" data-close-modal="settingsModal" type="button">إغلاق</button>
             <button id="saveSettingsBtn" class="modal-button primary" type="button">حفظ الإعدادات</button>
@@ -2554,27 +2068,36 @@
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════════════
-     CONFIRM MODAL
-     ═══════════════════════════════════════════════════════════ -->
-<div id="confirmModal" class="app-modal" role="dialog" aria-modal="true" aria-labelledby="confirmTitle">
-    <div class="modal-card" style="max-width:400px;">
+<!-- DATASHEET MODAL -->
+<div id="datasheetModal" class="app-modal" role="dialog" aria-modal="true">
+    <div class="modal-card">
         <div class="modal-header">
-            <h3 id="confirmTitle">تأكيد العملية</h3>
-            <button class="modal-close" data-close-modal="confirmModal" type="button" aria-label="إغلاق">
+            <h3>رفع Datasheet</h3>
+            <button class="modal-close" data-close-modal="datasheetModal" type="button" aria-label="إغلاق">
                 <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
         </div>
-
         <div class="modal-body">
-            <p id="confirmMessage" style="margin:0;color:#9aa7b7;font-size:11px;line-height:1.8;">
-                هل أنت متأكد من تنفيذ هذه العملية؟
-            </p>
+            <div id="datasheetUploadZone" class="upload-zone" role="button" tabindex="0">
+                <i class="fa-solid fa-cloud-arrow-up" aria-hidden="true"></i>
+                <strong>اسحب ملف المواصفات هنا</strong>
+                <span>PDF / XLSX / CSV / JSON / TXT</span>
+                <input id="datasheetFile" type="file"
+                       accept=".pdf,.xlsx,.xls,.csv,.json,.txt"
+                       style="display:none;">
+            </div>
+            <div id="datasheetUploadStatus"
+                 style="margin-top:10px;color:#68778a;font-size:9px;text-align:center;"
+                 role="status" aria-live="polite">
+                لم يتم اختيار ملف
+            </div>
         </div>
-
         <div class="modal-footer">
-            <button class="modal-button" data-close-modal="confirmModal" type="button">إلغاء</button>
-            <button id="confirmActionBtn" class="modal-button primary" type="button">تأكيد</button>
+            <button class="modal-button" data-close-modal="datasheetModal" type="button">إغلاق</button>
+            <button id="processDatasheetBtn" class="modal-button primary" type="button">
+                <i class="fa-solid fa-microchip" aria-hidden="true"></i>
+                تحليل المواصفات
+            </button>
         </div>
     </div>
 </div>
@@ -2592,10 +2115,11 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════
-     SCRIPTS (ORDER MATTERS)
+     SCRIPTS — ⚠️ الترتيب مهم
      ═══════════════════════════════════════════════════════════ -->
 <script src="js/config.js"></script>
 <script src="js/firebase.js"></script>
+<script src="js/backend.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/storage.js"></script>
 
@@ -2608,43 +2132,21 @@
 <script src="js/app.js"></script>
 
 <!-- ═══════════════════════════════════════════════════════════
-     PAGE BRIDGE — v1.2.0 (نموذج مواصفات السماعة مدمج)
+     PAGE BRIDGE — v2.2.0 (مع إصلاح التنقل الكامل)
      ═══════════════════════════════════════════════════════════ -->
 <script>
 (function () {
     "use strict";
 
-    /* ═══════════════ HELPERS + NAMESPACE ═══════════════ */
-
     const $ = (id) => document.getElementById(id);
 
-    function getAE() {
-        return window.AcousticEngineering || window.AE || {};
-    }
-
-    function getApp() {
-        return window.AcousticApp || getAE().app || null;
-    }
-
-    function getCanvas() {
-        return window.AcousticCanvas || getAE().canvas || null;
-    }
-
-    function getEngine() {
-        return getAE().engine || null;
-    }
-
-    function getStorage() {
-        return getAE().storage || null;
-    }
-
-    function getReport() {
-        return getAE().report || null;
-    }
-
-    function getSpeaker() {
-        return getAE().speaker || window.AcousticSpeaker || null;
-    }
+    function getAE() { return window.AcousticEngineering || window.AE || {}; }
+    function getApp() { return window.AcousticApp || getAE().app || null; }
+    function getCanvas() { return window.AcousticCanvas || getAE().canvas || null; }
+    function getEngine() { return getAE().engine || null; }
+    function getStorage() { return getAE().storage || null; }
+    function getReport() { return getAE().report || null; }
+    function getSpeaker() { return getAE().speaker || window.AcousticSpeaker || null; }
 
     /* ═══════════════ Toast ═══════════════ */
     function toast(message, type = "info", duration = 3000) {
@@ -2672,20 +2174,11 @@
         overlay.classList.add("active");
         overlay.setAttribute("aria-hidden", "false");
     }
-
     function hideLoading() {
         const overlay = $("loadingOverlay");
         if (!overlay) return;
         overlay.classList.remove("active");
         overlay.setAttribute("aria-hidden", "true");
-    }
-
-    /* ═══════════════ Escape HTML ═══════════════ */
-    function escapeHtml(s) {
-        return String(s ?? "").replace(/[&<>"']/g, c => ({
-            "&": "&amp;", "<": "&lt;", ">": "&gt;",
-            '"': "&quot;", "'": "&#39;"
-        }[c]));
     }
 
     /* ═══════════════ Modal helpers ═══════════════ */
@@ -2720,7 +2213,7 @@
         }
 
         if (previouslyFocused && typeof previouslyFocused.focus === "function") {
-            try { previouslyFocused.focus(); } catch { /* ignore */ }
+            try { previouslyFocused.focus(); } catch {}
         }
     }
 
@@ -2771,7 +2264,7 @@
                     "ae_sidebar_collapsed",
                     sidebar.classList.contains("collapsed") ? "1" : "0"
                 );
-            } catch { /* ignore */ }
+            } catch {}
         }
     }
 
@@ -2781,7 +2274,7 @@
             if (localStorage.getItem("ae_sidebar_collapsed") === "1") {
                 sidebar.classList.add("collapsed");
             }
-        } catch { /* ignore */ }
+        } catch {}
     }
 
     sidebarToggle?.addEventListener("click", toggleSidebar);
@@ -2794,7 +2287,7 @@
         sidebar.classList.remove("mobile-open");
     });
 
-    /* ═══════════════ Sidebar User ═══════════════ */
+    /* ═══════════════ User Info ═══════════════ */
     async function updateSidebarUser() {
         const auth = getAE().auth;
         if (!auth) return;
@@ -2803,10 +2296,7 @@
             let user = null;
             if (typeof auth.getCurrentUser === "function") {
                 user = await Promise.resolve(auth.getCurrentUser());
-            } else if (auth.state && auth.state.user) {
-                user = auth.state.user;
             }
-
             if (user) {
                 const nameEl = $("sidebarUserName");
                 const roleEl = $("sidebarUserRole");
@@ -2818,42 +2308,304 @@
         }
     }
 
-    /* ═══════════════ Navigation ═══════════════ */
+    /* ═══════════════════════════════════════════════════════
+       🎯 NAVIGATION — إصلاح كامل
+       ═══════════════════════════════════════════════════════ */
+
     function setActiveNav(section) {
         document.querySelectorAll(".nav-item[data-section]").forEach(nav => {
             nav.classList.toggle("active", nav.dataset.section === section);
         });
     }
 
-    function handleNavClick(item) {
-        const section = item.dataset.section;
-        setActiveNav(section);
+    /**
+     * إبراز عنصر مرئياً (يُستخدم للتنقل)
+     */
+    function highlightNavTarget(el) {
+        if (!el) return;
+        el.classList.remove("nav-highlight");
+        void el.offsetWidth; // trigger reflow
+        el.classList.add("nav-highlight");
+        setTimeout(() => el.classList.remove("nav-highlight"), 1500);
+    }
 
-        if (section === "report") {
-            const reportApi = getReport();
-            if (reportApi && typeof reportApi.open === "function") {
-                Promise.resolve(reportApi.open()).catch(err => {
-                    console.error("[report] open failed:", err);
-                    window.location.href = "report.html";
-                });
-            } else {
-                window.location.href = "report.html";
-            }
-            return;
+    /**
+     * Scroll سلس إلى عنصر + إبراز
+     */
+    function scrollToElement(id) {
+        const el = typeof id === "string" ? document.getElementById(id) : id;
+        if (!el) return false;
+
+        try {
+            el.scrollIntoView({
+                behavior: "smooth",
+                block: "center",
+                inline: "nearest"
+            });
+        } catch {
+            el.scrollIntoView();
         }
 
-        if (section === "auto-design") {
-            openModal("autoDesignModal");
-            return;
-        }
+        highlightNavTarget(el);
+        return true;
+    }
 
-        if (window.innerWidth <= 1000 && sidebar) {
-            sidebar.classList.remove("mobile-open");
+    /**
+     * Focus على عنصر (بعد scroll)
+     */
+    function focusElement(id, delay = 400) {
+        setTimeout(() => {
+            const el = typeof id === "string" ? document.getElementById(id) : id;
+            if (!el) return;
+            try {
+                el.focus({ preventScroll: true });
+                if (el.select && el.tagName === "INPUT") el.select();
+            } catch {}
+        }, delay);
+    }
+
+    /**
+     * تأكد أن اللوحة اليسرى ظاهرة على الجوال
+     */
+    function ensureLeftPanelVisible() {
+        if (window.innerWidth > 760) return;
+        const leftPanel = $("leftPanel") || document.querySelector(".left-panel");
+        if (leftPanel) {
+            leftPanel.style.display = "block";
+            leftPanel.style.width = "100%";
+            setTimeout(() => {
+                leftPanel.scrollTop = 0;
+            }, 50);
         }
     }
 
-    document.querySelectorAll(".nav-item[data-section]").forEach(item => {
-        item.addEventListener("click", () => handleNavClick(item));
+    /**
+     * تأكد أن اللوحة اليمنى ظاهرة على الجوال
+     */
+    function ensureRightPanelVisible() {
+        if (window.innerWidth > 1000) return;
+        const rightPanel = $("rightPanel") || document.querySelector(".right-panel");
+        if (rightPanel) {
+            rightPanel.style.display = "block";
+            rightPanel.style.width = "100%";
+            setTimeout(() => {
+                rightPanel.scrollTop = 0;
+            }, 50);
+        }
+    }
+
+    /**
+     * Focus على المخطط
+     */
+    function focusCanvas() {
+        const canvas = $("canvasContainer") || document.querySelector(".canvas-stage");
+        if (canvas) {
+            canvas.scrollIntoView({ behavior: "smooth", block: "center" });
+            highlightNavTarget(canvas);
+        }
+    }
+
+    /**
+     * إعادة حساب التحليل وتحديث الواجهة
+     */
+    function refreshAnalysis() {
+        try {
+            const engine = getEngine();
+            const canvas = getCanvas();
+            if (!engine || !canvas) return;
+
+            const data = canvas.getDesignData?.() || {};
+            const speakers = data.speakers || [];
+
+            if (speakers.length === 0) return;
+
+            // استخدم analyzeDesign إن وُجد
+            let analysis = null;
+            if (typeof engine.analyzeDesign === "function") {
+                analysis = engine.analyzeDesign(speakers, {});
+            } else if (typeof engine.analyzeCoverage === "function") {
+                analysis = engine.analyzeCoverage(speakers, {});
+            }
+
+            if (analysis) {
+                updateAnalysisUI(analysis);
+            }
+        } catch (err) {
+            console.error("[nav] analysis error:", err);
+        }
+    }
+
+    function updateAnalysisUI(analysis) {
+        if (!analysis) return;
+
+        const setText = (id, v) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = v;
+        };
+
+        // استخرج القيم من البنية المحتملة
+        const cov = analysis.coveragePercent ?? analysis.coverage?.coveragePercent ?? 0;
+        const avgSPL = analysis.averageSPL ?? analysis.coverage?.averageSPL ?? 0;
+        const minSPL = analysis.minimumSPL ?? analysis.coverage?.minimumSPL ?? 0;
+        const maxSPL = analysis.maximumSPL ?? analysis.coverage?.maximumSPL ?? 0;
+        const uniform = analysis.uniformity ?? analysis.coverage?.uniformity ?? 0;
+        const warn = Array.isArray(analysis.warnings) ? analysis.warnings.length :
+                     (analysis.warnings || 0);
+
+        setText("metricCoverage", Number(cov).toFixed(1) + "%");
+        setText("metricAverageSPL", Number(avgSPL).toFixed(1) + " dB");
+        setText("metricMinimumSPL", Number(minSPL).toFixed(1) + " dB");
+        setText("metricMaximumSPL", Number(maxSPL).toFixed(1) + " dB");
+        setText("metricUniformity", Number(uniform).toFixed(1) + " dB");
+
+        setText("analysisCoverage", Number(cov).toFixed(1) + "%");
+        setText("analysisAverageSPL", Number(avgSPL).toFixed(1) + " dB");
+        setText("analysisUniformity", Number(uniform).toFixed(1) + " dB");
+        setText("analysisWarnings", String(warn));
+        setText("analysisStatus", "مكتمل");
+    }
+
+    /**
+     * إعادة بناء BOM
+     */
+    function refreshBOM() {
+        try {
+            const engine = getEngine();
+            const canvas = getCanvas();
+            if (!engine || !canvas) return;
+
+            const data = canvas.getDesignData?.() || {};
+            const speakers = data.speakers || [];
+
+            let bom = [];
+            if (typeof engine.generateBOM === "function") {
+                bom = engine.generateBOM(speakers) || [];
+            }
+
+            const tbody = $("bomTableBody");
+            if (!tbody) return;
+
+            if (!bom.length) {
+                tbody.innerHTML = `<tr><td colspan="3" style="text-align:center;">لا توجد سماعات</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = bom.map(item => `
+                <tr>
+                    <td>${item.model || "—"}</td>
+                    <td>${item.category || item.type || "—"}</td>
+                    <td><strong>${item.quantity || 0}</strong></td>
+                </tr>
+            `).join("");
+        } catch (err) {
+            console.error("[nav] BOM error:", err);
+        }
+    }
+
+    /**
+     * 🎯 المعالج الرئيسي للتنقل — يعمل مع كل قسم
+     */
+    function handleNavClick(item) {
+        const section = item.dataset.section;
+        if (!section) return;
+
+        setActiveNav(section);
+
+        // إغلاق السايدبار على الجوال
+        if (window.innerWidth <= 1000 && sidebar) {
+            sidebar.classList.remove("mobile-open");
+        }
+
+        console.log("[nav] section:", section);
+
+        switch (section) {
+
+            case "overview":
+                scrollToElement("projectName");
+                toast("نظرة عامة على المشروع", "info", 1500);
+                return;
+
+            case "project":
+                scrollToElement("sectionProject") || scrollToElement("projectName");
+                focusElement("projectName");
+                toast("بيانات المشروع", "info", 1200);
+                return;
+
+            case "room":
+                ensureLeftPanelVisible();
+                scrollToElement("sectionRoom") || scrollToElement("roomWidthPanel");
+                focusElement("roomWidthPanel");
+                toast("أبعاد الفراغ الهندسي", "info", 1200);
+                return;
+
+            case "speakers":
+                ensureRightPanelVisible();
+                scrollToElement("sectionSpeakers") || scrollToElement("speakerLibrary");
+                toast("مكتبة السماعات — اضغط على سماعة لإضافتها", "info", 2000);
+                return;
+
+            case "design": {
+                const canvas = getCanvas();
+                if (canvas && typeof canvas.setTool === "function") {
+                    try { canvas.setTool("select"); } catch {}
+                }
+                focusCanvas();
+                toast("وضع التصميم — استخدم شريط الأدوات", "info", 1800);
+                return;
+            }
+
+            case "auto-design":
+                openModal("autoDesignModal");
+                return;
+
+            case "analysis":
+                scrollToElement("analysisContainer") || scrollToElement("metricsPanel");
+                refreshAnalysis();
+                toast("التحليل الصوتي", "info", 1500);
+                return;
+
+            case "bom":
+                scrollToElement("bomTableBody") || scrollToElement("bomPanel");
+                refreshBOM();
+                toast("جدول الكميات", "info", 1200);
+                return;
+
+            case "report": {
+                const reportApi = getReport();
+                if (reportApi && typeof reportApi.open === "function") {
+                    Promise.resolve(reportApi.open()).catch(err => {
+                        console.error("[report] open failed:", err);
+                        window.location.href = "report.html";
+                    });
+                } else {
+                    window.location.href = "report.html";
+                }
+                return;
+            }
+
+            default:
+                console.warn("[nav] unknown section:", section);
+        }
+    }
+
+    /* ربط الأحداث عبر Event Delegation — أكثر موثوقية */
+    const sidebarNav = $("sidebarNav") || document.querySelector(".sidebar-nav");
+    if (sidebarNav) {
+        sidebarNav.addEventListener("click", (event) => {
+            const item = event.target.closest(".nav-item[data-section]");
+            if (!item) return;
+            event.preventDefault();
+            handleNavClick(item);
+        });
+    }
+
+    /* أزرار لا تحتوي على data-section */
+    $("settingsBtn")?.addEventListener("click", () => {
+        openModal("settingsModal");
+    });
+
+    $("uploadDatasheetBtn")?.addEventListener("click", () => {
+        openModal("datasheetModal");
     });
 
     /* ═══════════════ Modal bindings ═══════════════ */
@@ -2869,7 +2621,421 @@
         });
     });
 
-    /* ═══════════════ NEW PROJECT ═══════════════ */
+    /* ═══════════════ SPEAKER — حفظ المواصفات ═══════════════ */
+    function readSpeakerForm() {
+        const getVal = (id) => document.getElementById(id)?.value || "";
+        const getNum = (id) => parseFloat(document.getElementById(id)?.value) || 0;
+
+        return {
+            manufacturer:         getVal("modalSpeakerManufacturer").trim(),
+            model:                getVal("modalSpeakerModel").trim(),
+            category:             getVal("modalSpeakerCategory") || "Point Source",
+            rms_power:            getNum("modalSpeakerPower"),
+            peak_power:           getNum("modalSpeakerPeak"),
+            max_spl:              getNum("modalSpeakerSPL"),
+            sensitivity:          getNum("modalSpeakerSensitivity"),
+            frequency_min:        getNum("modalSpeakerFreqLow"),
+            frequency_max:        getNum("modalSpeakerFreqHigh"),
+            horizontal_coverage:  getNum("modalSpeakerH") || 90,
+            vertical_coverage:    getNum("modalSpeakerV") || 60,
+            impedance:            getNum("modalSpeakerImpedance") || 8,
+            weight:               getNum("modalSpeakerWeight"),
+            mounting_type:        getVal("modalSpeakerMount") || "Stand"
+        };
+    }
+
+    function updateSpeakerPreview() {
+        const preview = $("modalSpeakerPreview");
+        if (!preview) return;
+
+        const spec = readSpeakerForm();
+        const speakerApi = getSpeaker();
+
+        if (speakerApi && typeof speakerApi.validate === "function") {
+            const errors = speakerApi.validate(spec);
+            if (errors.length) {
+                preview.innerHTML = `
+                    <div style="color:#fbbf24;">
+                        <strong>⚠ ملاحظات:</strong>
+                        <ul style="margin:5px 0;padding-right:16px;">
+                            ${errors.map(e => `<li>${e}</li>`).join("")}
+                        </ul>
+                    </div>
+                `;
+                return;
+            }
+        }
+
+        preview.innerHTML = `
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <div><span style="color:#6b7280;">RMS:</span> <strong>${spec.rms_power} W</strong></div>
+                <div><span style="color:#6b7280;">Max SPL:</span> <strong>${spec.max_spl} dB</strong></div>
+                <div><span style="color:#6b7280;">التغطية:</span> <strong>${spec.horizontal_coverage}° × ${spec.vertical_coverage}°</strong></div>
+                <div><span style="color:#6b7280;">التثبيت:</span> <strong>${spec.mounting_type}</strong></div>
+            </div>
+        `;
+    }
+
+    function showSpeakerErrors(errors) {
+        const box = $("modalSpeakerErrors");
+        if (!box) return;
+        if (!errors || !errors.length) {
+            box.style.display = "none";
+            box.innerHTML = "";
+            return;
+        }
+        box.style.display = "block";
+        box.innerHTML = `
+            <div style="font-weight:700;margin-bottom:4px;">⚠ بيانات غير صحيحة:</div>
+            <ul style="margin:0;padding-right:16px;">
+                ${errors.map(e => `<li>${e}</li>`).join("")}
+            </ul>
+        `;
+    }
+
+    function openSpeakerModal(preset) {
+        const speakerApi = getSpeaker();
+        const defaults = speakerApi?.DEFAULTS || {};
+
+        const set = (id, val) => {
+            const el = document.getElementById(id);
+            if (el) el.value = val ?? "";
+        };
+
+        set("modalSpeakerManufacturer", preset?.manufacturer || "");
+        set("modalSpeakerModel", preset?.model || "");
+        set("modalSpeakerCategory", preset?.category || "Point Source");
+        set("modalSpeakerPower", preset?.rms_power || "");
+        set("modalSpeakerPeak", preset?.peak_power || "");
+        set("modalSpeakerSPL", preset?.max_spl || "");
+        set("modalSpeakerSensitivity", preset?.sensitivity || "");
+        set("modalSpeakerFreqLow", preset?.frequency_min || "");
+        set("modalSpeakerFreqHigh", preset?.frequency_max || "");
+        set("modalSpeakerH", preset?.horizontal_coverage || "");
+        set("modalSpeakerV", preset?.vertical_coverage || "");
+        set("modalSpeakerImpedance", preset?.impedance || "");
+        set("modalSpeakerWeight", preset?.weight || "");
+        set("modalSpeakerMount", preset?.mounting_type || "Stand");
+
+        showSpeakerErrors([]);
+        updateSpeakerPreview();
+        openModal("speakerModal");
+    }
+
+    /* ربط معاينة حية */
+    [
+        "modalSpeakerManufacturer", "modalSpeakerModel", "modalSpeakerCategory",
+        "modalSpeakerPower", "modalSpeakerPeak", "modalSpeakerSPL",
+        "modalSpeakerSensitivity", "modalSpeakerFreqLow", "modalSpeakerFreqHigh",
+        "modalSpeakerH", "modalSpeakerV", "modalSpeakerImpedance",
+        "modalSpeakerWeight", "modalSpeakerMount"
+    ].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.addEventListener("input", updateSpeakerPreview);
+            el.addEventListener("change", updateSpeakerPreview);
+        }
+    });
+
+    /* حفظ المواصفات */
+    $("saveSpeakerBtn")?.addEventListener("click", async () => {
+        const spec = readSpeakerForm();
+        const speakerApi = getSpeaker();
+
+        // التحقق
+        if (speakerApi && typeof speakerApi.validate === "function") {
+            const errors = speakerApi.validate(spec);
+            if (errors.length) {
+                showSpeakerErrors(errors);
+                toast("صحّح البيانات أولاً", "warning");
+                return;
+            }
+        } else {
+            if (!spec.manufacturer || !spec.model) {
+                showSpeakerErrors(["الشركة والموديل مطلوبان"]);
+                return;
+            }
+        }
+
+        const btn = $("saveSpeakerBtn");
+        const textEl = $("saveSpeakerBtnText");
+        const originalText = textEl?.textContent || "حفظ المواصفات";
+
+        btn.disabled = true;
+        if (textEl) textEl.textContent = "جارٍ الحفظ...";
+
+        try {
+            // 1. أضف إلى speaker.js المحلي
+            let record = spec;
+            if (speakerApi && typeof speakerApi.add === "function") {
+                record = speakerApi.add(spec);
+            }
+
+            // 2. أضف إلى Canvas
+            const canvas = getCanvas();
+            const app = getApp();
+            const backend = getAE().backend;
+
+            if (canvas && typeof canvas.addSpeakerAt === "function") {
+                try {
+                    canvas.addSpeakerAt(
+                        { x: 10, y: 7.5 },  // في المنتصف
+                        record.id || null
+                    );
+                } catch (err) {
+                    console.warn("[bridge] canvas.addSpeakerAt failed:", err);
+                }
+            } else if (app && typeof app.addSpeaker === "function") {
+                try {
+                    await app.addSpeaker(spec);
+                } catch (err) {
+                    console.warn("[bridge] app.addSpeaker failed:", err);
+                }
+            }
+
+            // 3. احفظ في backend
+            if (backend?.speakers?.create) {
+                try {
+                    await backend.speakers.create(spec);
+                } catch (err) {
+                    console.warn("[bridge] backend.speakers.create failed:", err);
+                }
+            }
+
+            // 4. حدّث الواجهة
+            refreshSpeakerUI(record);
+            refreshAnalysis();
+            refreshBOM();
+
+            closeModal("speakerModal");
+            toast(`✓ تم حفظ مواصفات: ${spec.manufacturer} ${spec.model}`, "success");
+
+        } catch (err) {
+            console.error("[speaker] save error:", err);
+            showSpeakerErrors([err.message || "تعذّر الحفظ"]);
+            toast("تعذّر حفظ المواصفات", "error");
+        } finally {
+            btn.disabled = false;
+            if (textEl) textEl.textContent = originalText;
+        }
+    });
+
+    function refreshSpeakerUI(record) {
+        const canvas = getCanvas();
+        const data = canvas?.getDesignData?.() || {};
+        const speakers = data.speakers || [];
+
+        // عدّاد السماعات
+        const badge = $("speakerCountBadge");
+        if (badge) badge.textContent = speakers.length;
+
+        const metric = $("metricSpeakerCount");
+        if (metric) metric.textContent = speakers.length;
+
+        // بطاقات المكتبة — أضف بطاقة جديدة
+        if (record) {
+            const lib = $("speakerLibrary");
+            const speakerApi = getSpeaker();
+            if (lib && speakerApi && typeof speakerApi.renderCardHTML === "function") {
+                const wrapper = document.createElement("div");
+                wrapper.innerHTML = speakerApi.renderCardHTML(record);
+                const newNode = wrapper.firstElementChild;
+                if (newNode) {
+                    newNode.dataset.speakerId = record.id;
+                    lib.appendChild(newNode);
+                }
+            }
+        }
+    }
+
+    /* إضافة سماعة جديدة */
+    $("addSpeakerBtn")?.addEventListener("click", () => {
+        openSpeakerModal(null);
+    });
+
+    /* Presets — Event delegation */
+    const lib = $("speakerLibrary");
+    if (lib) {
+        lib.addEventListener("click", (e) => {
+            const card = e.target.closest("[data-speaker-preset]");
+            if (!card) return;
+            if (card.dataset.speakerId) return; // بطاقة مضافة سابقاً
+
+            const presetName = card.dataset.speakerPreset;
+            const speakerApi = getSpeaker();
+
+            let preset = null;
+            if (speakerApi && typeof speakerApi.getPreset === "function") {
+                preset = speakerApi.getPreset(presetName);
+            }
+
+            // إن لم يوجد preset، استخدم قيماً افتراضية
+            if (!preset) {
+                const presets = {
+                    "generic-fullrange": { manufacturer: "Generic", model: "Full Range 12", category: "Point Source", rms_power: 500, peak_power: 1000, max_spl: 128, sensitivity: 96, frequency_min: 50, frequency_max: 18000, horizontal_coverage: 90, vertical_coverage: 60, impedance: 8, weight: 20, mounting_type: "Stand" },
+                    "ceiling": { manufacturer: "Generic", model: "Ceiling 6", category: "Ceiling", rms_power: 6, peak_power: 24, max_spl: 105, sensitivity: 88, frequency_min: 90, frequency_max: 18000, horizontal_coverage: 100, vertical_coverage: 100, impedance: 8, weight: 1.5, mounting_type: "Ceiling" },
+                    "column": { manufacturer: "Generic", model: "Column Array", category: "Column", rms_power: 120, peak_power: 480, max_spl: 115, sensitivity: 94, frequency_min: 90, frequency_max: 18000, horizontal_coverage: 100, vertical_coverage: 30, impedance: 8, weight: 6, mounting_type: "Wall" },
+                    "subwoofer": { manufacturer: "Generic", model: "Subwoofer 18", category: "Subwoofer", rms_power: 1000, peak_power: 4000, max_spl: 135, sensitivity: 99, frequency_min: 30, frequency_max: 120, horizontal_coverage: 180, vertical_coverage: 180, impedance: 8, weight: 50, mounting_type: "Ground" }
+                };
+                preset = presets[presetName];
+            }
+
+            if (preset) openSpeakerModal(preset);
+        });
+
+        // دعم لوحة المفاتيح
+        lib.addEventListener("keydown", (e) => {
+            if (e.key !== "Enter" && e.key !== " ") return;
+            const card = e.target.closest("[data-speaker-preset]");
+            if (!card) return;
+            e.preventDefault();
+            card.click();
+        });
+    }
+
+    /* ═══════════════ AUTO DESIGN ═══════════════ */
+    $("autoDesignBtn")?.addEventListener("click", () => {
+        openModal("autoDesignModal");
+    });
+
+    $("runAutoDesignBtn")?.addEventListener("click", async () => {
+        const mode = document.querySelector('input[name="autoDesignMode"]:checked')?.value || "front-fill";
+
+        closeModal("autoDesignModal");
+        showLoading("جارٍ تنفيذ التوزيع الذكي...", "يتم حساب المواقع المثالية");
+
+        try {
+            const app = getApp();
+            const engine = getEngine();
+
+            let result = null;
+
+            if (app && typeof app.runAutoDesign === "function") {
+                result = await app.runAutoDesign(mode);
+            } else if (engine && typeof engine.autoDesign === "function") {
+                result = await engine.autoDesign(mode);
+            } else {
+                throw new Error("محرك التصميم الذكي غير متوفر");
+            }
+
+            if (result && result.layout) {
+                const canvas = getCanvas();
+                if (canvas && typeof canvas.loadDesign === "function") {
+                    canvas.loadDesign({
+                        room: { width: 20, depth: 15, height: 4 },
+                        speakers: result.layout
+                    });
+                }
+            }
+
+            refreshSpeakerUI();
+            refreshAnalysis();
+            refreshBOM();
+
+            toast("✓ تم إنشاء التوزيع الذكي", "success");
+
+        } catch (error) {
+            console.error("[bridge] auto design:", error);
+            toast(error?.message || "تعذّر تنفيذ التصميم", "error", 4500);
+        } finally {
+            hideLoading();
+        }
+    });
+
+    /* ═══════════════ DATASHEET ═══════════════ */
+    const uploadZone = $("datasheetUploadZone");
+    const datasheetFile = $("datasheetFile");
+
+    if (uploadZone && datasheetFile) {
+        uploadZone.addEventListener("click", () => datasheetFile.click());
+        uploadZone.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                datasheetFile.click();
+            }
+        });
+        datasheetFile.addEventListener("change", () => {
+            const file = datasheetFile.files?.[0];
+            const status = $("datasheetUploadStatus");
+            if (status) {
+                status.textContent = file ? `تم اختيار: ${file.name}` : "لم يتم اختيار ملف";
+            }
+        });
+    }
+
+    $("processDatasheetBtn")?.addEventListener("click", async () => {
+        const file = datasheetFile?.files?.[0];
+        if (!file) {
+            toast("اختر ملف Datasheet أولاً", "warning");
+            return;
+        }
+        showLoading("جارٍ تحليل المواصفات...", file.name);
+        try {
+            const app = getApp();
+            if (app && typeof app.processDatasheet === "function") {
+                await app.processDatasheet(file);
+            }
+            closeModal("datasheetModal");
+            toast("✓ تم تحليل المواصفات", "success");
+        } catch (error) {
+            console.error("[bridge] datasheet:", error);
+            toast(error?.message || "تعذّر تحليل الملف", "error", 4500);
+        } finally {
+            hideLoading();
+        }
+    });
+
+    /* ═══════════════ SETTINGS ═══════════════ */
+    $("saveSettingsBtn")?.addEventListener("click", () => {
+        try {
+            const settings = {
+                autoSave: $("autoSaveToggle")?.checked ?? true,
+                grid: $("settingsGridToggle")?.checked ?? true,
+                snap: $("settingsSnapToggle")?.checked ?? true,
+                coverage: $("coverageToggle")?.checked ?? true,
+                language: $("languageSelect")?.value || "ar"
+            };
+
+            try {
+                localStorage.setItem("ae_settings", JSON.stringify(settings));
+            } catch {}
+
+            const app = getApp();
+            if (app && typeof app.applySettings === "function") {
+                app.applySettings(settings);
+            }
+
+            closeModal("settingsModal");
+            toast("✓ تم حفظ الإعدادات", "success");
+        } catch (error) {
+            console.error(error);
+            toast("تعذّر حفظ الإعدادات", "error");
+        }
+    });
+
+    /* ═══════════════ CANVAS HUD ═══════════════ */
+    function callCanvas(method, ...args) {
+        const canvas = getCanvas();
+        if (canvas && typeof canvas[method] === "function") {
+            try { canvas[method](...args); } catch (err) {
+                console.error(`[bridge] canvas.${method}:`, err);
+            }
+        }
+    }
+
+    $("canvasZoomIn")?.addEventListener("click", () => callCanvas("zoomIn"));
+    $("canvasZoomOut")?.addEventListener("click", () => callCanvas("zoomOut"));
+    $("canvasFitBtn")?.addEventListener("click", () => callCanvas("fitView"));
+
+    ["zoomInBtn", "zoomOutBtn", "zoomResetBtn", "fitViewBtn"].forEach(id => {
+        const method = {
+            zoomInBtn: "zoomIn", zoomOutBtn: "zoomOut",
+            zoomResetBtn: "resetZoom", fitViewBtn: "fitView"
+        }[id];
+        $(id)?.addEventListener("click", () => callCanvas(method));
+    });
+
+    /* ═══════════════ PROJECT ═══════════════ */
     $("createProjectBtn")?.addEventListener("click", async () => {
         const name = ($("newProjectName")?.value || "").trim() || "مشروع صوتي جديد";
         const client = ($("newClientName")?.value || "").trim();
@@ -2887,11 +3053,6 @@
                 });
             }
 
-            const appApi = getApp();
-            if (project && appApi && typeof appApi.loadProject === "function") {
-                await appApi.loadProject(project);
-            }
-
             if ($("projectName")) $("projectName").value = name;
             if ($("clientName")) $("clientName").value = client;
             if ($("projectLocation")) $("projectLocation").value = location;
@@ -2899,465 +3060,20 @@
 
             closeModal("projectModal");
             toast("✓ تم إنشاء المشروع", "success");
-
         } catch (error) {
             console.error("[bridge] create project:", error);
             toast("تعذّر إنشاء المشروع: " + (error?.message || error), "error", 4500);
         }
     });
 
-    $("cancelProjectBtn")?.addEventListener("click", () => closeModal("projectModal"));
-
-    /* ═══════════════════════════════════════════════════════
-       SPEAKER — نموذج المواصفات الكامل (لا رفع ملف إلزامي)
-       ═══════════════════════════════════════════════════════ */
-
-    /* --- قراءة النموذج إلى كائن مواصفات --- */
-    function readSpeakerForm() {
-        return {
-            manufacturer:         $("modalSpeakerManufacturer")?.value || "",
-            model:                $("modalSpeakerModel")?.value || "",
-            category:             $("modalSpeakerCategory")?.value || "Point Source",
-            rms_power:            parseFloat($("modalSpeakerPower")?.value) || 0,
-            peak_power:           parseFloat($("modalSpeakerPeak")?.value) || 0,
-            max_spl:              parseFloat($("modalSpeakerSPL")?.value) || 0,
-            sensitivity:          parseFloat($("modalSpeakerSensitivity")?.value) || 0,
-            frequency_min:        parseFloat($("modalSpeakerFreqLow")?.value) || 0,
-            frequency_max:        parseFloat($("modalSpeakerFreqHigh")?.value) || 0,
-            horizontal_coverage:  parseFloat($("modalSpeakerH")?.value) || 90,
-            vertical_coverage:    parseFloat($("modalSpeakerV")?.value) || 60,
-            impedance:            parseFloat($("modalSpeakerImpedance")?.value) || 8,
-            weight:               parseFloat($("modalSpeakerWeight")?.value) || 0,
-            mounting_type:        $("modalSpeakerMount")?.value || "Stand"
-        };
-    }
-
-    /* --- معاينة حية أثناء الكتابة --- */
-    function updateSpeakerPreview() {
-        const preview = $("modalSpeakerPreview");
-        if (!preview) return;
-
-        const spec = readSpeakerForm();
-        const speakerApi = getSpeaker();
-
-        if (!speakerApi) {
-            preview.textContent = "وحدة السماعات غير جاهزة";
-            return;
-        }
-
-        const errors = speakerApi.validate(spec);
-        if (errors.length) {
-            preview.innerHTML = `
-                <div style="color:#fbbf24;">
-                    <strong>⚠ ملاحظات:</strong>
-                    <ul style="margin:5px 0;padding-right:16px;">
-                        ${errors.map(e => `<li>${escapeHtml(e)}</li>`).join("")}
-                    </ul>
-                </div>
-                <div style="color:#94a3b8;font-size:10px;margin-top:5px;">
-                    يمكن الحفظ بعد تصحيح الملاحظات
-                </div>
-            `;
-            return;
-        }
-
-        if (typeof speakerApi.renderSpecsHTML === "function") {
-            preview.innerHTML = speakerApi.renderSpecsHTML(spec);
-        } else {
-            preview.textContent = "المواصفات جاهزة للحفظ";
-        }
-    }
-
-    /* --- ربط الحقول بالمعاينة الحية --- */
-    [
-        "modalSpeakerManufacturer", "modalSpeakerModel", "modalSpeakerCategory",
-        "modalSpeakerPower", "modalSpeakerPeak", "modalSpeakerSPL",
-        "modalSpeakerSensitivity", "modalSpeakerFreqLow", "modalSpeakerFreqHigh",
-        "modalSpeakerH", "modalSpeakerV", "modalSpeakerImpedance",
-        "modalSpeakerWeight", "modalSpeakerMount"
-    ].forEach(id => {
-        const el = $(id);
-        if (el) {
-            el.addEventListener("input", updateSpeakerPreview);
-            el.addEventListener("change", updateSpeakerPreview);
-        }
-    });
-
-    /* --- عرض رسائل الخطأ --- */
-    function showSpeakerErrors(errors) {
-        const box = $("modalSpeakerErrors");
-        if (!box) return;
-        if (!errors || !errors.length) {
-            box.style.display = "none";
-            box.innerHTML = "";
-            return;
-        }
-        box.style.display = "block";
-        box.innerHTML = `
-            <div style="font-weight:700;margin-bottom:4px;">⚠ بيانات غير صحيحة:</div>
-            <ul style="margin:0;padding-right:16px;">
-                ${errors.map(e => `<li>${escapeHtml(e)}</li>`).join("")}
-            </ul>
-        `;
-    }
-
-    /* --- فتح النموذج (مع preset اختياري) --- */
-    function openSpeakerModal(preset) {
-        const speakerApi = getSpeaker();
-        const defaults = speakerApi?.DEFAULTS || {};
-
-        $("modalSpeakerManufacturer").value = preset?.manufacturer || "";
-        $("modalSpeakerModel").value = preset?.model || "";
-        $("modalSpeakerCategory").value = preset?.category || defaults.category || "Point Source";
-        $("modalSpeakerPower").value = preset?.rms_power || "";
-        $("modalSpeakerPeak").value = preset?.peak_power || "";
-        $("modalSpeakerSPL").value = preset?.max_spl || "";
-        $("modalSpeakerSensitivity").value = preset?.sensitivity || "";
-        $("modalSpeakerFreqLow").value = preset?.frequency_min || "";
-        $("modalSpeakerFreqHigh").value = preset?.frequency_max || "";
-        $("modalSpeakerH").value = preset?.horizontal_coverage || "";
-        $("modalSpeakerV").value = preset?.vertical_coverage || "";
-        $("modalSpeakerImpedance").value = preset?.impedance || "";
-        $("modalSpeakerWeight").value = preset?.weight || "";
-        $("modalSpeakerMount").value = preset?.mounting_type || defaults.mounting_type || "Stand";
-
-        // امسح ملف datasheet
-        const fileInput = $("modalSpeakerDatasheet");
-        if (fileInput) fileInput.value = "";
-
-        showSpeakerErrors([]);
-        updateSpeakerPreview();
-        openModal("speakerModal");
-    }
-
-    /* --- حفظ المواصفات --- */
-    $("saveSpeakerBtn")?.addEventListener("click", async () => {
-        const spec = readSpeakerForm();
-        const speakerApi = getSpeaker();
-
-        if (!speakerApi) {
-            toast("وحدة السماعات غير جاهزة", "error");
-            return;
-        }
-
-        const errors = speakerApi.validate(spec);
-        if (errors.length) {
-            showSpeakerErrors(errors);
-            toast("صحّح البيانات أولاً", "warning");
-            return;
-        }
-
-        const btn = $("saveSpeakerBtn");
-        const textEl = $("saveSpeakerBtnText");
-        const originalText = textEl?.textContent || "حفظ المواصفات";
-
-        btn.disabled = true;
-        if (textEl) textEl.textContent = "جارٍ الحفظ...";
-
-        try {
-            // 1. أضف محلياً في js/speaker.js
-            const record = speakerApi.add(spec);
-
-            // 2. أرسل للسيرفر إن كان متصلاً (مع رفع Datasheet إن وُجد)
-            const appApi = getApp();
-            const fileInput = $("modalSpeakerDatasheet");
-            const file = fileInput?.files?.[0];
-
-            if (appApi && typeof appApi.addSpeaker === "function") {
-                try {
-                    if (file) {
-                        // إن كانت هناك دالة لدعم FormData
-                        if (typeof appApi.addSpeakerWithFile === "function") {
-                            await appApi.addSpeakerWithFile(spec, file);
-                        } else {
-                            // fallback: أرسل البيانات فقط
-                            await appApi.addSpeaker(spec);
-                        }
-                    } else {
-                        await appApi.addSpeaker(spec);
-                    }
-                } catch (err) {
-                    console.warn("[speaker] فشل الإرسال للسيرفر:", err);
-                    // لا نفشل العملية — أضفنا محلياً على الأقل
-                }
-            }
-
-            // 3. حدّث الواجهة
-            refreshSpeakerUI(record);
-
-            // 4. أغلق النموذج
-            closeModal("speakerModal");
-            toast(`✓ تم حفظ مواصفات: ${spec.manufacturer} ${spec.model}`, "success");
-
-            // 5. أعلم باقي الوحدات
-            try {
-                window.dispatchEvent(new CustomEvent("speaker:added", { detail: record }));
-            } catch { /* ignore */ }
-
-        } catch (err) {
-            console.error("[speaker] add error:", err);
-            showSpeakerErrors([err.message || "تعذّر الحفظ"]);
-            toast("تعذّر حفظ المواصفات", "error");
-        } finally {
-            btn.disabled = false;
-            if (textEl) textEl.textContent = originalText;
-        }
-    });
-
-    /* --- تحديث البطاقات والجدول والعداد --- */
-    function refreshSpeakerUI(record) {
-        const speakerApi = getSpeaker();
-        if (!speakerApi) return;
-
-        const speakers = speakerApi.list();
-
-        // 1. عداد السماعات
-        const badge = $("speakerCountBadge");
-        if (badge) badge.textContent = speakers.length;
-
-        const metric = $("metricSpeakerCount");
-        if (metric) metric.textContent = speakers.length;
-
-        // 2. بطاقات المكتبة — أضف بطاقة جديدة
-        if (record) {
-            const lib = $("speakerLibrary");
-            if (lib && typeof speakerApi.renderCardHTML === "function") {
-                const wrapper = document.createElement("div");
-                wrapper.innerHTML = speakerApi.renderCardHTML(record);
-                const newNode = wrapper.firstElementChild;
-                if (newNode) {
-                    newNode.dataset.speakerId = record.id;
-                    lib.appendChild(newNode);
-                }
-            }
-        }
-
-        // 3. جدول BOM
-        const bom = $("bomTableBody");
-        if (bom) {
-            if (!speakers.length) {
-                bom.innerHTML = `<tr><td colspan="3" style="text-align:center;">لا توجد سماعات</td></tr>`;
-            } else if (typeof speakerApi.renderTableRow === "function") {
-                bom.innerHTML = speakers
-                    .map((s, i) => speakerApi.renderTableRow(s, i + 1))
-                    .join("");
-            }
-        }
-    }
-
-    /* --- ربط زر "إضافة سماعة" --- */
-    $("addSpeakerBtn")?.addEventListener("click", () => {
-        openSpeakerModal(null);
-    });
-
-    /* --- ربط بطاقات المكتبة (Presets) — Event delegation --- */
-    (function bindPresets() {
-        const lib = $("speakerLibrary");
-        if (!lib) return;
-
-        lib.addEventListener("click", (e) => {
-            const card = e.target.closest("[data-speaker-preset]");
-            if (!card) return;
-
-            // إن كانت بطاقة مخصصة (مضافة سابقاً)، لا تفعل شيئاً
-            if (card.dataset.speakerId) return;
-
-            const presetName = card.dataset.speakerPreset;
-            const speakerApi = getSpeaker();
-            if (!speakerApi) return;
-
-            const preset = typeof speakerApi.getPreset === "function"
-                ? speakerApi.getPreset(presetName)
-                : null;
-
-            if (!preset) {
-                openSpeakerModal(null);
-                return;
-            }
-
-            openSpeakerModal(preset);
+    /* ═══════════════ TOOLS ═══════════════ */
+    document.querySelectorAll("[data-tool]").forEach(btn => {
+        btn.addEventListener("click", () => {
+            const tool = btn.dataset.tool;
+            document.querySelectorAll("[data-tool]").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            callCanvas("setTool", tool);
         });
-
-        // دعم لوحة المفاتيح
-        lib.addEventListener("keydown", (e) => {
-            if (e.key !== "Enter" && e.key !== " ") return;
-            const card = e.target.closest("[data-speaker-preset]");
-            if (!card) return;
-            e.preventDefault();
-            card.click();
-        });
-    })();
-
-    /* ═══════════════ DATASHEET (اختياري - رفع مستقل) ═══════════════ */
-    $("uploadDatasheetBtn")?.addEventListener("click", () => {
-        openModal("datasheetModal");
-    });
-
-    function bindUploadZone() {
-        const zone = $("datasheetUploadZone");
-        const fileInput = $("datasheetFile");
-        if (!zone || !fileInput) return;
-
-        zone.addEventListener("click", () => fileInput.click());
-        zone.addEventListener("keydown", (e) => {
-            if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                fileInput.click();
-            }
-        });
-
-        zone.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            zone.style.borderColor = "rgba(56,189,248,.55)";
-        });
-        zone.addEventListener("dragleave", () => {
-            zone.style.borderColor = "";
-        });
-        zone.addEventListener("drop", (e) => {
-            e.preventDefault();
-            zone.style.borderColor = "";
-            const file = e.dataTransfer?.files?.[0];
-            if (file) {
-                fileInput.files = e.dataTransfer.files;
-                const status = $("datasheetUploadStatus");
-                if (status) status.textContent = `تم اختيار: ${file.name}`;
-            }
-        });
-
-        fileInput.addEventListener("change", () => {
-            const file = fileInput.files?.[0];
-            const status = $("datasheetUploadStatus");
-            if (status) {
-                status.textContent = file
-                    ? `تم اختيار: ${file.name}`
-                    : "لم يتم اختيار ملف";
-            }
-        });
-    }
-
-    $("processDatasheetBtn")?.addEventListener("click", async () => {
-        const fileInput = $("datasheetFile");
-        const file = fileInput?.files?.[0];
-
-        if (!file) {
-            toast("اختر ملف Datasheet أولاً", "warning");
-            return;
-        }
-
-        showLoading("جارٍ تحليل المواصفات...", file.name);
-
-        try {
-            const appApi = getApp();
-            if (appApi && typeof appApi.processDatasheet === "function") {
-                await appApi.processDatasheet(file);
-            } else if (window.AcousticDatasheet?.process) {
-                await window.AcousticDatasheet.process(file);
-            } else {
-                throw new Error("وحدة تحليل Datasheet غير متوفرة");
-            }
-
-            closeModal("datasheetModal");
-            toast("✓ تم تحليل المواصفات", "success");
-
-        } catch (error) {
-            console.error("[bridge] datasheet:", error);
-            toast(error?.message || "تعذّر تحليل الملف", "error", 4500);
-        } finally {
-            hideLoading();
-        }
-    });
-
-    /* ═══════════════ AUTO DESIGN ═══════════════ */
-    $("autoDesignBtn")?.addEventListener("click", () => {
-        openModal("autoDesignModal");
-    });
-
-    $("runAutoDesignBtn")?.addEventListener("click", async () => {
-        const mode = document.querySelector('input[name="autoDesignMode"]:checked')?.value
-            || "front-fill";
-
-        closeModal("autoDesignModal");
-        showLoading("جارٍ تنفيذ التوزيع الذكي...", "يتم حساب المواقع المثالية");
-
-        try {
-            const appApi = getApp();
-            const engineApi = getEngine();
-
-            if (appApi && typeof appApi.runAutoDesign === "function") {
-                await appApi.runAutoDesign(mode);
-            } else if (engineApi && typeof engineApi.autoDesign === "function") {
-                await engineApi.autoDesign(mode);
-            } else {
-                throw new Error("محرك التصميم الذكي غير متوفر");
-            }
-
-            toast("✓ تم إنشاء التوزيع الذكي", "success");
-
-        } catch (error) {
-            console.error("[bridge] auto design:", error);
-            toast(error?.message || "تعذّر تنفيذ التصميم", "error", 4500);
-        } finally {
-            hideLoading();
-        }
-    });
-
-    /* ═══════════════ SETTINGS ═══════════════ */
-    $("settingsBtn")?.addEventListener("click", () => {
-        openModal("settingsModal");
-    });
-
-    $("saveSettingsBtn")?.addEventListener("click", () => {
-        try {
-            const settings = {
-                autoSave: $("autoSaveToggle")?.checked ?? true,
-                grid: $("settingsGridToggle")?.checked ?? true,
-                snap: $("settingsSnapToggle")?.checked ?? true,
-                coverage: $("coverageToggle")?.checked ?? true,
-                language: $("languageSelect")?.value || "ar"
-            };
-
-            try {
-                localStorage.setItem("ae_settings", JSON.stringify(settings));
-            } catch { /* ignore */ }
-
-            const appApi = getApp();
-            if (appApi && typeof appApi.applySettings === "function") {
-                appApi.applySettings(settings);
-            }
-
-            closeModal("settingsModal");
-            toast("✓ تم حفظ الإعدادات", "success");
-
-        } catch (error) {
-            console.error(error);
-            toast("تعذّر حفظ الإعدادات", "error");
-        }
-    });
-
-    /* ═══════════════ CANVAS HUD ═══════════════ */
-    function callCanvas(method, ...args) {
-        const canvasApi = getCanvas();
-        if (canvasApi && typeof canvasApi[method] === "function") {
-            try {
-                canvasApi[method](...args);
-            } catch (err) {
-                console.error(`[bridge] canvas.${method}:`, err);
-            }
-        }
-    }
-
-    $("canvasZoomIn")?.addEventListener("click", () => callCanvas("zoomIn"));
-    $("canvasZoomOut")?.addEventListener("click", () => callCanvas("zoomOut"));
-    $("canvasFitBtn")?.addEventListener("click", () => callCanvas("fitView"));
-
-    ["zoomInBtn", "zoomOutBtn", "zoomResetBtn", "fitViewBtn"].forEach(id => {
-        const method = {
-            zoomInBtn: "zoomIn",
-            zoomOutBtn: "zoomOut",
-            zoomResetBtn: "resetZoom",
-            fitViewBtn: "fitView"
-        }[id];
-        $(id)?.addEventListener("click", () => callCanvas(method));
     });
 
     /* ═══════════════ KEYBOARD ═══════════════ */
@@ -3390,47 +3106,50 @@
         trapFocus(event);
     });
 
-    /* ═══════════════ ROOM DIMENSION MIRRORING ═══════════════ */
+    /* ═══════════════ MIRRORING room dimensions ═══════════════ */
     function mirrorValue(sourceId, targetId) {
         const source = $(sourceId);
         const target = $(targetId);
         if (!source || !target) return;
 
-        let raf = null;
         source.addEventListener("input", () => {
-            if (raf) cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(() => {
-                target.value = source.value;
-                target.dispatchEvent(new Event("change", { bubbles: true }));
-            });
+            target.value = source.value;
         });
     }
 
     mirrorValue("roomWidth", "roomWidthPanel");
     mirrorValue("roomDepth", "roomDepthPanel");
     mirrorValue("roomHeight", "roomHeightPanel");
-
     mirrorValue("roomWidthPanel", "roomWidth");
     mirrorValue("roomDepthPanel", "roomDepth");
     mirrorValue("roomHeightPanel", "roomHeight");
 
-    /* ═══════════════ INITIALIZATION ═══════════════ */
+    /* ═══════════════ LISTEN to speakers changes ═══════════════ */
+    window.addEventListener("speakers:changed", () => {
+        refreshSpeakerUI();
+        // أعِد التحليل بعد delay بسيط
+        setTimeout(refreshAnalysis, 300);
+        setTimeout(refreshBOM, 300);
+    });
+
+    window.addEventListener("canvas:changed", () => {
+        setTimeout(refreshAnalysis, 300);
+        setTimeout(refreshBOM, 300);
+    });
+
+    /* ═══════════════ INIT ═══════════════ */
     async function init() {
         try {
             showLoading("جارٍ تجهيز النظام...", "يتم تهيئة الوحدات");
 
             restoreSidebarState();
-            bindUploadZone();
 
-            // عرض السماعات المحفوظة مسبقاً
+            // عرض السماعات المحفوظة
             refreshSpeakerUI();
+            refreshAnalysis();
+            refreshBOM();
 
-            // استمع لأحداث السماعات من js/speaker.js
-            window.addEventListener("speakers:changed", () => {
-                refreshSpeakerUI();
-            });
-
-            // انتظر تهيئة Firebase / Auth إن وُجد
+            // انتظر auth
             const auth = getAE().auth;
             if (auth && typeof auth.initialize === "function") {
                 try {
@@ -3449,14 +3168,7 @@
                 $("projectTitle").textContent = $("projectName").value;
             }
 
-            const appApi = getApp();
-            if (appApi && typeof appApi.initialize === "function") {
-                try {
-                    await appApi.initialize();
-                } catch (err) {
-                    console.error("[bridge] app.initialize:", err);
-                }
-            }
+            console.log("[bridge] init complete");
 
         } catch (error) {
             console.error("[bridge] init error:", error);
@@ -3474,16 +3186,14 @@
 
     /* ═══════════════ Expose bridge ═══════════════ */
     window.AcousticBridge = {
-        toast,
-        openModal,
-        closeModal,
-        closeAllModals,
-        showLoading,
-        hideLoading,
+        toast, openModal, closeModal, closeAllModals,
+        showLoading, hideLoading,
+        handleNavClick, scrollToElement, refreshAnalysis, refreshBOM,
         getAE, getApp, getCanvas, getEngine, getStorage, getReport, getSpeaker,
-        openSpeakerModal,
-        refreshSpeakerUI
+        openSpeakerModal, refreshSpeakerUI
     };
+
+    console.log("[app.html bridge] v2.2.0 جاهز");
 
 })();
 </script>
