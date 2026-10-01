@@ -1,12 +1,151 @@
 /* ============================================================
-   Acoustic Engineering — js/canvas.js
+   Acoustic Engineering — js/canvas.js v2.1.0
    Interactive Engineering Canvas (SVG-based)
-   Version 2.0 — Compatible with app.html v1.0
+   ✅ Undo/Redo مُصلَح
+   ✅ مزامنة مع speaker.js و engine.js
+   ✅ Transform داخل SVG (crisp)
+   ✅ دعم touch pinch-zoom
+   ✅ أسماء موحّدة للبيانات
    ============================================================ */
 (function () {
     "use strict";
+
     window.AcousticEngineering = window.AcousticEngineering || {};
+    window.AE = window.AE || window.AcousticEngineering;
+
     const AE = window.AcousticEngineering;
+
+    /* ═══════════════ Resolution helpers ═══════════════ */
+
+    function getEngine() {
+        return AE.engine || window.AcousticEngine || null;
+    }
+
+    function getSpeakerAPI() {
+        return AE.speaker || window.AcousticSpeaker || window.SpeakerDatabase || null;
+    }
+
+    /* ═══════════════ Secure ID ═══════════════ */
+
+    let _idCounter = 0;
+    function generateId(prefix) {
+        try {
+            if (typeof crypto !== "undefined") {
+                if (typeof crypto.randomUUID === "function") {
+                    return `${prefix}-${crypto.randomUUID()}`;
+                }
+                if (crypto.getRandomValues) {
+                    const b = new Uint8Array(6);
+                    crypto.getRandomValues(b);
+                    const hex = Array.from(b)
+                        .map(x => x.toString(16).padStart(2, "0"))
+                        .join("");
+                    return `${prefix}-${hex}`;
+                }
+            }
+        } catch { /* ignore */ }
+        return `${prefix}-${Date.now().toString(36)}-${_idCounter++}`;
+    }
+
+    /* ═══════════════ قراءة مواصفات السماعة (مسطّحة/متداخلة) ═══════════════ */
+
+    function readSpeakerSpecs(speaker) {
+        if (!speaker) {
+            return {
+                rms: 500, maxSPL: 125, sensitivity: 96,
+                horizontal: 90, vertical: 60,
+                manufacturer: "", model: "", category: "Point Source"
+            };
+        }
+
+        const power = speaker.power && typeof speaker.power === "object" && !Array.isArray(speaker.power)
+            ? speaker.power : {};
+        const cov = speaker.coverage && typeof speaker.coverage === "object" && !Array.isArray(speaker.coverage)
+            ? speaker.coverage : {};
+
+        const num = (v, fb) => {
+            const n = Number(v);
+            return Number.isFinite(n) ? n : fb;
+        };
+
+        return {
+            rms: num(
+                speaker.rms_power ?? speaker.rms ?? power.rms,
+                500
+            ),
+            maxSPL: num(
+                speaker.max_spl ?? speaker.maxSPL,
+                125
+            ),
+            sensitivity: num(speaker.sensitivity, 96),
+            horizontal: num(
+                speaker.horizontal_coverage ?? speaker.horizontal ?? speaker.horizontalCoverage ?? cov.horizontal,
+                90
+            ),
+            vertical: num(
+                speaker.vertical_coverage ?? speaker.vertical ?? speaker.verticalCoverage ?? cov.vertical,
+                60
+            ),
+            manufacturer: speaker.manufacturer || "Generic",
+            model: speaker.model || "Speaker",
+            category: speaker.category || speaker.type || "Point Source"
+        };
+    }
+
+    /* ═══════════════ Custom Confirm Dialog ═══════════════ */
+
+    function confirmAsync(message, title) {
+        return new Promise((resolve) => {
+            const overlay = document.createElement("div");
+            overlay.style.cssText = `
+                position: fixed; inset: 0; z-index: 99999;
+                display: flex; align-items: center; justify-content: center;
+                background: rgba(0,0,0,.72); backdrop-filter: blur(7px);
+            `;
+
+            const dialog = document.createElement("div");
+            dialog.style.cssText = `
+                width: min(400px, 90%); padding: 22px;
+                background: #10151d; border: 1px solid rgba(255,255,255,.09);
+                border-radius: 14px; color: #e6edf5;
+                font-family: Cairo, sans-serif; direction: rtl;
+                box-shadow: 0 30px 100px rgba(0,0,0,.5);
+            `;
+            dialog.innerHTML = `
+                <h3 style="margin:0 0 10px;font-size:15px;">${title || "تأكيد"}</h3>
+                <p style="margin:0 0 20px;color:#9aa7b7;font-size:12px;line-height:1.7;">${message}</p>
+                <div style="display:flex;gap:8px;justify-content:flex-start;">
+                    <button id="cvCancel" style="height:36px;padding:0 16px;border-radius:8px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);color:#aeb9c8;cursor:pointer;font-family:inherit;font-size:11px;">إلغاء</button>
+                    <button id="cvOk" style="height:36px;padding:0 16px;border-radius:8px;border:1px solid #e60012;background:#e60012;color:#fff;cursor:pointer;font-family:inherit;font-size:11px;">تأكيد</button>
+                </div>
+            `;
+
+            overlay.appendChild(dialog);
+            document.body.appendChild(overlay);
+
+            const cleanup = (result) => {
+                overlay.remove();
+                document.removeEventListener("keydown", onKey);
+                resolve(result);
+            };
+
+            const onKey = (e) => {
+                if (e.key === "Escape") cleanup(false);
+                if (e.key === "Enter") cleanup(true);
+            };
+
+            overlay.querySelector("#cvOk").onclick = () => cleanup(true);
+            overlay.querySelector("#cvCancel").onclick = () => cleanup(false);
+            overlay.onclick = (e) => { if (e.target === overlay) cleanup(false); };
+            document.addEventListener("keydown", onKey);
+
+            setTimeout(() => overlay.querySelector("#cvOk")?.focus(), 50);
+        });
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CANVAS
+       ═══════════════════════════════════════════════════════════ */
 
     const AcousticCanvas = {
         state: {
@@ -27,6 +166,7 @@
             measuring: false,
             panning: false,
             dragStart: null,
+            dragHistoryPushed: false,
             measureStart: null,
             wallStart: null,
             zoneStart: null,
@@ -34,10 +174,11 @@
             objects: [],
             history: [],
             historyIndex: -1,
-            room: { width: 12, depth: 8, height: 3 },
+            room: { width: 20, depth: 15, height: 4 },
             svg: null,
             container: null,
             roomRect: null,
+            transformLayer: null,   // ← جديد: لتكبير crisp
             grid: null,
             speakersLayer: null,
             wallsLayer: null,
@@ -47,28 +188,27 @@
             selectionLayer: null,
             cursorPoint: null,
             cursorCoordinates: null,
-            viewBox: { x: 0, y: 0, width: 1000, height: 700 },
-            pixelsPerMeter: 60
+            // pinch zoom
+            activePointers: new Map(),
+            pinchStartDistance: 0,
+            pinchStartZoom: 1
         },
 
-        /* =========================================================
-           INITIALIZATION
-        ========================================================= */
+        /* ═══════════════ INIT ═══════════════ */
         init: function () {
             if (this.state.initialized) return;
             this.cacheElements();
 
             if (!this.state.svg) {
-                console.warn("AcousticCanvas: SVG element not found");
+                console.warn("[Canvas] SVG element not found");
                 return;
             }
 
-            // إخفاء حالة "ابدأ التصميم" عند وجود عناصر
-            const emptyState = document.getElementById("canvasEmptyState");
-            if (emptyState) emptyState.style.display = "";
-
+            this.ensureTransformLayer();
             this.state.initialized = true;
             this.bindEvents();
+            this.bindExternalEvents();
+
             this.updateRoom(
                 this.state.room.width,
                 this.state.room.depth,
@@ -78,63 +218,64 @@
             this.updateEmptyState();
         },
 
-        /* =========================================================
-           CACHE DOM ELEMENTS (supports both IDs)
-        ========================================================= */
+        /* ═══════════════ CACHE ═══════════════ */
         cacheElements: function () {
             const s = this.state;
 
-            // SVG root — يقبل كلا المعرفين
-            s.svg =
-                document.getElementById("engineeringCanvas") ||
-                document.getElementById("designSvg");
+            s.svg = document.getElementById("engineeringCanvas")
+                 || document.getElementById("designSvg");
 
-            // Container
-            s.container =
-                document.querySelector(".canvas-stage") ||
-                document.getElementById("canvasContainer") ||
-                (s.svg ? s.svg.parentElement : null);
+            s.container = document.querySelector(".canvas-stage")
+                       || document.getElementById("canvasContainer")
+                       || (s.svg ? s.svg.parentElement : null);
 
-            // Room rect — يُنشَأ إن لم يوجد
             s.roomRect = document.getElementById("roomRect");
+            s.grid = document.getElementById("gridLayer") || document.getElementById("canvasGrid");
 
-            // Grid
-            s.grid =
-                document.getElementById("gridLayer") ||
-                document.getElementById("canvasGrid");
+            s.wallsLayer       = document.getElementById("roomLayer")     || document.getElementById("wallsLayer");
+            s.speakersLayer    = document.getElementById("objectLayer")   || document.getElementById("speakersLayer");
+            s.coverageLayer    = document.getElementById("coverageLayer");
+            s.measurementLayer = document.getElementById("measurementLayer");
+            s.selectionLayer   = document.getElementById("selectionLayer");
+            s.zonesLayer       = document.getElementById("zonesLayer");
 
-            // Layers — mapping دقيق مع بنية app.html
-            s.wallsLayer =
-                document.getElementById("roomLayer") ||
-                document.getElementById("wallsLayer");
-            s.speakersLayer =
-                document.getElementById("objectLayer") ||
-                document.getElementById("speakersLayer");
-            s.coverageLayer =
-                document.getElementById("coverageLayer");
-            s.measurementLayer =
-                document.getElementById("measurementLayer");
-            s.selectionLayer =
-                document.getElementById("selectionLayer");
-            s.zonesLayer =
-                document.getElementById("zonesLayer");
-
-            // Fallback: إن لم توجد أي طبقات، استخدم SVG نفسه
-            if (!s.wallsLayer) s.wallsLayer = s.svg;
-            if (!s.speakersLayer) s.speakersLayer = s.svg;
-            if (!s.coverageLayer) s.coverageLayer = s.svg;
-            if (!s.measurementLayer) s.measurementLayer = s.svg;
-            if (!s.selectionLayer) s.selectionLayer = s.svg;
-            if (!s.zonesLayer) s.zonesLayer = s.svg;
-
-            // Cursor coordinates
             s.cursorCoordinates = document.getElementById("cursorCoordinates");
             s.cursorPoint = document.getElementById("cursorPoint");
         },
 
-        /* =========================================================
-           EVENT BINDING
-        ========================================================= */
+        /**
+         * ينشئ <g id="canvasTransformLayer"> يحتوي كل الطبقات
+         * الحل: التكبير عبر transform على g بدل SVG (crisp)
+         */
+        ensureTransformLayer: function () {
+            const svg = this.state.svg;
+            if (!svg) return;
+
+            let layer = svg.querySelector("#canvasTransformLayer");
+            if (layer) {
+                this.state.transformLayer = layer;
+                return;
+            }
+
+            layer = document.createElementNS("http://www.w3.org/2000/svg", "g");
+            layer.id = "canvasTransformLayer";
+            layer.setAttribute("transform", "translate(0,0) scale(1)");
+
+            // انقل كل children SVG (ما عدا defs و rect الخلفية) إلى الطبقة الجديدة
+            const movable = [];
+            for (const child of Array.from(svg.children)) {
+                const tag = child.tagName.toLowerCase();
+                const id = child.id || "";
+                if (tag === "defs" || id === "canvasBackground") continue;
+                movable.push(child);
+            }
+            movable.forEach(el => layer.appendChild(el));
+            svg.appendChild(layer);
+
+            this.state.transformLayer = layer;
+        },
+
+        /* ═══════════════ EVENTS ═══════════════ */
         bindEvents: function () {
             const s = this.state;
             if (!s.svg) return;
@@ -143,16 +284,98 @@
             s.svg.addEventListener("pointermove", this.onPointerMove.bind(this));
             s.svg.addEventListener("pointerup", this.onPointerUp.bind(this));
             s.svg.addEventListener("pointercancel", this.onPointerUp.bind(this));
+            s.svg.addEventListener("pointerleave", this.onPointerUp.bind(this));
             s.svg.addEventListener("wheel", this.onWheel.bind(this), { passive: false });
             s.svg.addEventListener("dblclick", this.onDoubleClick.bind(this));
             s.svg.addEventListener("contextmenu", (e) => e.preventDefault());
 
-            window.addEventListener("resize", this.refreshCanvas.bind(this));
+            // Debounced resize
+            let resizeTimer = null;
+            window.addEventListener("resize", () => {
+                if (resizeTimer) clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(() => this.refreshCanvas(), 150);
+            });
+
+            // Keyboard shortcuts
+            document.addEventListener("keydown", (e) => {
+                const tag = (document.activeElement?.tagName || "").toLowerCase();
+                if (tag === "input" || tag === "textarea" || tag === "select") return;
+
+                if (e.key === "Delete" || e.key === "Backspace") {
+                    if (this.state.selectedId) {
+                        e.preventDefault();
+                        this.deleteSelected();
+                    }
+                }
+                if (e.key === "Escape") {
+                    this.clearSelection();
+                    this.cancelWall();
+                    this.cancelZone();
+                }
+                if (e.key === "r" && this.state.selectedId) {
+                    this.rotateSelectedObject(e.shiftKey ? -15 : 15);
+                }
+                if (e.ctrlKey || e.metaKey) {
+                    if (e.key === "z" && !e.shiftKey) {
+                        e.preventDefault();
+                        this.undo();
+                    }
+                    if ((e.key === "z" && e.shiftKey) || e.key === "y") {
+                        e.preventDefault();
+                        this.redo();
+                    }
+                }
+            });
         },
 
-        /* =========================================================
-           TOOL MANAGEMENT
-        ========================================================= */
+        /**
+         * يربط canvas بـ engine.js و speaker.js (event-driven sync)
+         */
+        bindExternalEvents: function () {
+            // عندما ينتهي autoDesign
+            window.addEventListener("engine:auto-design-complete", (e) => {
+                const result = e.detail;
+                if (result && Array.isArray(result.layout)) {
+                    this.state.objects = result.layout.map(o => this.normalizeObject(o));
+                    this.render();
+                }
+            });
+
+            // عندما يُحمَّل تصميم
+            window.addEventListener("engine:design-loaded", (e) => {
+                const data = e.detail;
+                if (data && Array.isArray(data.speakers)) {
+                    this.state.objects = data.speakers.map(o => this.normalizeObject(o));
+                    this.render();
+                }
+            });
+
+            // عندما تُضاف سماعة من مكتبة speaker.js
+            window.addEventListener("speaker:added", (e) => {
+                const speaker = e.detail;
+                if (speaker && speaker.id) {
+                    // لا نضيف تلقائياً — فقط نتذكّر آخر سماعة
+                    this.state.lastSpeakerId = speaker.id;
+                }
+            });
+
+            // عندما تُحدَّث السماعات
+            window.addEventListener("speakers:changed", () => {
+                // أعِد الرسم بأسعار جديدة
+                this.render();
+            });
+
+            // من app.html
+            window.addEventListener("canvas:add-speaker", (e) => {
+                const detail = e.detail || {};
+                this.addSpeakerAt(
+                    { x: detail.x || 0, y: detail.y || 0 },
+                    detail.speakerId || this.state.lastSpeakerId
+                );
+            });
+        },
+
+        /* ═══════════════ TOOL ═══════════════ */
         setTool: function (tool) {
             const valid = ["select", "wall", "speaker", "measure", "zone", "pan"];
             if (valid.indexOf(tool) === -1) tool = "select";
@@ -164,55 +387,49 @@
             this.state.wallStart = null;
             this.state.measureStart = null;
             this.state.zoneStart = null;
+
             this.clearTemporaryGraphics();
 
-            // Update cursor class
             if (this.state.svg) {
                 this.state.svg.style.cursor = this.getCursorForTool(tool);
             }
-
             this.updateStatus(this.getToolLabel(tool));
         },
 
         getCursorForTool: function (tool) {
-            const cursors = {
+            return {
                 select: "default",
                 wall: "crosshair",
                 speaker: "copy",
                 measure: "crosshair",
                 zone: "crosshair",
                 pan: "grab"
-            };
-            return cursors[tool] || "default";
+            }[tool] || "default";
         },
 
         getToolLabel: function (tool) {
-            const labels = {
+            return {
                 select: "وضع التحديد",
                 wall: "رسم الجدران",
                 speaker: "إضافة سماعة — اضغط داخل المخطط",
                 measure: "وضع القياس — اضغط نقطتين",
                 zone: "رسم منطقة — اضغط واسحب",
                 pan: "تحريك العرض"
-            };
-            return labels[tool] || "وضع التصميم";
+            }[tool] || "وضع التصميم";
         },
 
-        /* =========================================================
-           ROOM
-        ========================================================= */
+        /* ═══════════════ ROOM ═══════════════ */
         updateRoom: function (width, depth, height) {
-            width = Number(width) || 12;
-            depth = Number(depth) || 8;
-            height = Number(height) || 3;
+            width  = Number(width)  || 20;
+            depth  = Number(depth)  || 15;
+            height = Number(height) || 4;
 
-            this.state.room = { width: width, depth: depth, height: height };
+            this.state.room = { width, depth, height };
 
             const svg = this.state.svg;
             if (!svg) return;
 
-            // تأكد من وجود roomRect
-            let rect = this.state.roomRect || document.getElementById("roomRect");
+            let rect = this.state.roomRect;
             if (!rect) {
                 rect = this.createSvg("rect");
                 rect.id = "roomRect";
@@ -225,9 +442,8 @@
             }
             this.state.roomRect = rect;
 
-            // حساب الأبعاد داخل الـ viewBox
             const vb = svg.viewBox.baseVal;
-            const vbW = vb.width || 1000;
+            const vbW = vb.width  || 1000;
             const vbH = vb.height || 700;
 
             const padding = 80;
@@ -252,15 +468,10 @@
             rect.setAttribute("width", roomW);
             rect.setAttribute("height", roomH);
 
-            this.state.pixelsPerMeter = roomW / width;
-
-            // رسم حدود الفراغ فقط
             this.render();
         },
 
-        /* =========================================================
-           COORDINATE TRANSFORMS
-        ========================================================= */
+        /* ═══════════════ TRANSFORMS ═══════════════ */
         screenToSvg: function (event) {
             const svg = this.state.svg;
             if (!svg) return { x: 0, y: 0 };
@@ -324,34 +535,39 @@
             };
         },
 
-        /* =========================================================
-           POINTER EVENTS
-        ========================================================= */
+        /* ═══════════════ POINTER ═══════════════ */
         onPointerDown: function (event) {
-            if (event.button !== 0 && event.pointerType !== "touch") return;
+            // Touch: pinch-zoom
+            if (event.pointerType === "touch") {
+                this.state.activePointers.set(event.pointerId, {
+                    x: event.clientX,
+                    y: event.clientY
+                });
 
+                if (this.state.activePointers.size === 2) {
+                    const pts = Array.from(this.state.activePointers.values());
+                    this.state.pinchStartDistance = Math.hypot(
+                        pts[0].x - pts[1].x,
+                        pts[0].y - pts[1].y
+                    );
+                    this.state.pinchStartZoom = this.state.zoom;
+                    return;
+                }
+            }
+
+            if (event.button !== 0 && event.pointerType !== "touch") return;
             this.state.currentPointer = event;
 
             const svgPoint = this.screenToSvg(event);
             const meterPoint = this.clampMeters(this.svgToMeters(svgPoint));
 
-            // Shift = pan
-            if (event.shiftKey) {
+            if (event.shiftKey || this.state.tool === "pan") {
                 this.startPan(event);
                 return;
             }
 
-            // Tool: Pan
-            if (this.state.tool === "pan") {
-                this.startPan(event);
-                return;
-            }
-
-            // Tool: Select
             if (this.state.tool === "select") {
-                const target = event.target;
-                const el = target.closest ? target.closest("[data-object-id]") : null;
-
+                const el = event.target.closest?.("[data-object-id]");
                 if (el) {
                     this.selectObject(el.getAttribute("data-object-id"));
                     this.startDrag(event);
@@ -361,81 +577,66 @@
                 return;
             }
 
-            // Tool: Speaker
             if (this.state.tool === "speaker") {
-                this.addSpeakerAt(meterPoint);
+                this.addSpeakerAt(meterPoint, this.state.lastSpeakerId);
                 return;
             }
 
-            // Tool: Wall
-            if (this.state.tool === "wall") {
-                this.startWall(meterPoint);
-                return;
-            }
-
-            // Tool: Measure
-            if (this.state.tool === "measure") {
-                this.startMeasurement(meterPoint);
-                return;
-            }
-
-            // Tool: Zone
-            if (this.state.tool === "zone") {
-                this.startZone(meterPoint);
-                return;
-            }
+            if (this.state.tool === "wall")    { this.startWall(meterPoint); return; }
+            if (this.state.tool === "measure") { this.startMeasurement(meterPoint); return; }
+            if (this.state.tool === "zone")    { this.startZone(meterPoint); return; }
         },
 
         onPointerMove: function (event) {
             this.state.currentPointer = event;
+
+            // Touch pinch-zoom
+            if (event.pointerType === "touch" && this.state.activePointers.has(event.pointerId)) {
+                this.state.activePointers.set(event.pointerId, {
+                    x: event.clientX,
+                    y: event.clientY
+                });
+
+                if (this.state.activePointers.size === 2 && this.state.pinchStartDistance > 0) {
+                    const pts = Array.from(this.state.activePointers.values());
+                    const dist = Math.hypot(pts[0].x - pts[1].x, pts[0].y - pts[1].y);
+                    const ratio = dist / this.state.pinchStartDistance;
+                    this.setZoom(this.state.pinchStartZoom * ratio);
+                    return;
+                }
+            }
+
             this.updateCoordinates(event);
 
-            if (this.state.dragging) {
-                this.dragSelectedObject(event);
-                return;
-            }
-
-            if (this.state.panning) {
-                this.panMove(event);
-                return;
-            }
-
-            if (this.state.drawing && this.state.tool === "wall") {
-                this.previewWall(event);
-                return;
-            }
-
-            if (this.state.measuring) {
-                this.previewMeasurement(event);
-                return;
-            }
-
-            if (this.state.drawing && this.state.tool === "zone") {
-                this.previewZone(event);
-                return;
-            }
+            if (this.state.dragging) { this.dragSelectedObject(event); return; }
+            if (this.state.panning)  { this.panMove(event); return; }
+            if (this.state.drawing && this.state.tool === "wall") { this.previewWall(event); return; }
+            if (this.state.measuring) { this.previewMeasurement(event); return; }
+            if (this.state.drawing && this.state.tool === "zone") { this.previewZone(event); return; }
         },
 
         onPointerUp: function (event) {
-            if (this.state.dragging) this.finishDrag();
-            if (this.state.panning) this.finishPan();
+            // Touch cleanup
+            if (event && event.pointerType === "touch") {
+                this.state.activePointers.delete(event.pointerId);
+                if (this.state.activePointers.size < 2) {
+                    this.state.pinchStartDistance = 0;
+                }
+            }
 
-            if (this.state.drawing && this.state.tool === "wall") {
-                this.finishWall(event);
+            if (this.state.dragging) {
+                this.finishDrag();
+                try { this.state.svg.releasePointerCapture(event.pointerId); } catch { /* ignore */ }
             }
-            if (this.state.measuring) {
-                this.finishMeasurement(event);
-            }
-            if (this.state.drawing && this.state.tool === "zone") {
-                this.finishZone(event);
-            }
+            if (this.state.panning) this.finishPan();
+            if (this.state.drawing && this.state.tool === "wall") this.finishWall(event);
+            if (this.state.measuring) this.finishMeasurement(event);
+            if (this.state.drawing && this.state.tool === "zone") this.finishZone(event);
         },
 
         onDoubleClick: function (event) {
-            const target = event.target;
-            const el = target.closest ? target.closest("[data-object-id]") : null;
+            const el = event.target.closest?.("[data-object-id]");
             if (!el) return;
-
             const obj = this.getObjectById(el.getAttribute("data-object-id"));
             if (obj && obj.type === "speaker") {
                 this.rotateObject(obj.id, 15);
@@ -444,36 +645,24 @@
 
         onWheel: function (event) {
             event.preventDefault();
-            const direction = event.deltaY < 0 ? 1 : -1;
-            const factor = direction > 0 ? 1.12 : 0.89;
+            const factor = event.deltaY < 0 ? 1.12 : 0.89;
             this.setZoom(this.state.zoom * factor);
         },
 
-        /* =========================================================
-           COORDINATES DISPLAY
-        ========================================================= */
         updateCoordinates: function (event) {
-            if (!event) {
-                if (this.state.currentPointer) {
-                    event = this.state.currentPointer;
-                } else {
-                    return;
-                }
-            }
+            event = event || this.state.currentPointer;
+            if (!event) return;
 
             const svgPoint = this.screenToSvg(event);
-            let meterPoint = this.svgToMeters(svgPoint);
-            meterPoint = this.clampMeters(meterPoint);
+            const meterPoint = this.clampMeters(this.svgToMeters(svgPoint));
 
             if (this.state.cursorCoordinates) {
                 this.state.cursorCoordinates.textContent =
-                    "X: " + meterPoint.x.toFixed(2) + "m | Y: " + meterPoint.y.toFixed(2) + "m";
+                    `X: ${meterPoint.x.toFixed(2)}m | Y: ${meterPoint.y.toFixed(2)}m`;
             }
         },
 
-        /* =========================================================
-           SELECTION
-        ========================================================= */
+        /* ═══════════════ SELECTION ═══════════════ */
         selectObject: function (id) {
             const obj = this.getObjectById(id);
             if (!obj) return;
@@ -483,6 +672,12 @@
             this.renderSelection();
             this.populateInspector(obj);
             this.updateStatus("تم تحديد: " + (obj.model || obj.type));
+
+            try {
+                window.dispatchEvent(new CustomEvent("canvas:selected", {
+                    detail: { object: obj }
+                }));
+            } catch { /* ignore */ }
         },
 
         clearSelection: function () {
@@ -498,7 +693,7 @@
         },
 
         getObjectById: function (id) {
-            return this.state.objects.find(function (o) { return o.id === id; }) || null;
+            return this.state.objects.find(o => o.id === id) || null;
         },
 
         renderSelection: function () {
@@ -540,13 +735,10 @@
             }
         },
 
-        /* =========================================================
-           INSPECTOR
-        ========================================================= */
+        /* ═══════════════ INSPECTOR ═══════════════ */
         populateInspector: function (obj) {
             const info = document.getElementById("selectionInfo");
             const empty = document.getElementById("selectionEmpty");
-
             if (info) info.style.display = "";
             if (empty) empty.style.display = "none";
 
@@ -556,15 +748,11 @@
             const type = document.getElementById("selectedObjectType");
             if (type) type.textContent = (obj.type || "").toUpperCase();
 
-            const power = document.getElementById("speakerPower");
-            if (power && obj.power) power.value = obj.power;
+            const specs = readSpeakerSpecs(obj);
 
-            const spl = document.getElementById("speakerSPL");
-            if (spl && obj.maxSPL) spl.value = obj.maxSPL;
-
-            const model = document.getElementById("speakerModel");
-            if (model) model.value = obj.model || "";
-
+            this.setValue("speakerPower", specs.rms);
+            this.setValue("speakerSPL", specs.maxSPL);
+            this.setValue("speakerModel", specs.model);
             this.setValue("selectedX", obj.x);
             this.setValue("selectedY", obj.y);
             this.setValue("selectedZ", obj.z ?? obj.mountingHeight ?? 3);
@@ -583,35 +771,52 @@
             if (el) el.value = value ?? "";
         },
 
-        /* =========================================================
-           SPEAKER — ADD
-        ========================================================= */
-        addSpeakerAt: function (point) {
+        /* ═══════════════ ADD SPEAKER ═══════════════ */
+        addSpeakerAt: function (point, speakerId) {
             point = this.snapPoint(point);
             point = this.clampMeters(point, 0.15);
 
-            const mountingHeight = Math.max(
-                2.2,
-                this.state.room.height - 0.2
-            );
+            const mountingHeight = Math.max(2.2, this.state.room.height - 0.2);
+
+            // اقرأ مواصفات من speaker.js إن وُجد
+            let specs = {
+                rms: 500, maxSPL: 125,
+                horizontal: 90, vertical: 60,
+                manufacturer: "Generic", model: "Custom Speaker",
+                category: "Point Source"
+            };
+
+            const speakerApi = getSpeakerAPI();
+            if (speakerId && speakerApi) {
+                try {
+                    const found = speakerApi.getById?.(speakerId) || speakerApi.get?.(speakerId);
+                    if (found) specs = readSpeakerSpecs(found);
+                } catch { /* ignore */ }
+            } else if (speakerApi) {
+                // لم يُحدَّد — استخدم الأول من المكتبة
+                const db = speakerApi.list?.() || [];
+                if (db.length) specs = readSpeakerSpecs(db[0]);
+            }
 
             const speaker = {
-                id: "SPK-" + Date.now() + "-" + Math.floor(Math.random() * 1000),
+                id: generateId("SPK"),
                 type: "speaker",
-                name: "Speaker",
-                model: "Custom Speaker",
+                speakerId: speakerId || null,   // ← مفتاح الربط مع speaker.js
+                name: specs.model,
+                model: specs.model,
+                manufacturer: specs.manufacturer,
+                category: specs.category,
                 x: Number(point.x.toFixed(3)),
                 y: Number(point.y.toFixed(3)),
                 z: mountingHeight,
                 rotation: 0,
-                power: 500,
-                rms: 500,
-                maxSPL: 125,
-                horizontal: 90,
-                vertical: 60,
-                horizontalCoverage: 90,
-                verticalCoverage: 60,
-                mountingHeight: mountingHeight
+                rms_power: specs.rms,
+                max_spl: specs.maxSPL,
+                horizontal_coverage: specs.horizontal,
+                vertical_coverage: specs.vertical,
+                mountingHeight: mountingHeight,
+                gain: 0,
+                delay: 0
             };
 
             this.pushHistory();
@@ -619,20 +824,51 @@
             this.selectObject(speaker.id);
             this.render();
             this.updateMetrics();
-            this.updateStatus("✓ تمت إضافة السماعة — " + this.state.objects.filter(o => o.type === "speaker").length + " سماعة");
+            this.updateStatus(
+                `✓ تمت إضافة السماعة — ${this.state.objects.filter(o => o.type === "speaker").length} سماعة`
+            );
             this.dispatchChange();
 
             return speaker;
         },
 
-        /* =========================================================
-           DRAG
-        ========================================================= */
+        /**
+         * يضمن أن الكائن قادم من engine.js يحتوي كل الحقول المطلوبة
+         */
+        normalizeObject: function (obj) {
+            if (!obj || typeof obj !== "object") return obj;
+
+            const specs = readSpeakerSpecs(obj);
+
+            return {
+                ...obj,
+                id: obj.id || generateId("SPK"),
+                type: obj.type || "speaker",
+                speakerId: obj.speakerId || null,
+                model: obj.model || specs.model,
+                manufacturer: obj.manufacturer || specs.manufacturer,
+                category: obj.category || specs.category,
+                x: Number(obj.x) || 0,
+                y: Number(obj.y) || 0,
+                z: Number(obj.z ?? obj.mountingHeight) || 3,
+                rotation: Number(obj.rotation) || 0,
+                rms_power: specs.rms,
+                max_spl: specs.maxSPL,
+                horizontal_coverage: specs.horizontal,
+                vertical_coverage: specs.vertical,
+                mountingHeight: Number(obj.mountingHeight ?? obj.z) || 3,
+                gain: Number(obj.gain) || 0,
+                delay: Number(obj.delay) || 0
+            };
+        },
+
+        /* ═══════════════ DRAG (مُصلَح) ═══════════════ */
         startDrag: function (event) {
             const obj = this.getSelectedObject();
             if (!obj) return;
 
             this.state.dragging = true;
+            this.state.dragHistoryPushed = false;  // ← علم: لم يُحفظ بعد
             this.state.dragStart = {
                 eventX: event.clientX,
                 eventY: event.clientY,
@@ -640,15 +876,19 @@
                 objectY: obj.y
             };
 
-            try {
-                this.state.svg.setPointerCapture(event.pointerId);
-            } catch (e) {}
+            try { this.state.svg.setPointerCapture(event.pointerId); } catch { /* ignore */ }
         },
 
         dragSelectedObject: function (event) {
             const obj = this.getSelectedObject();
             const start = this.state.dragStart;
             if (!obj || !start) return;
+
+            // ✅ احفظ الحالة قبل أول تعديل فعلي (أول حركة)
+            if (!this.state.dragHistoryPushed) {
+                this.pushHistory();
+                this.state.dragHistoryPushed = true;
+            }
 
             const current = this.screenToSvg(event);
             const startPoint = this.screenToSvg({
@@ -665,7 +905,6 @@
             };
 
             newPoint = this.clampMeters(newPoint, 0.15);
-
             if (this.state.snapEnabled) {
                 newPoint = this.snapPoint(newPoint);
                 newPoint = this.clampMeters(newPoint, 0.15);
@@ -679,15 +918,13 @@
         },
 
         finishDrag: function () {
-            if (this.state.dragging) this.pushHistory();
             this.state.dragging = false;
             this.state.dragStart = null;
+            this.state.dragHistoryPushed = false;
             this.dispatchChange();
         },
 
-        /* =========================================================
-           WALL TOOL
-        ========================================================= */
+        /* ═══════════════ WALL ═══════════════ */
         startWall: function (point) {
             point = this.snapPoint(point);
             point = this.clampMeters(point);
@@ -727,7 +964,7 @@
             preview.setAttribute("x2", b.x);
             preview.setAttribute("y2", b.y);
 
-            const d = Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
+            const d = Math.hypot(end.x - start.x, end.y - start.y);
             this.updateStatus("طول الجدار: " + d.toFixed(2) + " m");
         },
 
@@ -739,17 +976,14 @@
             end = this.clampMeters(end);
 
             const start = this.state.wallStart;
-            const d = Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
+            const d = Math.hypot(end.x - start.x, end.y - start.y);
 
-            if (d < 0.05) {
-                this.cancelWall();
-                return;
-            }
+            if (d < 0.05) { this.cancelWall(); return; }
 
             this.pushHistory();
 
-            const wall = {
-                id: "WALL-" + Date.now(),
+            this.state.objects.push({
+                id: generateId("WALL"),
                 type: "wall",
                 x1: Number(start.x.toFixed(3)),
                 y1: Number(start.y.toFixed(3)),
@@ -757,9 +991,8 @@
                 y2: Number(end.y.toFixed(3)),
                 height: this.state.room.height,
                 thickness: 0.15
-            };
+            });
 
-            this.state.objects.push(wall);
             this.cancelWall();
             this.render();
             this.dispatchChange();
@@ -773,9 +1006,7 @@
             this.state.drawing = false;
         },
 
-        /* =========================================================
-           MEASURE TOOL
-        ========================================================= */
+        /* ═══════════════ MEASURE ═══════════════ */
         startMeasurement: function (point) {
             this.state.measureStart = this.clampMeters(point);
             this.state.measuring = true;
@@ -824,7 +1055,7 @@
             line.setAttribute("x2", b.x);
             line.setAttribute("y2", b.y);
 
-            const d = Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
+            const d = Math.hypot(end.x - start.x, end.y - start.y);
 
             text.setAttribute("x", (a.x + b.x) / 2);
             text.setAttribute("y", (a.y + b.y) / 2 - 10);
@@ -836,14 +1067,12 @@
             if (!start) return;
 
             const svgPoint = this.screenToSvg(event);
-            let end = this.clampMeters(this.svgToMeters(svgPoint));
+            const end = this.clampMeters(this.svgToMeters(svgPoint));
 
-            const d = Math.sqrt(Math.pow(end.x - start.x, 2) + Math.pow(end.y - start.y, 2));
-
+            const d = Math.hypot(end.x - start.x, end.y - start.y);
             this.removeTemporaryMeasurement();
             this.state.measureStart = null;
             this.state.measuring = false;
-
             this.updateStatus("المسافة: " + d.toFixed(2) + " m");
         },
 
@@ -854,9 +1083,7 @@
             });
         },
 
-        /* =========================================================
-           ZONE TOOL
-        ========================================================= */
+        /* ═══════════════ ZONE ═══════════════ */
         startZone: function (point) {
             this.state.zoneStart = this.clampMeters(point);
             this.state.drawing = true;
@@ -868,7 +1095,7 @@
             if (!start) return;
 
             const svgPoint = this.screenToSvg(event);
-            let end = this.clampMeters(this.svgToMeters(svgPoint));
+            const end = this.clampMeters(this.svgToMeters(svgPoint));
 
             const a = this.metersToSvg(start);
             const b = this.metersToSvg(end);
@@ -899,29 +1126,25 @@
             if (!start) return;
 
             const svgPoint = this.screenToSvg(event);
-            let end = this.clampMeters(this.svgToMeters(svgPoint));
+            const end = this.clampMeters(this.svgToMeters(svgPoint));
 
             const w = Math.abs(end.x - start.x);
             const d = Math.abs(end.y - start.y);
 
-            if (w < 0.1 || d < 0.1) {
-                this.cancelZone();
-                return;
-            }
+            if (w < 0.1 || d < 0.1) { this.cancelZone(); return; }
 
             this.pushHistory();
 
-            const zone = {
-                id: "ZONE-" + Date.now(),
+            this.state.objects.push({
+                id: generateId("ZONE"),
                 type: "zone",
                 name: "منطقة صوتية",
                 x: Math.min(start.x, end.x),
                 y: Math.min(start.y, end.y),
                 width: w,
                 depth: d
-            };
+            });
 
-            this.state.objects.push(zone);
             this.cancelZone();
             this.render();
             this.dispatchChange();
@@ -934,9 +1157,7 @@
             this.state.drawing = false;
         },
 
-        /* =========================================================
-           PAN
-        ========================================================= */
+        /* ═══════════════ PAN ═══════════════ */
         startPan: function (event) {
             this.state.panning = true;
             this.state.panStart = {
@@ -954,7 +1175,6 @@
 
             this.state.panX = start.panX + (event.clientX - start.x);
             this.state.panY = start.panY + (event.clientY - start.y);
-
             this.applyTransform();
         },
 
@@ -966,18 +1186,16 @@
             }
         },
 
-        /* =========================================================
-           ZOOM
-        ========================================================= */
+        /* ═══════════════ ZOOM ═══════════════ */
         setZoom: function (zoom) {
             zoom = Number(zoom) || 1;
             zoom = Math.max(this.state.minZoom, Math.min(this.state.maxZoom, zoom));
             this.state.zoom = zoom;
             this.applyTransform();
 
-            const label = document.getElementById("zoomLevel") ||
-                          document.getElementById("canvasZoomValue") ||
-                          document.getElementById("zoomLabel");
+            const label = document.getElementById("zoomLevel")
+                       || document.getElementById("canvasZoomValue")
+                       || document.getElementById("zoomLabel");
             if (label) label.textContent = Math.round(zoom * 100) + "%";
         },
 
@@ -993,19 +1211,45 @@
             if (label) label.textContent = "100%";
         },
 
-        fitView: function () { this.resetZoom(); },
-
-        applyTransform: function () {
-            const svg = this.state.svg;
-            if (!svg) return;
-            svg.style.transformOrigin = "center center";
-            svg.style.transform =
-                "translate(" + this.state.panX + "px, " + this.state.panY + "px) scale(" + this.state.zoom + ")";
+        fitView: function () {
+            // 100% + إعادة التمركز — سلوك بسيط
+            this.resetZoom();
         },
 
-        /* =========================================================
-           RENDER
-        ========================================================= */
+        /**
+         * ✅ تطبيق التحويل على <g> داخل SVG (crisp rendering)
+         * بدل CSS transform على <svg> (blurry)
+         */
+        applyTransform: function () {
+            const layer = this.state.transformLayer;
+            if (!layer) return;
+
+            const svg = this.state.svg;
+            const vb = svg.viewBox.baseVal;
+            const vbW = vb.width || 1000;
+            const vbH = vb.height || 700;
+
+            // حوّل الـ pan (بكسل) إلى وحدات SVG
+            const rect = svg.getBoundingClientRect();
+            const scaleX = rect.width ? vbW / rect.width : 1;
+            const scaleY = rect.height ? vbH / rect.height : 1;
+
+            const panX = this.state.panX * scaleX;
+            const panY = this.state.panY * scaleY;
+
+            const z = this.state.zoom;
+            const cx = vbW / 2;
+            const cy = vbH / 2;
+
+            // حول نقطة المركز
+            const tx = cx - (cx * z) + panX;
+            const ty = cy - (cy * z) + panY;
+
+            layer.setAttribute("transform",
+                `translate(${tx.toFixed(2)}, ${ty.toFixed(2)}) scale(${z.toFixed(3)})`);
+        },
+
+        /* ═══════════════ RENDER ═══════════════ */
         render: function () {
             this.renderWalls();
             this.renderZones();
@@ -1022,13 +1266,10 @@
             const preview = document.getElementById("temporaryWall");
             const roomRect = this.state.roomRect;
 
-            // نحتفظ بالـ roomRect و preview
+            // مسح كل شيء ثم أعِد الإضافة
             layer.innerHTML = "";
-            if (roomRect && roomRect.parentElement !== layer) {
-                layer.appendChild(roomRect);
-            } else if (roomRect) {
-                layer.appendChild(roomRect);
-            }
+            if (roomRect) layer.appendChild(roomRect);
+            if (preview) layer.appendChild(preview);
 
             const walls = this.state.objects.filter(o => o.type === "wall");
 
@@ -1048,8 +1289,6 @@
                 line.style.cursor = "pointer";
                 layer.appendChild(line);
             });
-
-            if (preview) layer.appendChild(preview);
         },
 
         renderZones: function () {
@@ -1086,24 +1325,25 @@
 
             layer.innerHTML = "";
 
-            const speakers = this.state.objects.filter(o => o.type === "speaker");
-            speakers.forEach(spk => this.renderSpeaker(layer, spk));
+            this.state.objects
+                .filter(o => o.type === "speaker")
+                .forEach(spk => this.renderSpeaker(layer, spk));
         },
 
         renderSpeaker: function (layer, spk) {
             const point = this.metersToSvg({ x: spk.x, y: spk.y });
+            const specs = readSpeakerSpecs(spk);
 
             const g = this.createSvg("g");
             g.setAttribute("data-object-id", spk.id);
             g.setAttribute("class", "canvas-speaker");
             g.style.cursor = "pointer";
             g.setAttribute("transform",
-                "translate(" + point.x + "," + point.y + ") rotate(" + (spk.rotation || 0) + ")");
+                `translate(${point.x},${point.y}) rotate(${spk.rotation || 0})`);
 
             // Coverage cone
-            const coverage = this.createSvg("path");
             const h = 55;
-            const spread = Math.max(20, Math.min(150, spk.horizontal || spk.horizontalCoverage || 90));
+            const spread = Math.max(20, Math.min(150, specs.horizontal));
             const half = spread / 2;
             const rad = Math.PI / 180;
             const x1 = Math.sin(-half * rad) * h;
@@ -1112,15 +1352,15 @@
             const y2 = -Math.cos(half * rad) * h;
             const largeArc = spread > 180 ? 1 : 0;
 
+            const coverage = this.createSvg("path");
             coverage.setAttribute("d",
-                "M 0 0 L " + x1 + " " + y1 +
-                " A " + h + " " + h + " 0 " + largeArc + " 1 " + x2 + " " + y2 + " Z");
+                `M 0 0 L ${x1} ${y1} A ${h} ${h} 0 ${largeArc} 1 ${x2} ${y2} Z`);
             coverage.setAttribute("fill", "rgba(230,0,18,0.10)");
             coverage.setAttribute("stroke", "rgba(230,0,18,0.30)");
             coverage.setAttribute("pointer-events", "none");
             g.appendChild(coverage);
 
-            // Speaker body
+            // Body
             const body = this.createSvg("rect");
             body.setAttribute("x", "-14");
             body.setAttribute("y", "-10");
@@ -1133,7 +1373,7 @@
             body.setAttribute("data-object-id", spk.id);
             g.appendChild(body);
 
-            // Direction indicator
+            // Direction
             const dir = this.createSvg("line");
             dir.setAttribute("x1", "0");
             dir.setAttribute("y1", "-10");
@@ -1153,29 +1393,25 @@
             label.setAttribute("font-family", "Cairo, sans-serif");
             label.setAttribute("text-anchor", "middle");
             label.setAttribute("pointer-events", "none");
-            label.textContent = spk.model || "Speaker";
+            label.textContent = specs.model;
             g.appendChild(label);
 
             layer.appendChild(g);
         },
 
-        /* =========================================================
-           EMPTY STATE
-        ========================================================= */
         updateEmptyState: function () {
             const empty = document.getElementById("canvasEmptyState");
             if (!empty) return;
-
-            const hasObjects = this.state.objects.length > 0;
-            empty.style.display = hasObjects ? "none" : "";
+            empty.style.display = this.state.objects.length > 0 ? "none" : "";
         },
 
-        /* =========================================================
-           METRICS
-        ========================================================= */
+        /* ═══════════════ METRICS ═══════════════ */
         updateMetrics: function () {
             const speakers = this.state.objects.filter(o => o.type === "speaker");
-            const totalPower = speakers.reduce((s, i) => s + (Number(i.power) || 0), 0);
+            const totalPower = speakers.reduce(
+                (s, i) => s + (readSpeakerSpecs(i).rms || 0),
+                0
+            );
 
             const count = document.getElementById("metricSpeakerCount");
             if (count) count.textContent = speakers.length;
@@ -1186,17 +1422,16 @@
             const power = document.getElementById("metricTotalPower");
             if (power) power.textContent = totalPower.toFixed(0) + " W";
 
-            if (window.AcousticApp) {
+            // ✅ null check قبل الوصول لـ AcousticApp
+            if (window.AcousticApp && typeof window.AcousticApp === "object") {
                 window.AcousticApp.canvasMetrics = {
                     speakerCount: speakers.length,
-                    totalPower: totalPower
+                    totalPower
                 };
             }
         },
 
-        /* =========================================================
-           DELETE / CLEAR
-        ========================================================= */
+        /* ═══════════════ DELETE / CLEAR ═══════════════ */
         deleteSelected: function () {
             const id = this.state.selectedId;
             if (!id) return;
@@ -1216,8 +1451,14 @@
 
         removeSelected: function () { this.deleteSelected(); },
 
-        clear: function () {
-            if (!confirm("هل أنت متأكد من مسح جميع العناصر؟")) return;
+        clear: async function () {
+            if (this.state.objects.length === 0) return;
+
+            const ok = await confirmAsync(
+                "هل أنت متأكد من مسح جميع العناصر؟",
+                "مسح المخطط"
+            );
+            if (!ok) return;
 
             this.pushHistory();
             this.state.objects = [];
@@ -1229,15 +1470,14 @@
             this.updateStatus("تم مسح المخطط");
         },
 
-        /* =========================================================
-           ROTATION
-        ========================================================= */
+        /* ═══════════════ ROTATION (مُصلَح) ═══════════════ */
         rotateObject: function (id, degrees) {
             const obj = this.getObjectById(id);
             if (!obj || obj.type !== "speaker") return;
 
-            this.pushHistory();
+            this.pushHistory();  // ✅ قبل التعديل
             obj.rotation = this.normalizeAngle((Number(obj.rotation) || 0) + Number(degrees));
+
             this.render();
             this.populateInspector(obj);
             this.dispatchChange();
@@ -1251,7 +1491,10 @@
         setSelectedSpeakerRotation: function (value) {
             const obj = this.getSelectedObject();
             if (!obj || obj.type !== "speaker") return;
+
+            this.pushHistory();  // ✅ قبل التعديل
             obj.rotation = this.normalizeAngle(Number(value));
+
             this.render();
             this.populateInspector(obj);
             this.dispatchChange();
@@ -1265,8 +1508,8 @@
             y = Number(y);
             if (!Number.isFinite(x) || !Number.isFinite(y)) return;
 
-            this.pushHistory();
-            const p = this.clampMeters({ x: x, y: y }, 0.15);
+            this.pushHistory();  // ✅ قبل التعديل
+            const p = this.clampMeters({ x, y }, 0.15);
             obj.x = Number(p.x.toFixed(3));
             obj.y = Number(p.y.toFixed(3));
 
@@ -1282,9 +1525,7 @@
             return a;
         },
 
-        /* =========================================================
-           HISTORY
-        ========================================================= */
+        /* ═══════════════ HISTORY ═══════════════ */
         pushHistory: function () {
             const snapshot = JSON.stringify(this.state.objects);
 
@@ -1307,7 +1548,7 @@
 
             try {
                 this.state.objects = JSON.parse(this.state.history[this.state.historyIndex]);
-            } catch (e) { return; }
+            } catch { return; }
 
             this.state.selectedId = null;
             this.render();
@@ -1321,15 +1562,13 @@
 
             try {
                 this.state.objects = JSON.parse(this.state.history[this.state.historyIndex]);
-            } catch (e) { return; }
+            } catch { return; }
 
             this.render();
             this.updateStatus("تمت الإعادة");
         },
 
-        /* =========================================================
-           HELPERS
-        ========================================================= */
+        /* ═══════════════ HELPERS ═══════════════ */
         createSvg: function (tag) {
             return document.createElementNS("http://www.w3.org/2000/svg", tag);
         },
@@ -1347,8 +1586,8 @@
         },
 
         updateStatus: function (msg) {
-            const el = document.getElementById("statusMessage") ||
-                       document.getElementById("analysisStatus");
+            const el = document.getElementById("statusMessage")
+                    || document.getElementById("analysisStatus");
             if (el) el.textContent = msg;
         },
 
@@ -1356,38 +1595,46 @@
 
         dispatchChange: function () {
             try {
+                window.dispatchEvent(new CustomEvent("canvas:changed", {
+                    detail: { objects: this.state.objects }
+                }));
+                // للتوافق مع الكود القديم
                 window.dispatchEvent(new CustomEvent("acoustic:change", {
                     detail: { objects: this.state.objects }
                 }));
-            } catch (e) {}
+            } catch { /* ignore */ }
         },
 
-        /* =========================================================
-           DATA EXPORT / IMPORT
-        ========================================================= */
+        /* ═══════════════ DATA EXPORT/IMPORT ═══════════════ */
         getDesignData: function () {
             return {
-                version: "1.0",
+                version: "2.0",
                 room: JSON.parse(JSON.stringify(this.state.room)),
                 objects: JSON.parse(JSON.stringify(this.state.objects)),
                 speakers: this.state.objects
                     .filter(o => o.type === "speaker")
-                    .map(o => ({
-                        id: o.id,
-                        type: "speaker",
-                        model: o.model,
-                        manufacturer: o.manufacturer,
-                        x: o.x,
-                        y: o.y,
-                        z: o.z,
-                        rotation: o.rotation,
-                        power: o.power,
-                        rms: o.rms,
-                        maxSPL: o.maxSPL,
-                        horizontalCoverage: o.horizontal || o.horizontalCoverage,
-                        verticalCoverage: o.vertical || o.verticalCoverage,
-                        mountingHeight: o.mountingHeight || o.z
-                    })),
+                    .map(o => {
+                        const specs = readSpeakerSpecs(o);
+                        return {
+                            id: o.id,
+                            speakerId: o.speakerId,
+                            type: "speaker",
+                            model: specs.model,
+                            manufacturer: specs.manufacturer,
+                            category: specs.category,
+                            x: o.x,
+                            y: o.y,
+                            z: o.z,
+                            rotation: o.rotation,
+                            rms_power: specs.rms,
+                            max_spl: specs.maxSPL,
+                            horizontal_coverage: specs.horizontal,
+                            vertical_coverage: specs.vertical,
+                            mountingHeight: o.mountingHeight || o.z,
+                            gain: o.gain || 0,
+                            delay: o.delay || 0
+                        };
+                    }),
                 settings: {
                     zoom: this.state.zoom,
                     snapEnabled: this.state.snapEnabled,
@@ -1405,7 +1652,7 @@
 
             const objects = data.objects || data.speakers;
             if (Array.isArray(objects)) {
-                this.state.objects = JSON.parse(JSON.stringify(objects));
+                this.state.objects = objects.map(o => this.normalizeObject(o));
             }
 
             this.render();
@@ -1422,39 +1669,36 @@
         }
     };
 
-    /* =========================================================
-       EXPOSE GLOBALLY
-    ========================================================= */
+    /* ═══════════════ EXPOSE ═══════════════ */
     window.AcousticCanvas = AcousticCanvas;
 
-    window.initAcousticCanvas = function () { AcousticCanvas.init(); };
-    window.setTool = function (t) { AcousticCanvas.setTool(t); };
-    window.updateCanvasRoom = function (w, d, h) { AcousticCanvas.updateRoom(w, d, h); };
-    window.setGridVisible = function (e) { AcousticCanvas.setGridVisible(e); };
-    window.setSnapEnabled = function (e) { AcousticCanvas.setSnapEnabled(e); };
-    window.canvasZoomIn = function () { AcousticCanvas.zoomIn(); };
-    window.canvasZoomOut = function () { AcousticCanvas.zoomOut(); };
-    window.canvasResetZoom = function () { AcousticCanvas.resetZoom(); };
-    window.fitCanvasToRoom = function () { AcousticCanvas.fitView(); };
-    window.clearDesignCanvas = function () { AcousticCanvas.clear(); };
-    window.deleteSelectedCanvasObject = function () { AcousticCanvas.deleteSelected(); };
-    window.rotateSelectedObject = function (d) { AcousticCanvas.rotateSelectedObject(d); };
-    window.setSelectedSpeakerRotation = function (v) { AcousticCanvas.setSelectedSpeakerRotation(v); };
-    window.setSelectedSpeakerPosition = function (x, y) { AcousticCanvas.setSelectedSpeakerPosition(x, y); };
-    window.getDesignData = function () { return AcousticCanvas.getDesignData(); };
-    window.loadDesignData = function (d) { AcousticCanvas.loadDesign(d); };
-    window.canvasUndo = function () { AcousticCanvas.undo(); };
-    window.canvasRedo = function () { AcousticCanvas.redo(); };
-    window.refreshCanvas = function () { AcousticCanvas.refreshCanvas(); };
+    window.initAcousticCanvas = () => AcousticCanvas.init();
+    window.setTool = (t) => AcousticCanvas.setTool(t);
+    window.updateCanvasRoom = (w, d, h) => AcousticCanvas.updateRoom(w, d, h);
+    window.setGridVisible = (e) => AcousticCanvas.setGridVisible(e);
+    window.setSnapEnabled = (e) => AcousticCanvas.setSnapEnabled(e);
+    window.canvasZoomIn = () => AcousticCanvas.zoomIn();
+    window.canvasZoomOut = () => AcousticCanvas.zoomOut();
+    window.canvasResetZoom = () => AcousticCanvas.resetZoom();
+    window.fitCanvasToRoom = () => AcousticCanvas.fitView();
+    window.clearDesignCanvas = () => AcousticCanvas.clear();
+    window.deleteSelectedCanvasObject = () => AcousticCanvas.deleteSelected();
+    window.rotateSelectedObject = (d) => AcousticCanvas.rotateSelectedObject(d);
+    window.setSelectedSpeakerRotation = (v) => AcousticCanvas.setSelectedSpeakerRotation(v);
+    window.setSelectedSpeakerPosition = (x, y) => AcousticCanvas.setSelectedSpeakerPosition(x, y);
+    window.getDesignData = () => AcousticCanvas.getDesignData();
+    window.loadDesignData = (d) => AcousticCanvas.loadDesign(d);
+    window.canvasUndo = () => AcousticCanvas.undo();
+    window.canvasRedo = () => AcousticCanvas.redo();
+    window.refreshCanvas = () => AcousticCanvas.refreshCanvas();
 
-    /* =========================================================
-       AUTO INIT
-    ========================================================= */
+    /* ═══════════════ AUTO INIT ═══════════════ */
     if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", function () {
-            AcousticCanvas.init();
-        });
+        document.addEventListener("DOMContentLoaded", () => AcousticCanvas.init());
     } else {
         AcousticCanvas.init();
     }
+
+    console.log("[canvas.js] v2.1.0 جاهز");
+
 })();
