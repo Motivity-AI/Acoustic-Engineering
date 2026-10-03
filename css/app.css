@@ -1,5 +1,5 @@
 /* ============================================================
-   Acoustic Engineering — css/app.css v2.0.0
+   Acoustic Engineering — css/app.css v2.1.0
    Application / Designer Workspace styles
    ✅ CSS Variables موحّدة (تتطابق مع style.css و app.html)
    ✅ إزالة التكرار مع style.css (base layer مسؤول)
@@ -8,6 +8,8 @@
    ✅ prefers-reduced-motion
    ✅ Z-index scale موحّد
    ✅ Reduced duplication + أداء أفضل
+   ✅ إصلاح sidebar الجوال + backdrop + body lock — v2.1.0
+   ✅ إصلاح switch + tooltip + canvas-empty-state في RTL — v2.1.0
    ============================================================ */
 
 /* ═══════════════════════════════════════════════════════════
@@ -23,6 +25,11 @@
     background: var(--ae-bg, #080b12);
     color: var(--ae-text, #f4f7fb);
     font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
+}
+
+/* ✅ FIX: قفل تمرير الصفحة عند فتح القائمة على الجوال */
+body.app-nav-open {
+    overflow: hidden;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -42,6 +49,7 @@
         width var(--transition-base, 0.2s ease),
         min-width var(--transition-base, 0.2s ease),
         transform var(--transition-base, 0.2s ease);
+    will-change: transform, width;
 }
 
 .sidebar.collapsed {
@@ -93,6 +101,33 @@
 
 .sidebar.collapsed .brand-copy {
     display: none;
+}
+
+/* ✅ FIX: زر إغلاق القائمة على الجوال */
+.sidebar-close {
+    display: none;
+    width: 32px;
+    height: 32px;
+    margin-inline-start: auto;
+    border: 0;
+    border-radius: var(--radius-sm, 8px);
+    background: rgba(255, 255, 255, 0.05);
+    color: #a8b2c0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: background-color var(--transition-fast, 0.15s ease);
+}
+
+.sidebar-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.sidebar-close:focus-visible {
+    outline: 2px solid var(--ae-blue, #38bdf8);
+    outline-offset: 2px;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -172,11 +207,18 @@
     background: rgba(255, 255, 255, 0.045);
 }
 
+/* ✅ FIX: جعل التدرّج والمؤشر على نفس الجهة (inline-start) في RTL و LTR */
 .nav-item.active {
     color: #fff;
-    background: linear-gradient(90deg, rgba(230, 0, 18, 0.14), rgba(230, 0, 18, 0.04));
+    /* RTL: red at start (right), fades to transparent (left) */
+    background: linear-gradient(to left, rgba(230, 0, 18, 0.14), rgba(230, 0, 18, 0.04));
     border-color: rgba(230, 0, 18, 0.16);
     box-shadow: inset -3px 0 0 var(--ae-red, #e60012);
+}
+
+[dir="ltr"] .nav-item.active {
+    background: linear-gradient(to right, rgba(230, 0, 18, 0.14), rgba(230, 0, 18, 0.04));
+    box-shadow: inset 3px 0 0 var(--ae-red, #e60012);
 }
 
 .nav-item.active i {
@@ -332,6 +374,11 @@
 .topbar-button:focus-visible {
     outline: 2px solid var(--ae-blue, #38bdf8);
     outline-offset: 2px;
+}
+
+/* ✅ FIX: زر فتح القائمة على الجوال — مخفي افتراضياً */
+.sidebar-toggle {
+    display: none;
 }
 
 .project-header {
@@ -525,11 +572,12 @@
 }
 
 /* ─── Tool button tooltips ─── */
+/* ✅ FIX: استخدام left:50% بدل inset-inline-start لضمان التوسيط في RTL و LTR */
 .tool-button[title]::after {
     content: attr(title);
     position: absolute;
     bottom: -33px;
-    inset-inline-start: 50%;
+    left: 50%;
     transform: translateX(-50%);
     padding: 4px 7px;
     border-radius: 5px;
@@ -804,9 +852,10 @@
 }
 
 /* ─── Empty state ─── */
+/* ✅ FIX: left:50% بدل inset-inline-start:50% لضمان التوسيط في RTL */
 .canvas-empty-state {
     position: absolute;
-    inset-inline-start: 50%;
+    left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
     width: min(340px, calc(100% - 40px));
@@ -1505,6 +1554,7 @@
 
 /* ═══════════════════════════════════════════════════════════
    23. Toggle Switch
+   ✅ FIX: المفتاح يبدأ من inline-start، ويتحرك إلى inline-end عند التفعيل
    ═══════════════════════════════════════════════════════════ */
 
 .toggle-row {
@@ -1553,8 +1603,11 @@
     position: absolute;
     width: 14px;
     height: 14px;
-    inset-inline-end: 3px;
     top: 3px;
+
+    /* ✅ FIX: البداية على inline-start */
+    inset-inline-start: 3px;
+
     border-radius: 50%;
     background: #8995a4;
     transition:
@@ -1566,13 +1619,14 @@
     background: rgba(230, 0, 18, 0.65);
 }
 
+/* ✅ FIX: عند التفعيل يتحرك نحو inline-end */
 .switch input:checked + .switch-slider::before {
-    transform: translateX(-18px);
     background: #fff;
+    transform: translateX(18px); /* LTR */
 }
 
-[dir="ltr"] .switch input:checked + .switch-slider::before {
-    transform: translateX(18px);
+[dir="rtl"] .switch input:checked + .switch-slider::before {
+    transform: translateX(-18px); /* RTL */
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -1614,23 +1668,43 @@
 }
 
 @media (max-width: 1000px) {
+    /* ✅ FIX: القائمة تظهر من نفس جهة سطح المكتب (inline-start) */
     .sidebar {
         position: fixed;
         top: 0;
         bottom: 0;
-        inset-inline-end: 0;
+        inset-inline-start: 0;
+
+        /* الإخفاء الافتراضي (LTR: تنزلق لليسار) */
+        transform: translateX(-100%);
+
+        box-shadow: 20px 0 60px rgba(0, 0, 0, 0.35);
+        z-index: 2100; /* فوق topbar (500) */
+        height: 100dvh;
+    }
+
+    /* ✅ FIX: في RTL تنزلق لليمين */
+    [dir="rtl"] .sidebar {
         transform: translateX(100%);
         box-shadow: -20px 0 60px rgba(0, 0, 0, 0.35);
     }
-    .sidebar.mobile-open {
+
+    /* ✅ FIX: عند الفتح — الاتجاهان يرجعان إلى 0 */
+    .sidebar.mobile-open,
+    .sidebar.open {
         transform: translateX(0);
     }
-    [dir="ltr"] .sidebar {
-        transform: translateX(-100%);
+
+    /* ✅ FIX: إظهار زر الإغلاق */
+    .sidebar-close {
+        display: inline-flex;
     }
-    [dir="ltr"] .sidebar.mobile-open {
-        transform: translateX(0);
+
+    /* ✅ FIX: إظهار زر فتح القائمة */
+    .sidebar-toggle {
+        display: inline-flex;
     }
+
     .design-layout {
         grid-template-columns: 220px minmax(300px, 1fr);
     }
@@ -1639,6 +1713,36 @@
     }
     .project-header {
         max-width: 220px;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ✅ FIX: Backdrop خلف القائمة على الجوال
+   ═══════════════════════════════════════════════════════════ */
+
+.sidebar-backdrop {
+    display: none;
+}
+
+@media (max-width: 1000px) {
+    .sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+        z-index: 2050; /* أقل من 2100 (القائمة) */
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity var(--transition-base, 0.2s ease),
+            visibility var(--transition-base, 0.2s ease);
+    }
+
+    .sidebar-backdrop.active {
+        opacity: 1;
+        visibility: visible;
     }
 }
 
@@ -1703,6 +1807,8 @@
 
 @media print {
     .sidebar,
+    .sidebar-backdrop,
+    .sidebar-toggle,
     .topbar,
     .design-toolbar,
     .bottom-panels,
