@@ -1,12 +1,14 @@
 /* ============================================================
-   Acoustic Engineering — css/admin.css v2.0.0
+   Acoustic Engineering — css/admin.css v2.1.0
    Admin Panel specific styles
    ✅ CSS Variables موحّدة (تتطابق مع style.css)
    ✅ RTL logical properties (inset-inline-*, border-inline-*)
    ✅ :focus-visible شامل
    ✅ prefers-reduced-motion
    ✅ أدوار متسقة (badge colors موحّدة مع style.css)
-   ✅ إصلاح sidebdr على الجوال (RTL/LTR)
+   ✅ إصلاح sidebar على الجوال (RTL/LTR) — v2.1.0
+   ✅ إضافة backdrop + body lock للجوال — v2.1.0
+   ✅ position: fixed بدل sticky لثبات أكبر — v2.1.0
    ✅ إضافة أنماط admin-section, dialog, toast, loading
    ============================================================ */
 
@@ -23,6 +25,11 @@
     font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
 }
 
+/* ✅ FIX: منع تمرير الصفحة عند فتح القائمة على الجوال */
+body.admin-nav-open {
+    overflow: hidden;
+}
+
 /* ═══════════════════════════════════════════════════════════
    2. Sidebar
    ═══════════════════════════════════════════════════════════ */
@@ -37,10 +44,15 @@
     padding: 20px 12px;
     height: 100vh;
     height: 100dvh;
-    position: sticky;
+
+    /* ✅ FIX: fixed بدل sticky لضمان ثبات الارتفاع داخل flex */
+    position: fixed;
     top: 0;
+    inset-inline-start: 0;
     z-index: 100;
+
     transition: transform var(--transition-base, 0.2s ease);
+    will-change: transform;
 }
 
 /* ─── Brand ─── */
@@ -87,6 +99,33 @@
     font-size: 10px;
     margin-top: 2px;
     letter-spacing: 0.5px;
+}
+
+/* ✅ FIX: زر إغلاق القائمة على الجوال (اختياري — يظهر فقط عند الحاجة) */
+.admin-sidebar-close {
+    display: none;
+    width: 32px;
+    height: 32px;
+    margin-inline-start: auto;
+    border: 0;
+    border-radius: var(--radius-sm, 8px);
+    background: rgba(255, 255, 255, 0.05);
+    color: #a8b2c0;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    transition: background-color var(--transition-fast, 0.15s ease);
+}
+
+.admin-sidebar-close:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.admin-sidebar-close:focus-visible {
+    outline: 2px solid var(--ae-blue, #38bdf8);
+    outline-offset: 2px;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -165,6 +204,10 @@
     min-width: 0;
     padding: 24px;
     overflow-y: auto;
+
+    /* ✅ FIX: إزاحة المحتوى بمقدار عرض القائمة الثابتة */
+    margin-inline-start: 260px;
+
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.08) transparent;
 }
@@ -207,6 +250,35 @@
     gap: 8px;
     flex-wrap: wrap;
     align-items: center;
+}
+
+/* ✅ FIX: زر فتح القائمة (Hamburger) — مخفي افتراضياً */
+.admin-menu-toggle {
+    display: none;
+    width: 38px;
+    height: 38px;
+    padding: 0;
+    border-radius: var(--radius-md, 9px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.03);
+    color: #a8b2c0;
+    font-size: 15px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition:
+        background-color var(--transition-fast, 0.15s ease),
+        color var(--transition-fast, 0.15s ease);
+}
+
+.admin-menu-toggle:hover {
+    background: rgba(255, 255, 255, 0.07);
+    color: #fff;
+}
+
+.admin-menu-toggle:focus-visible {
+    outline: 2px solid var(--ae-blue, #38bdf8);
+    outline-offset: 2px;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -766,30 +838,47 @@
 }
 
 @media (max-width: 900px) {
+    /* ✅ FIX: القائمة تظهر من نفس جهة سطح المكتب (inline-start) */
     .admin-sidebar {
         position: fixed;
         top: 0;
         bottom: 0;
-        inset-inline-end: 0;
-        transform: translateX(100%);
-        box-shadow: -20px 0 50px rgba(0, 0, 0, 0.4);
+        inset-inline-start: 0;
+
+        /* الإخفاء الافتراضي (LTR: تنزلق لليسار) */
+        transform: translateX(-100%);
+
+        box-shadow: 20px 0 50px rgba(0, 0, 0, 0.4);
         z-index: 200;
         height: 100dvh;
     }
 
-    [dir="ltr"] .admin-sidebar {
-        transform: translateX(-100%);
+    /* ✅ FIX: في RTL تنزلق لليمين */
+    [dir="rtl"] .admin-sidebar {
+        transform: translateX(100%);
+        box-shadow: -20px 0 50px rgba(0, 0, 0, 0.4);
     }
 
+    /* ✅ FIX: عند الفتح — الاتجاهان يرجعان إلى 0 */
     .admin-sidebar.mobile-open,
-    .admin-sidebar.open,
-    [dir="ltr"] .admin-sidebar.mobile-open,
-    [dir="ltr"] .admin-sidebar.open {
+    .admin-sidebar.open {
         transform: translateX(0);
     }
 
+    /* ✅ FIX: إزالة الإزاحة على الجوال (القائمة منسدلة) */
     .admin-main {
+        margin-inline-start: 0;
         padding: 16px;
+    }
+
+    /* ✅ FIX: إظهار زر الفتح */
+    .admin-menu-toggle {
+        display: inline-flex;
+    }
+
+    /* ✅ FIX: إظهار زر الإغلاق داخل القائمة */
+    .admin-sidebar-close {
+        display: inline-flex;
     }
 
     .stats-grid {
@@ -821,6 +910,36 @@
     .admin-btn:not(.icon-only) {
         width: 38px;
         padding: 0;
+    }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   ✅ FIX: Backdrop خلف القائمة على الجوال
+   ═══════════════════════════════════════════════════════════ */
+
+.admin-sidebar-backdrop {
+    display: none;
+}
+
+@media (max-width: 900px) {
+    .admin-sidebar-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.55);
+        -webkit-backdrop-filter: blur(4px);
+        backdrop-filter: blur(4px);
+        z-index: 150; /* أقل من 200 (القائمة) */
+        opacity: 0;
+        visibility: hidden;
+        transition:
+            opacity var(--transition-base, 0.2s ease),
+            visibility var(--transition-base, 0.2s ease);
+    }
+
+    .admin-sidebar-backdrop.active {
+        opacity: 1;
+        visibility: visible;
     }
 }
 
@@ -897,6 +1016,8 @@
 
 @media print {
     .admin-sidebar,
+    .admin-sidebar-backdrop,
+    .admin-menu-toggle,
     .admin-actions,
     .admin-btn,
     #adminToastContainer,
@@ -911,6 +1032,7 @@
         color: #111 !important;
         overflow: visible !important;
         height: auto !important;
+        margin-inline-start: 0 !important;
     }
 
     .admin-panel,
